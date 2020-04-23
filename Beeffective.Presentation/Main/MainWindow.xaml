@@ -18,6 +18,32 @@
     Height="450"
     WindowState="Maximized"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding
+            Key="N"
+            Command="{Binding NewCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="D"
+            Command="{Binding DashboardCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="P"
+            Command="{Binding PriorityCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="G"
+            Command="{Binding GoalsCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="T"
+            Command="{Binding TagsCommand}"
+            Modifiers="Control" />
+        <KeyBinding
+            Key="L"
+            Command="{Binding CalendarCommand}"
+            Modifiers="Control" />
+    </Window.InputBindings>
     <Window.Resources>
 
         <ResourceDictionary>
