@@ -2,15 +2,55 @@
     x:Class="Beeffective.Presentation.Main.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dashboard="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:menu="clr-namespace:Beeffective.Presentation.Main.Menu"
+    xmlns:priority="clr-namespace:Beeffective.Presentation.Main.Priority"
     Title="Beeffective"
     Width="800"
     Height="450"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Window.Resources>
-        <ResourceDictionary Source="../Themes/Generic.xaml" />
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="../Themes/Generic.xaml" />
+
+                <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
+                        <dashboard:DashboardView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type priority:PriorityViewModel}">
+                        <priority:PriorityView />
+                    </DataTemplate>
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Window.Resources>
-    <Grid Background="{StaticResource MaterialDesignBackground}" />
+    <Grid Background="{StaticResource MaterialDesignBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <controls:Background Grid.Column="0" Grid.ColumnSpan="2" />
+        <menu:MenuView
+            Grid.Column="0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Stretch" />
+        <Grid
+            Grid.Column="1"
+            Margin="16"
+            Background="{StaticResource MaterialDesignPaper}"
+            Opacity="0.5" />
+        <ContentControl
+            Grid.Column="1"
+            Margin="16"
+            Content="{Binding ContentViewModel}" />
+    </Grid>
 </Window>

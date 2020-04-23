@@ -17,8 +17,8 @@ namespace Beeffective
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var mainView = Container.GetExportedValue<IMainView>();
-            mainView.Show();
+            var mainViewModel = Container.GetExportedValue<MainViewModel>();
+            mainViewModel.Show();
         }
     }
 }

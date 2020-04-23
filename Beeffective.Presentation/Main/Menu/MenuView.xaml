@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="Beeffective.Presentation.Main.Menu.MenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Themes/Generic.xaml" />
+    </UserControl.Resources>
+    <Grid Background="{StaticResource MaterialDesignPaper}">
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
+                <Setter Property="Width" Value="64" />
+                <Setter Property="Height" Value="64" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="8,8,8,0" />
+            </Style>
+            <Style TargetType="md:PackIcon">
+                <Setter Property="Width" Value="28" />
+                <Setter Property="Height" Value="28" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <Button>
+                <md:PackIcon Kind="Add" />
+            </Button>
+            <Button Command="{Binding DashboardCommand}">
+                <md:PackIcon Kind="ViewDashboardOutline" />
+            </Button>
+            <Button Command="{Binding PriorityCommand}">
+                <md:PackIcon Kind="PriorityHigh" />
+            </Button>
+            <Button>
+                <md:PackIcon Kind="BullseyeArrow" />
+            </Button>
+            <Button>
+                <md:PackIcon Kind="TagOutline" />
+            </Button>
+            <Button>
+                <md:PackIcon Kind="CalendarClock" />
+            </Button>
+        </StackPanel>
+        <Button Grid.Row="3" Margin="8">
+            <md:PackIcon Kind="SettingsOutline" />
+        </Button>
+    </Grid>
+</UserControl>
