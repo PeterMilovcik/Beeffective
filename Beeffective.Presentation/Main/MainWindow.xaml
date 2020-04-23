@@ -2,13 +2,17 @@
     x:Class="Beeffective.Presentation.Main.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:calendar="clr-namespace:Beeffective.Presentation.Main.Calendar"
     xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dashboard="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:goals="clr-namespace:Beeffective.Presentation.Main.Goals"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menu="clr-namespace:Beeffective.Presentation.Main.Menu"
+    xmlns:new="clr-namespace:Beeffective.Presentation.Main.New"
     xmlns:priority="clr-namespace:Beeffective.Presentation.Main.Priority"
+    xmlns:settings="clr-namespace:Beeffective.Presentation.Main.Settings"
+    xmlns:tags="clr-namespace:Beeffective.Presentation.Main.Tags"
     Title="Beeffective"
     Width="800"
     Height="450"
@@ -22,6 +26,9 @@
                 <ResourceDictionary Source="../Themes/Generic.xaml" />
 
                 <ResourceDictionary>
+                    <DataTemplate DataType="{x:Type new:NewViewModel}">
+                        <new:NewView />
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
                         <dashboard:DashboardView />
                     </DataTemplate>
@@ -30,6 +37,15 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type goals:GoalsViewModel}">
                         <goals:GoalsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type tags:TagsViewModel}">
+                        <tags:TagsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type calendar:CalendarViewModel}">
+                        <calendar:CalendarView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type settings:SettingsViewModel}">
+                        <settings:SettingsView />
                     </DataTemplate>
                 </ResourceDictionary>
 

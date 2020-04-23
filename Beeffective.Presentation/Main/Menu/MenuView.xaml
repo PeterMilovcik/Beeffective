@@ -6,7 +6,7 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../../Themes/Generic.xaml" />
     </UserControl.Resources>
-    <Grid Background="{StaticResource MaterialDesignPaper}">
+    <Grid Margin="16,16,0,16">
         <Grid.Resources>
             <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
                 <Setter Property="Width" Value="64" />
@@ -25,30 +25,38 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="{StaticResource MaterialDesignPaper}"
+            Opacity="0.5" />
         <StackPanel Grid.Row="1">
-            <Button>
+            <Button Command="{Binding NewCommand}" ToolTip="Add New">
                 <md:PackIcon Kind="Add" />
             </Button>
-            <Button Command="{Binding DashboardCommand}">
+            <Button Command="{Binding DashboardCommand}" ToolTip="Dashboard">
                 <md:PackIcon Kind="ViewDashboardOutline" />
             </Button>
-            <Button Command="{Binding PriorityCommand}">
+            <Button Command="{Binding PriorityCommand}" ToolTip="Priority">
                 <md:PackIcon Kind="PriorityHigh" />
             </Button>
-            <Button Command="{Binding GoalsCommand}">
+            <Button Command="{Binding GoalsCommand}" ToolTip="Goals">
                 <md:PackIcon Kind="BullseyeArrow" />
             </Button>
-            <Button Command="{Binding TagsCommand}">
+            <Button Command="{Binding TagsCommand}" ToolTip="Tags">
                 <md:PackIcon Kind="TagOutline" />
             </Button>
-            <Button Command="{Binding CalendarCommand}">
+            <Button Command="{Binding CalendarCommand}" ToolTip="Calendar">
                 <md:PackIcon Kind="CalendarClock" />
             </Button>
         </StackPanel>
         <Button
             Grid.Row="3"
             Margin="8"
-            Command="{Binding SettingsCommand}">
+            Command="{Binding SettingsCommand}"
+            ToolTip="Settings">
             <md:PackIcon Kind="SettingsOutline" />
         </Button>
     </Grid>
