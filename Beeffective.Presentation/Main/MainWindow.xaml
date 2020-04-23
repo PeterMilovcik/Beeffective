@@ -9,5 +9,8 @@
     Height="450"
     WindowState="Maximized"
     mc:Ignorable="d">
-    <Grid />
+    <Window.Resources>
+        <ResourceDictionary Source="../Themes/Generic.xaml" />
+    </Window.Resources>
+    <Grid Background="{StaticResource MaterialDesignBackground}" />
 </Window>
