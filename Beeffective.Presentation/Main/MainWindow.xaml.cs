@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.Composition;
-using Beeffective.Presentation.Main;
 
-namespace Beeffective.Presentation
+namespace Beeffective.Presentation.Main
 {
     [Export(typeof(IMainView))]
     public partial class MainWindow : IMainView

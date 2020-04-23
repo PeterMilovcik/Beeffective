@@ -5,6 +5,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>bee.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
