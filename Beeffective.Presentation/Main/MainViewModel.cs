@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dashboard;
+using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main
@@ -10,21 +11,22 @@ namespace Beeffective.Presentation.Main
     public class MainViewModel : ViewModel
     {
         private readonly IMainView view;
-        private ViewModel contentViewModel;
+        private ViewModel content;
 
         [ImportingConstructor]
         public MainViewModel(IMainView view)
         {
             this.view = view;
             view.DataContext = this;
-            DashboardCommand = new DelegateCommand(o => ContentViewModel = Dashboard);
-            PriorityCommand = new DelegateCommand(o => ContentViewModel = Priority);
+            DashboardCommand = new DelegateCommand(o => Content = Dashboard);
+            PriorityCommand = new DelegateCommand(o => Content = Priority);
+            GoalsCommand = new DelegateCommand(o => Content = Goals);
         }
 
         public void Show()
         {
             view.Show();
-            ContentViewModel = Dashboard;
+            Content = Dashboard;
         }
 
         [Import]
@@ -37,10 +39,15 @@ namespace Beeffective.Presentation.Main
 
         public ICommand PriorityCommand { get; }
 
-        public ViewModel ContentViewModel
+        [Import]
+        public GoalsViewModel Goals { get; set; }
+
+        public ICommand GoalsCommand { get; }
+
+        public ViewModel Content
         {
-            get => contentViewModel;
-            set => SetProperty(ref contentViewModel, value);
+            get => content;
+            set => SetProperty(ref content, value);
         }
     }
 }

@@ -5,6 +5,7 @@
     xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dashboard="clr-namespace:Beeffective.Presentation.Main.Dashboard"
+    xmlns:goals="clr-namespace:Beeffective.Presentation.Main.Goals"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:menu="clr-namespace:Beeffective.Presentation.Main.Menu"
     xmlns:priority="clr-namespace:Beeffective.Presentation.Main.Priority"
@@ -26,6 +27,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type priority:PriorityViewModel}">
                         <priority:PriorityView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type goals:GoalsViewModel}">
+                        <goals:GoalsView />
                     </DataTemplate>
                 </ResourceDictionary>
 
@@ -51,6 +55,6 @@
         <ContentControl
             Grid.Column="1"
             Margin="16"
-            Content="{Binding ContentViewModel}" />
+            Content="{Binding Content}" />
     </Grid>
 </Window>

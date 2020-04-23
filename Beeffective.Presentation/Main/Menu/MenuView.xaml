@@ -35,17 +35,20 @@
             <Button Command="{Binding PriorityCommand}">
                 <md:PackIcon Kind="PriorityHigh" />
             </Button>
-            <Button>
+            <Button Command="{Binding GoalsCommand}">
                 <md:PackIcon Kind="BullseyeArrow" />
             </Button>
-            <Button>
+            <Button Command="{Binding TagsCommand}">
                 <md:PackIcon Kind="TagOutline" />
             </Button>
-            <Button>
+            <Button Command="{Binding CalendarCommand}">
                 <md:PackIcon Kind="CalendarClock" />
             </Button>
         </StackPanel>
-        <Button Grid.Row="3" Margin="8">
+        <Button
+            Grid.Row="3"
+            Margin="8"
+            Command="{Binding SettingsCommand}">
             <md:PackIcon Kind="SettingsOutline" />
         </Button>
     </Grid>
