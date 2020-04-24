@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
@@ -46,8 +47,13 @@ namespace Beeffective.Presentation.Main.New
         private void UnsubscribeFrom(TaskViewModel taskViewModel) => 
             taskViewModel.PropertyChanged -= OnTaskViewModelPropertyChanged;
 
-        private void OnTaskViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) => 
-            SaveCommand.RaiseCanExecuteChanged();
+        private void OnTaskViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(newTaskViewModel.Title))
+            {
+                SaveCommand.RaiseCanExecuteChanged();
+            }
+        }
 
         public DelegateCommand SaveCommand { get; }
 
@@ -55,6 +61,7 @@ namespace Beeffective.Presentation.Main.New
         {
             if (newTaskViewModel == null) return false;
             if (string.IsNullOrWhiteSpace(newTaskViewModel.Title)) return false;
+            if (taskModels.Any(m => m.Title == newTaskViewModel.Title)) return false;
             return true;
         }
 

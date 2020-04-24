@@ -36,7 +36,7 @@
             FontSize="{StaticResource FontSize}"
             Foreground="{StaticResource MaterialDesignDarkForeground}"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding NewTask.Title}" />
+            Text="{Binding NewTask.Title, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBox
             Width="{StaticResource TextBoxWidth}"
