@@ -8,7 +8,19 @@ namespace Beeffective.Presentation.Main.Tasks
             new TaskModel
             {
                 Id = viewModel.Id,
-                Title = viewModel.Title
+                Title = viewModel.Title,
+                Urgency = viewModel.Urgency,
+                Importance = viewModel.Importance
+            };
+
+        public static TaskViewModel ToViewModel(this TaskModel model) =>
+            new TaskViewModel
+            {
+                Id = model.Id,
+                Title = model.Title,
+                Urgency = model.Urgency,
+                Importance = model.Importance,
+                IsChanged = false
             };
     }
 }

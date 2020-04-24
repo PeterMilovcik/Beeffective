@@ -68,6 +68,8 @@ namespace Beeffective.Presentation.Main.New
         private async Task SaveAsync()
         {
             var newTaskModel = newTaskViewModel.ToModel();
+            newTaskModel.Urgency = taskModels.Select(m => m.Urgency).Min() - 1;
+            newTaskModel.Importance = taskModels.Select(m => m.Importance).Min() - 1;
             await repository.AddTaskAsync(newTaskModel);
         }
     }

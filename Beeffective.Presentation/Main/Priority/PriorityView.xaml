@@ -12,10 +12,32 @@
         <ResourceDictionary Source="../../Themes/Generic.xaml" />
     </UserControl.Resources>
     <Grid>
-        <Label
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Priority"
-            Foreground="{StaticResource PrimaryHueMidBrush}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0" Margin="16,32,8,16">
+            <TextBlock
+                FontSize="{StaticResource HeaderFontSize}"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Text="Importance" />
+            <ListView
+                x:Name="ImportanceListView"
+                AllowDrop="True"
+                DragEnter="ImportanceListView_OnDragEnter"
+                Drop="ImportanceListView_OnDrop"
+                ItemsSource="{Binding Tasks}"
+                PreviewMouseLeftButtonDown="ListView_OnPreviewMouseLeftButtonDown"
+                PreviewMouseMove="ListView_OnPreviewMouseMove">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Title}" Header="Title" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+
     </Grid>
 </UserControl>

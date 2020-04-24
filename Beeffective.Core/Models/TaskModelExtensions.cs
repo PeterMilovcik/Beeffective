@@ -4,18 +4,22 @@ namespace Beeffective.Core.Models
 {
     public static class TaskModelExtensions
     {
-        public static TaskEntity ToEntity(this TaskModel model) => 
+        public static TaskEntity ToEntity(this TaskModel model) =>
             new TaskEntity
             {
                 Id = model.Id,
-                Title = model.Title
+                Title = model.Title,
+                Urgency = model.Urgency,
+                Importance = model.Importance
             };
 
         public static TaskModel ToModel(this TaskEntity entity) =>
             new TaskModel
             {
                 Id = entity.Id,
-                Title = entity.Title
+                Title = entity.Title,
+                Urgency = entity.Urgency,
+                Importance = entity.Importance
             };
     }
 }
