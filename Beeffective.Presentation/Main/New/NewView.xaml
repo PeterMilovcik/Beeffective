@@ -14,26 +14,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../../Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <system:Double x:Key="FontSize">18</system:Double>
+            <system:Double x:Key="FontSize">16</system:Double>
             <system:Double x:Key="TextBoxWidth">600</system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="64,64,0,0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Margin="64,64,0,0" HorizontalAlignment="Left">
 
         <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             VerticalAlignment="Center"
             FontFamily="{StaticResource MaterialDesignFont}"
             FontSize="{StaticResource HeaderFontSize}"
@@ -42,9 +29,6 @@
             Text="New Task" />
 
         <TextBox
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             Width="{StaticResource TextBoxWidth}"
             Margin="0,16,16,0"
             md:HintAssist.Hint="Title"
@@ -54,9 +38,6 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
         <TextBox
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             Width="{StaticResource TextBoxWidth}"
             Margin="0,16,16,0"
             md:HintAssist.Hint="Goal"
@@ -66,9 +47,6 @@
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
         <TextBox
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             Width="{StaticResource TextBoxWidth}"
             Margin="0,16,16,0"
             md:HintAssist.Hint="Tags"
@@ -77,6 +55,112 @@
             Foreground="{StaticResource MaterialDesignDarkForeground}"
             Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-    </Grid>
+        <Grid Margin="0,16,16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox
+                x:Name="RepeatCheckBox"
+                Grid.Column="0"
+                Width="80"
+                Margin="0,16,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Repeat"
+                Cursor="Hand"
+                FontFamily="{StaticResource MaterialDesignFont}"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Style="{StaticResource MaterialDesignCheckBox}"
+                ToolTip="Repeat" />
+
+            <Grid
+                Grid.Column="1"
+                Margin="16,0,0,0"
+                HorizontalAlignment="Stretch"
+                Visibility="{Binding IsChecked, ElementName=RepeatCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+                    Grid.Column="0"
+                    md:HintAssist.Hint="Every"
+                    FontSize="{StaticResource FontSize}"
+                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    <ComboBoxItem>
+                        Day
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Week
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Month
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Year
+                    </ComboBoxItem>
+                </ComboBox>
+
+                <DatePicker
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    md:HintAssist.Hint="From Date"
+                    FontSize="{StaticResource FontSize}"
+                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                <md:TimePicker
+                    Grid.Column="2"
+                    Margin="16,0,0,0"
+                    md:HintAssist.Hint="From Time"
+                    FontSize="{StaticResource FontSize}"
+                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                    Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+
+            </Grid>
+
+        </Grid>
+
+        <Grid Margin="0,16,16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox
+                x:Name="DueDateCheckBox"
+                Grid.Column="0"
+                Width="80"
+                Margin="0,16,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Due Date"
+                Cursor="Hand"
+                FontFamily="{StaticResource MaterialDesignFont}"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Style="{StaticResource MaterialDesignCheckBox}"
+                ToolTip="Due Date" />
+
+            <Grid
+                Grid.Column="1"
+                Margin="16,0,0,0"
+                HorizontalAlignment="Stretch"
+                Visibility="{Binding IsChecked, ElementName=DueDateCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <DatePicker
+                    md:HintAssist.Hint="Date"
+                    FontSize="{StaticResource FontSize}"
+                    Foreground="{StaticResource MaterialDesignDarkForeground}"
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+            </Grid>
+
+        </Grid>
+
+    </StackPanel>
 
 </UserControl>

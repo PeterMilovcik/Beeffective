@@ -33,7 +33,10 @@
             Background="{StaticResource MaterialDesignPaper}"
             Opacity="0.5" />
         <StackPanel Grid.Row="1">
-            <Button Command="{Binding NewCommand}" ToolTip="Add New">
+            <Button
+                Padding="0"
+                Command="{Binding NewCommand}"
+                ToolTip="Add New">
                 <md:PackIcon Kind="Add" />
             </Button>
             <Button Command="{Binding DashboardCommand}" ToolTip="Dashboard">
