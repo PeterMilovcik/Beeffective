@@ -35,7 +35,8 @@
             FontFamily="{StaticResource MaterialDesignFont}"
             FontSize="{StaticResource FontSize}"
             Foreground="{StaticResource MaterialDesignDarkForeground}"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding NewTask.Title}" />
 
         <TextBox
             Width="{StaticResource TextBoxWidth}"

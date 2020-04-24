@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
@@ -22,13 +23,19 @@ namespace Beeffective.Presentation.Main
         {
             this.view = view;
             view.DataContext = this;
-            NewCommand = new DelegateCommand(o => Content = New);
-            DashboardCommand = new DelegateCommand(o => Content = Dashboard);
-            PriorityCommand = new DelegateCommand(o => Content = Priority);
-            GoalsCommand = new DelegateCommand(o => Content = Goals);
-            TagsCommand = new DelegateCommand(o => Content = Tags);
-            CalendarCommand = new DelegateCommand(o => Content = Calendar);
-            SettingsCommand = new DelegateCommand(o => Content = Settings);
+            NewCommand = new DelegateCommand(async o => await ChangeContentAsync(New));
+            DashboardCommand = new DelegateCommand(async o => await ChangeContentAsync(Dashboard));
+            PriorityCommand = new DelegateCommand(async o => await ChangeContentAsync(Priority));
+            GoalsCommand = new DelegateCommand(async o => await ChangeContentAsync(Goals));
+            TagsCommand = new DelegateCommand(async o => await ChangeContentAsync(Tags));
+            CalendarCommand = new DelegateCommand(async o => await ChangeContentAsync(Calendar));
+            SettingsCommand = new DelegateCommand(async o => await ChangeContentAsync(Settings));
+        }
+
+        private async Task ChangeContentAsync(ViewModel viewModel)
+        {
+            Content = viewModel;
+            await Content.InitializeAsync();
         }
 
         public void Show()

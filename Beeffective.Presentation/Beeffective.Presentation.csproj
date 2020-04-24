@@ -8,10 +8,10 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.1.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
-    <PackageReference Include="WpfShapes" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Beeffective.Core\Beeffective.Core.csproj" />
     <ProjectReference Include="..\Beeffective.Core\Beeffective.Services.csproj" />
     <ProjectReference Include="..\Beeffective.Services\Beeffective.Services.csproj" />
   </ItemGroup>
