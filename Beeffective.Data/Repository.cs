@@ -2,16 +2,29 @@
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Beeffective.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Beeffective.Data
 {
     [Export(typeof(IRepository))]
     public class Repository : IRepository
     {
-        public Task<List<TaskEntity>> LoadTaskAsync() => 
-            Task.FromResult(new List<TaskEntity>());
+        private readonly DataContext context;
 
-        public Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity) => 
-            Task.FromResult(taskEntity);
+        [ImportingConstructor]
+        public Repository(DataContext context)
+        {
+            this.context = context;
+        }
+
+        public Task<List<TaskEntity>> LoadTaskAsync() => 
+            context.Tasks.ToListAsync();
+
+        public async Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity)
+        {
+            var entry = await context.Tasks.AddAsync(taskEntity);
+            await context.SaveChangesAsync();
+            return entry.Entity;
+        }
     }
 }
