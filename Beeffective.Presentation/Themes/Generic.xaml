@@ -4,7 +4,8 @@
     xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:local="clr-namespace:Beeffective.Presentation"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes">
+    xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
@@ -13,5 +14,19 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Yellow.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <system:Double x:Key="HeaderFontSize">36</system:Double>
+
+    <Style
+        x:Key="MenuButton"
+        BasedOn="{StaticResource MaterialDesignRaisedButton}"
+        TargetType="Button">
+        <Setter Property="Width" Value="64" />
+        <Setter Property="Height" Value="64" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="8,8,8,0" />
+    </Style>
+    <Style TargetType="materialDesign:PackIcon">
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
+    </Style>
 
 </ResourceDictionary>

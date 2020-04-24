@@ -7,18 +7,6 @@
         <ResourceDictionary Source="../../Themes/Generic.xaml" />
     </UserControl.Resources>
     <Grid Margin="16,16,0,16">
-        <Grid.Resources>
-            <Style BasedOn="{StaticResource MaterialDesignRaisedButton}" TargetType="Button">
-                <Setter Property="Width" Value="64" />
-                <Setter Property="Height" Value="64" />
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="Margin" Value="8,8,8,0" />
-            </Style>
-            <Style TargetType="md:PackIcon">
-                <Setter Property="Width" Value="28" />
-                <Setter Property="Height" Value="28" />
-            </Style>
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -34,24 +22,39 @@
             Opacity="0.5" />
         <StackPanel Grid.Row="1">
             <Button
-                Padding="0"
                 Command="{Binding NewCommand}"
+                Style="{StaticResource MenuButton}"
                 ToolTip="Add New">
                 <md:PackIcon Kind="Add" />
             </Button>
-            <Button Command="{Binding DashboardCommand}" ToolTip="Dashboard">
+            <Button
+                Command="{Binding DashboardCommand}"
+                Style="{StaticResource MenuButton}"
+                ToolTip="Dashboard">
                 <md:PackIcon Kind="ViewDashboardOutline" />
             </Button>
-            <Button Command="{Binding PriorityCommand}" ToolTip="Priority">
+            <Button
+                Command="{Binding PriorityCommand}"
+                Style="{StaticResource MenuButton}"
+                ToolTip="Priority">
                 <md:PackIcon Kind="PriorityHigh" />
             </Button>
-            <Button Command="{Binding GoalsCommand}" ToolTip="Goals">
+            <Button
+                Command="{Binding GoalsCommand}"
+                Style="{StaticResource MenuButton}"
+                ToolTip="Goals">
                 <md:PackIcon Kind="BullseyeArrow" />
             </Button>
-            <Button Command="{Binding TagsCommand}" ToolTip="Tags">
+            <Button
+                Command="{Binding TagsCommand}"
+                Style="{StaticResource MenuButton}"
+                ToolTip="Tags">
                 <md:PackIcon Kind="TagOutline" />
             </Button>
-            <Button Command="{Binding CalendarCommand}" ToolTip="Calendar">
+            <Button
+                Command="{Binding CalendarCommand}"
+                Style="{StaticResource MenuButton}"
+                ToolTip="Calendar">
                 <md:PackIcon Kind="CalendarClock" />
             </Button>
         </StackPanel>
@@ -59,6 +62,7 @@
             Grid.Row="3"
             Margin="8"
             Command="{Binding SettingsCommand}"
+            Style="{StaticResource MenuButton}"
             ToolTip="Settings">
             <md:PackIcon Kind="SettingsOutline" />
         </Button>
