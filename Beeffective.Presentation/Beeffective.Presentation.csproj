@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Beeffective.Core\Beeffective.Services.csproj" />
+    <ProjectReference Include="..\Beeffective.Services\Beeffective.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Update="Main\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

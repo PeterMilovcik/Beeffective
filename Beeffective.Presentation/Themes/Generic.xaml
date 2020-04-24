@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:local="clr-namespace:Beeffective.Presentation"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
