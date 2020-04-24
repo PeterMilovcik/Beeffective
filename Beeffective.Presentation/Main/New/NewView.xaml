@@ -161,6 +161,24 @@
 
         </Grid>
 
+        <TextBox
+            Height="130"
+            Margin="0,32,16,0"
+            VerticalAlignment="Top"
+            md:HintAssist.Hint="Description"
+            AcceptsReturn="True"
+            FontSize="{StaticResource FontSize}"
+            Foreground="{StaticResource MaterialDesignDarkForeground}"
+            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
+            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+            TextWrapping="Wrap"
+            VerticalScrollBarVisibility="Auto" />
+
+        <Button
+            Margin="0,32,16,0"
+            Content="ADD"
+            Style="{StaticResource MaterialDesignRaisedButton}" />
+
     </StackPanel>
 
 </UserControl>
