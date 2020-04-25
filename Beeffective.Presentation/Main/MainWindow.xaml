@@ -98,5 +98,17 @@
             Grid.Column="1"
             Margin="16"
             Content="{Binding Content}" />
+        <Grid
+            Grid.Column="1"
+            Margin="16"
+            Background="{StaticResource MaterialDesignPaper}"
+            Opacity="0.5"
+            Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Text="Loading..." />
+        </Grid>
     </Grid>
 </Window>

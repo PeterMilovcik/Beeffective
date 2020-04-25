@@ -1,4 +1,5 @@
-﻿using Beeffective.Presentation.Common;
+﻿using System;
+using Beeffective.Presentation.Common;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -36,5 +37,7 @@ namespace Beeffective.Presentation.Main.Tasks
                 if (SetProperty(ref importance, value)) IsChanged = true;
             }
         }
+
+        public double Priority => Math.Sqrt(Math.Pow(Urgency, 2) + Math.Pow(Importance, 2));
     }
 }

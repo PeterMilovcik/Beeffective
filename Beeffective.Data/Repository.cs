@@ -9,22 +9,25 @@ namespace Beeffective.Data
     [Export(typeof(IRepository))]
     public class Repository : IRepository
     {
-        private readonly DataContext context;
-
-        [ImportingConstructor]
-        public Repository(DataContext context)
+        public async Task<List<TaskEntity>> LoadTaskAsync()
         {
-            this.context = context;
+            await using DataContext context = new DataContext();
+            return await context.Tasks.ToListAsync();
         }
-
-        public Task<List<TaskEntity>> LoadTaskAsync() => 
-            context.Tasks.ToListAsync();
 
         public async Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity)
         {
+            await using DataContext context = new DataContext();
             var entry = await context.Tasks.AddAsync(taskEntity);
             await context.SaveChangesAsync();
             return entry.Entity;
+        }
+
+        public async Task UpdateTaskAsync(TaskEntity taskEntity)
+        {
+            await using DataContext context = new DataContext();
+            context.Update(taskEntity);
+            await context.SaveChangesAsync();
         }
     }
 }

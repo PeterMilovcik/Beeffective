@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -50,7 +51,7 @@ namespace Beeffective.Presentation.Main.Priority
 
             var taskViewModel = (TaskViewModel)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
 
-            InitialiseAdorner(listViewItem);
+            InitialiseAdorner(listView, listViewItem);
             listView.PreviewDragOver += ListViewDragOver;
             listView.DragLeave += ListViewDragLeave;
             listView.DragEnter += ListViewDragEnter;
@@ -69,7 +70,7 @@ namespace Beeffective.Presentation.Main.Priority
             }
         }
 
-        private void ListViewDrop(object sender, DragEventArgs e, bool isImportance)
+        private async Task ListViewDropAsync(object sender, DragEventArgs e, bool isImportance)
         {
             var listView = sender as ListView;
             if (listView == null) return;
@@ -87,21 +88,21 @@ namespace Beeffective.Presentation.Main.Priority
                     if (DataContext is PriorityViewModel viewModel)
                     {
                         if (isImportance)
-                            viewModel.SwapImportance(dragged, dropped);
+                            await viewModel.SwapImportanceAsync(dragged, dropped);
                         else
-                            viewModel.SwapUrgency(dragged, dropped);
+                            await viewModel.SwapUrgencyAsync(dragged, dropped);
                     }
                 }
             }
         }
 
 
-        private void InitialiseAdorner(ListViewItem listViewItem)
+        private void InitialiseAdorner(ListView listView, ListViewItem listViewItem)
         {
             var brush = new VisualBrush(listViewItem);
             adorner = new DragAdorner(listViewItem, listViewItem.RenderSize, brush);
             adorner.Opacity = 0.75;
-            layer = AdornerLayer.GetAdornerLayer(ImportanceListView);
+            layer = AdornerLayer.GetAdornerLayer(listView);
             layer?.Add(adorner);
         }
 
@@ -148,7 +149,7 @@ namespace Beeffective.Presentation.Main.Priority
             if (adorner != null)
             {
                 adorner.OffsetLeft = args.GetPosition(listView).X;
-                adorner.OffsetTop = args.GetPosition(listView).Y - startPoint.Y;
+                adorner.OffsetTop = args.GetPosition(listView).Y;
             }
         }
 
@@ -166,14 +167,24 @@ namespace Beeffective.Presentation.Main.Priority
             return null;
         }
 
-        private void ImportanceListView_OnDrop(object sender, DragEventArgs e)
+        private async void ImportanceListView_OnDrop(object sender, DragEventArgs e)
         {
-            ListViewDrop(sender, e, true);
+            await ListViewDropAsync(sender, e, true);
         }
 
         private void ImportanceListView_OnDragEnter(object sender, DragEventArgs e)
         {
             ListViewDragEnter(sender, e);
+        }
+
+        private void UrgencyListView_OnDragEnter(object sender, DragEventArgs e)
+        {
+            ListViewDragEnter(sender, e);
+        }
+
+        private async void UrgencyListView_OnDrop(object sender, DragEventArgs e)
+        {
+            await ListViewDropAsync(sender, e, false);
         }
     }
 }

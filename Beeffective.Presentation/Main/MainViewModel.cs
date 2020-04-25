@@ -35,7 +35,15 @@ namespace Beeffective.Presentation.Main
         private async Task ChangeContentAsync(ViewModel viewModel)
         {
             Content = viewModel;
-            await Content.InitializeAsync();
+            try
+            {
+                IsBusy = true;
+                await Content.InitializeAsync();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         public void Show()
