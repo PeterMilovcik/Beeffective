@@ -16,7 +16,7 @@ namespace Beeffective.Presentation.Main.Priority
         private Point startPoint;
         private DragAdorner adorner;
         private AdornerLayer layer;
-        private bool isDragOutOfScope = false;
+        private bool isDragOutOfScope;
 
         public PriorityView()
         {
@@ -149,7 +149,7 @@ namespace Beeffective.Presentation.Main.Priority
             if (adorner != null)
             {
                 adorner.OffsetLeft = args.GetPosition(listView).X;
-                adorner.OffsetTop = args.GetPosition(listView).Y;
+                adorner.OffsetTop = args.GetPosition(listView).Y - startPoint.Y + 180;
             }
         }
 

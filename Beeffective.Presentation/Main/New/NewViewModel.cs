@@ -37,7 +37,7 @@ namespace Beeffective.Presentation.Main.New
         {
             taskModels = await repository.LoadTaskAsync();
             Goals = new ObservableCollection<string>(
-                taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Goal)).Select(t => t.Goal));
+                taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Goal)).Select(t => t.Goal).Distinct());
         }
 
         public TaskViewModel NewTask

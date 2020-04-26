@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Hosting;
 using System.Windows;
 using Beeffective.Presentation.Main;
+using Syncfusion.Licensing;
 
 namespace Beeffective
 {
@@ -10,6 +11,7 @@ namespace Beeffective
 
         public App()
         {
+            SyncfusionLicenseProvider.RegisterLicense("##SyncfusionLicense##");
             var catalog = new ApplicationCatalog();
             Container = new CompositionContainer(catalog);
         }

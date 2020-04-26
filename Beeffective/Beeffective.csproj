@@ -20,4 +20,12 @@
     <ProjectReference Include="..\Beeffective.Presentation\Beeffective.Presentation.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="PreBuild: cd &quot;$(ProjectDir)&quot; &#xD;&#xA;SyncfusionLicenseRegister.bat PreBuild App.xaml.cs" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="PostBuild: cd &quot;$(ProjectDir)&quot; &#xD;&#xA;SyncfusionLicenseRegister.bat PostBuild App.xaml.cs" />
+  </Target>
+
 </Project>
