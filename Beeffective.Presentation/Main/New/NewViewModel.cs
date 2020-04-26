@@ -27,9 +27,11 @@ namespace Beeffective.Presentation.Main.New
 
         public override async Task InitializeAsync()
         {
-            taskModels = await repository.LoadTaskAsync();
+            await LoadTaskAsync();
             NewTask = new TaskViewModel();
         }
+
+        private async Task LoadTaskAsync() => taskModels = await repository.LoadTaskAsync();
 
         public TaskViewModel NewTask
         {
@@ -77,6 +79,7 @@ namespace Beeffective.Presentation.Main.New
             }
 
             await repository.AddTaskAsync(newTaskModel);
+            await LoadTaskAsync();
         }
     }
 }
