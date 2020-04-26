@@ -4,6 +4,7 @@
     xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:local="clr-namespace:Beeffective.Presentation"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes">
 
@@ -50,6 +51,59 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Popup>
                     </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="syncfusion:TokenItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="syncfusion:TokenItem">
+                    <Border
+                        x:Name="TokenBorder"
+                        Height="{TemplateBinding Height}"
+                        Margin="4,4,2,4"
+                        Background="{StaticResource MaterialDesignPaper}"
+                        CornerRadius="10">
+                        <Grid x:Name="TokenGrid" Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                x:Name="TokenTextBlock"
+                                Grid.Column="1"
+                                Margin="2,0,2,3"
+                                Padding="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource MaterialDesignBodyLight}"
+                                Text="{TemplateBinding Text}" />
+                            <Button
+                                x:Name="TokenCloseButton"
+                                Grid.Column="2"
+                                Margin="2"
+                                Background="{StaticResource MaterialDesignPaper}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                IsTabStop="False">
+                                <Button.Content>
+                                    <TextBlock
+                                        x:Name="TokenButtonContent"
+                                        VerticalAlignment="Center"
+                                        FontFamily="Segoe MDL2 Assets"
+                                        FontSize="10"
+                                        Foreground="Black"
+                                        Text="&#xE711;" />
+                                </Button.Content>
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="13" />
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -76,13 +76,16 @@
             Background="{StaticResource MaterialDesignPaper}"
             BorderThickness="0"
             CaretBrush="{StaticResource PrimaryHueMidBrush}"
+            Delimiter=" "
             FontSize="{StaticResource FontSize}"
             Foreground="{StaticResource MaterialDesignDarkForeground}"
             HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
             IgnoreCase="True"
+            MultiSelectMode="Delimiter"
             SuggestionMode="Contains"
             Text="{Binding NewTask.Tags}"
             TextHighlightMode="FirstOccurrence"
+            TokensWrapMode="Wrap"
             Watermark="Space separated tags">
             <sf:SfTextBoxExt.AutoCompleteItemTemplate>
                 <DataTemplate>

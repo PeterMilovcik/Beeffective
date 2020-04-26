@@ -18,6 +18,7 @@ namespace Beeffective.Presentation.Main.New
         private List<TaskModel> taskModels;
         private TaskViewModel newTaskViewModel;
         private ObservableCollection<string> goals;
+        private ObservableCollection<string> tags;
 
         [ImportingConstructor]
         public NewViewModel(IRepositoryService repository)
@@ -38,6 +39,18 @@ namespace Beeffective.Presentation.Main.New
             taskModels = await repository.LoadTaskAsync();
             Goals = new ObservableCollection<string>(
                 taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Goal)).Select(t => t.Goal).Distinct());
+            Tags = new ObservableCollection<string>(ParseTags());
+        }
+
+        private IEnumerable<string> ParseTags()
+        {
+            var result = new List<string>();
+            foreach (var taskModel in taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Tags)))
+            {
+                result.AddRange(taskModel.Tags.Trim().Split(" "));
+            }
+
+            return result.Distinct();
         }
 
         public TaskViewModel NewTask
@@ -54,6 +67,12 @@ namespace Beeffective.Presentation.Main.New
         {
             get => goals;
             set => SetProperty(ref goals, value);
+        }
+
+        public ObservableCollection<string> Tags
+        {
+            get => tags;
+            set => SetProperty(ref tags, value);
         }
 
         private void SubscribeTo(TaskViewModel taskViewModel) => 
