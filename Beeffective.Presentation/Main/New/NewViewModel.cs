@@ -101,17 +101,25 @@ namespace Beeffective.Presentation.Main.New
 
         private async Task SaveAsync()
         {
-            var newTaskModel = NewTask.ToModel();
+            IsBusy = true;
+            try
+            { 
+                var newTaskModel = NewTask.ToModel();
 
-            foreach (var taskModel in taskModels)
-            {
-                taskModel.Urgency++;
-                taskModel.Importance++;
-                await repository.UpdateTaskAsync(taskModel);
+                foreach (var taskModel in taskModels)
+                {
+                    taskModel.Urgency++;
+                    taskModel.Importance++;
+                    await repository.UpdateTaskAsync(taskModel);
+                }
+
+                await repository.AddTaskAsync(newTaskModel);
+                await InitializeAsync();
             }
-
-            await repository.AddTaskAsync(newTaskModel);
-            await InitializeAsync();
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

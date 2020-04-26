@@ -19,213 +19,219 @@
             <system:Double x:Key="TextBoxWidth">600</system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Margin="64,64,0,0" HorizontalAlignment="Left">
+    <Grid>
+        <StackPanel Margin="64,64,0,0" HorizontalAlignment="Left">
 
-        <TextBlock
-            VerticalAlignment="Center"
-            FontFamily="{StaticResource MaterialDesignFont}"
-            FontSize="{StaticResource HeaderFontSize}"
-            FontWeight="ExtraBold"
-            Foreground="{StaticResource PrimaryHueMidBrush}"
-            Text="New Task" />
-
-        <sf:SfTextBoxExt
-            Width="{StaticResource TextBoxWidth}"
-            Margin="0,16,16,0"
-            Background="{StaticResource MaterialDesignPaper}"
-            BorderThickness="0"
-            CaretBrush="{StaticResource PrimaryHueMidBrush}"
-            FontSize="{StaticResource FontSize}"
-            Foreground="{StaticResource MaterialDesignDarkForeground}"
-            HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-            Text="{Binding NewTask.Title, UpdateSourceTrigger=PropertyChanged}"
-            Watermark="Title" />
-
-        <sf:SfTextBoxExt
-            Width="{StaticResource TextBoxWidth}"
-            Margin="0,16,16,0"
-            AutoCompleteMode="SuggestAppend"
-            AutoCompleteSource="{Binding Goals}"
-            Background="{StaticResource MaterialDesignPaper}"
-            BorderThickness="0"
-            CaretBrush="{StaticResource PrimaryHueMidBrush}"
-            FontSize="{StaticResource FontSize}"
-            Foreground="{StaticResource MaterialDesignDarkForeground}"
-            HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-            IgnoreCase="True"
-            SuggestionMode="Contains"
-            Text="{Binding NewTask.Goal}"
-            TextHighlightMode="FirstOccurrence"
-            Watermark="Goal">
-            <sf:SfTextBoxExt.AutoCompleteItemTemplate>
-                <DataTemplate>
-                    <TextBlock
-                        Margin="5,2"
-                        Foreground="{StaticResource MaterialDesignDarkForeground}"
-                        Style="{StaticResource MaterialDesignTextBlock}"
-                        Text="{Binding}" />
-                </DataTemplate>
-            </sf:SfTextBoxExt.AutoCompleteItemTemplate>
-        </sf:SfTextBoxExt>
-
-        <sf:SfTextBoxExt
-            Width="{StaticResource TextBoxWidth}"
-            Margin="0,16,16,0"
-            AutoCompleteMode="SuggestAppend"
-            AutoCompleteSource="{Binding Tags}"
-            Background="{StaticResource MaterialDesignPaper}"
-            BorderThickness="0"
-            CaretBrush="{StaticResource PrimaryHueMidBrush}"
-            Delimiter=" "
-            FontSize="{StaticResource FontSize}"
-            Foreground="{StaticResource MaterialDesignDarkForeground}"
-            HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-            IgnoreCase="True"
-            MultiSelectMode="Delimiter"
-            SuggestionMode="Contains"
-            Text="{Binding NewTask.Tags}"
-            TextHighlightMode="FirstOccurrence"
-            TokensWrapMode="Wrap"
-            Watermark="Space separated tags">
-            <sf:SfTextBoxExt.AutoCompleteItemTemplate>
-                <DataTemplate>
-                    <TextBlock
-                        Margin="5,2"
-                        Foreground="{StaticResource MaterialDesignDarkForeground}"
-                        Style="{StaticResource MaterialDesignTextBlock}"
-                        Text="{Binding}" />
-                </DataTemplate>
-            </sf:SfTextBoxExt.AutoCompleteItemTemplate>
-        </sf:SfTextBoxExt>
-
-        <Grid Margin="0,16,16,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <CheckBox
-                x:Name="RepeatCheckBox"
-                Grid.Column="0"
-                Width="80"
-                Margin="0,16,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="Repeat"
-                Cursor="Hand"
+            <TextBlock
+                VerticalAlignment="Center"
                 FontFamily="{StaticResource MaterialDesignFont}"
+                FontSize="{StaticResource HeaderFontSize}"
+                FontWeight="ExtraBold"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
-                Style="{StaticResource MaterialDesignCheckBox}"
-                ToolTip="Repeat" />
+                Text="New Task" />
 
-            <Grid
-                Grid.Column="1"
-                Margin="16,0,0,0"
-                HorizontalAlignment="Stretch"
-                Visibility="{Binding IsChecked, ElementName=RepeatCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <sf:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,16,0"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                Text="{Binding NewTask.Title, UpdateSourceTrigger=PropertyChanged}"
+                Watermark="Title" />
+
+            <sf:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,16,0"
+                AutoCompleteMode="SuggestAppend"
+                AutoCompleteSource="{Binding Goals}"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                IgnoreCase="True"
+                SuggestionMode="Contains"
+                Text="{Binding NewTask.Goal}"
+                TextHighlightMode="FirstOccurrence"
+                Watermark="Goal">
+                <sf:SfTextBoxExt.AutoCompleteItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Margin="5,2"
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            Text="{Binding}" />
+                    </DataTemplate>
+                </sf:SfTextBoxExt.AutoCompleteItemTemplate>
+            </sf:SfTextBoxExt>
+
+            <sf:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,16,0"
+                AutoCompleteMode="SuggestAppend"
+                AutoCompleteSource="{Binding Tags}"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                Delimiter=" "
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                IgnoreCase="True"
+                MultiSelectMode="Delimiter"
+                SuggestionMode="Contains"
+                Text="{Binding NewTask.Tags}"
+                TextHighlightMode="FirstOccurrence"
+                TokensWrapMode="Wrap"
+                Watermark="Space separated tags">
+                <sf:SfTextBoxExt.AutoCompleteItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Margin="5,2"
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            Text="{Binding}" />
+                    </DataTemplate>
+                </sf:SfTextBoxExt.AutoCompleteItemTemplate>
+            </sf:SfTextBoxExt>
+
+            <Grid Margin="0,16,16,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ComboBox
-                    Grid.Column="0"
-                    md:HintAssist.Hint="Every"
-                    FontSize="{StaticResource FontSize}"
-                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                    <ComboBoxItem>
-                        Day
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        Week
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        Month
-                    </ComboBoxItem>
-                    <ComboBoxItem>
-                        Year
-                    </ComboBoxItem>
-                </ComboBox>
 
-                <DatePicker
+                <CheckBox
+                    x:Name="RepeatCheckBox"
+                    Grid.Column="0"
+                    Width="80"
+                    Margin="0,16,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Repeat"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource MaterialDesignFont}"
+                    Foreground="{StaticResource PrimaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    ToolTip="Repeat" />
+
+                <Grid
                     Grid.Column="1"
                     Margin="16,0,0,0"
-                    md:HintAssist.Hint="From Date"
-                    FontSize="{StaticResource FontSize}"
-                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    HorizontalAlignment="Stretch"
+                    Visibility="{Binding IsChecked, ElementName=RepeatCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        Grid.Column="0"
+                        md:HintAssist.Hint="Every"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBoxItem>
+                            Day
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Week
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Month
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Year
+                        </ComboBoxItem>
+                    </ComboBox>
 
-                <md:TimePicker
-                    Grid.Column="2"
+                    <DatePicker
+                        Grid.Column="1"
+                        Margin="16,0,0,0"
+                        md:HintAssist.Hint="From Date"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                    <md:TimePicker
+                        Grid.Column="2"
+                        Margin="16,0,0,0"
+                        md:HintAssist.Hint="From Time"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+
+                </Grid>
+
+            </Grid>
+
+            <Grid Margin="0,16,16,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox
+                    x:Name="DueDateCheckBox"
+                    Grid.Column="0"
+                    Width="80"
+                    Margin="0,16,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Due Date"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource MaterialDesignFont}"
+                    Foreground="{StaticResource PrimaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    ToolTip="Due Date" />
+
+                <Grid
+                    Grid.Column="1"
                     Margin="16,0,0,0"
-                    md:HintAssist.Hint="From Time"
-                    FontSize="{StaticResource FontSize}"
-                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+                    HorizontalAlignment="Stretch"
+                    Visibility="{Binding IsChecked, ElementName=DueDateCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <DatePicker
+                        md:HintAssist.Hint="Date"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                </Grid>
 
             </Grid>
 
-        </Grid>
-
-        <Grid Margin="0,16,16,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <CheckBox
-                x:Name="DueDateCheckBox"
-                Grid.Column="0"
-                Width="80"
-                Margin="0,16,0,0"
-                HorizontalAlignment="Left"
+            <TextBox
+                Height="130"
+                Margin="0,32,16,0"
                 VerticalAlignment="Top"
-                Content="Due Date"
-                Cursor="Hand"
+                md:HintAssist.Hint="Description"
+                AcceptsReturn="True"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
+                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+
+            <Button
+                Margin="0,32,16,0"
+                Padding="0"
+                Command="{Binding SaveCommand}"
+                Content="SAVE"
                 FontFamily="{StaticResource MaterialDesignFont}"
-                Foreground="{StaticResource PrimaryHueMidBrush}"
-                Style="{StaticResource MaterialDesignCheckBox}"
-                ToolTip="Due Date" />
+                FontSize="{StaticResource FontSize}"
+                Style="{StaticResource MaterialDesignRaisedButton}" />
 
-            <Grid
-                Grid.Column="1"
-                Margin="16,0,0,0"
-                HorizontalAlignment="Stretch"
-                Visibility="{Binding IsChecked, ElementName=DueDateCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-                <DatePicker
-                    md:HintAssist.Hint="Date"
-                    FontSize="{StaticResource FontSize}"
-                    Foreground="{StaticResource MaterialDesignDarkForeground}"
-                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-
-            </Grid>
-
-        </Grid>
-
-        <TextBox
-            Height="130"
-            Margin="0,32,16,0"
-            VerticalAlignment="Top"
-            md:HintAssist.Hint="Description"
-            AcceptsReturn="True"
-            FontSize="{StaticResource FontSize}"
-            Foreground="{StaticResource MaterialDesignDarkForeground}"
-            IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
-            Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
-            TextWrapping="Wrap"
-            VerticalScrollBarVisibility="Auto" />
-
-        <Button
-            Margin="0,32,16,0"
-            Padding="0"
-            Command="{Binding SaveCommand}"
-            Content="SAVE"
-            FontFamily="{StaticResource MaterialDesignFont}"
-            FontSize="{StaticResource FontSize}"
-            Style="{StaticResource MaterialDesignRaisedButton}" />
-
-    </StackPanel>
-
+        </StackPanel>
+        <!--  simplest form  -->
+        <md:Snackbar
+            x:Name="NewTaskSavedSnackBar"
+            IsActive="{Binding IsBusy}"
+            Message="New task is saved." />
+    </Grid>
 </UserControl>

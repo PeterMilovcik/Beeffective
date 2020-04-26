@@ -13,6 +13,7 @@
     xmlns:new="clr-namespace:Beeffective.Presentation.Main.New"
     xmlns:priority="clr-namespace:Beeffective.Presentation.Main.Priority"
     xmlns:settings="clr-namespace:Beeffective.Presentation.Main.Settings"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:tags="clr-namespace:Beeffective.Presentation.Main.Tags"
     Title="Beeffective"
     Width="800"
@@ -96,22 +97,18 @@
                 Margin="16"
                 Background="{StaticResource MaterialDesignPaper}"
                 Opacity="0.5" />
+
             <ContentControl
                 Grid.Column="1"
                 Margin="16"
                 Content="{Binding Content}" />
-            <Grid
+
+            <sf:SfBusyIndicator
                 Grid.Column="1"
-                Margin="16"
-                Background="{StaticResource MaterialDesignPaper}"
-                Opacity="0.5"
-                Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource PrimaryHueMidBrush}"
-                    Text="Loading..." />
-            </Grid>
+                AnimationType="DualRing"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Header="Loading..."
+                IsBusy="{Binding IsBusy}" />
         </Grid>
     </materialDesign:DialogHost>
 </Window>

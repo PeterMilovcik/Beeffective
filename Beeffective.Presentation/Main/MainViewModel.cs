@@ -34,10 +34,10 @@ namespace Beeffective.Presentation.Main
 
         private async Task ChangeContentAsync(ViewModel viewModel)
         {
+            IsBusy = true;
             Content = viewModel;
             try
             {
-                IsBusy = true;
                 await Content.InitializeAsync();
             }
             finally
