@@ -29,5 +29,12 @@ namespace Beeffective.Data
             context.Update(taskEntity);
             await context.SaveChangesAsync();
         }
+
+        public async Task RemoveTaskAsync(TaskEntity taskEntity)
+        {
+            await using DataContext context = new DataContext();
+            context.Remove(taskEntity);
+            await context.SaveChangesAsync();
+        }
     }
 }

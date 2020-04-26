@@ -9,5 +9,6 @@ namespace Beeffective.Services.Repository
         public Task<List<TaskModel>> LoadTaskAsync();
         Task<TaskModel> AddTaskAsync(TaskModel newTaskModel);
         Task UpdateTaskAsync(TaskModel taskModel);
+        Task RemoveTaskAsync(TaskModel taskModel);
     }
 }

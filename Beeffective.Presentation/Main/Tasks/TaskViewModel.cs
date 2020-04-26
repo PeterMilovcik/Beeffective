@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Beeffective.Presentation.Common;
 
 namespace Beeffective.Presentation.Main.Tasks
@@ -8,6 +9,11 @@ namespace Beeffective.Presentation.Main.Tasks
         private string title;
         private int urgency;
         private int importance;
+
+        public TaskViewModel()
+        {
+            RemoveCommand = new DelegateCommand(o => OnRemoving());
+        }
 
         public int Id { get; set; }
 
@@ -25,7 +31,11 @@ namespace Beeffective.Presentation.Main.Tasks
             get => urgency;
             set
             {
-                if (SetProperty(ref urgency, value)) IsChanged = true;
+                if (SetProperty(ref urgency, value))
+                {
+                    IsChanged = true;
+                    OnPropertyChanged(nameof(Priority));
+                }
             }
         }
 
@@ -34,10 +44,21 @@ namespace Beeffective.Presentation.Main.Tasks
             get => importance;
             set
             {
-                if (SetProperty(ref importance, value)) IsChanged = true;
+                if (SetProperty(ref importance, value))
+                {
+                    IsChanged = true;
+                    OnPropertyChanged(nameof(Priority));
+                }
             }
         }
 
         public double Priority => Math.Sqrt(Math.Pow(Urgency, 2) + Math.Pow(Importance, 2));
+
+        public ICommand RemoveCommand { get; }
+
+        public event EventHandler Removing;
+
+        protected virtual void OnRemoving() => 
+            Removing?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -9,5 +9,6 @@ namespace Beeffective.Data
         Task<List<TaskEntity>> LoadTaskAsync();
         Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity);
         Task UpdateTaskAsync(TaskEntity taskEntity);
+        Task RemoveTaskAsync(TaskEntity taskEntity);
     }
 }

@@ -26,5 +26,8 @@ namespace Beeffective.Services.Repository
 
         public async Task UpdateTaskAsync(TaskModel taskModel) => 
             await repository.UpdateTaskAsync(taskModel.ToEntity());
+
+        public async Task RemoveTaskAsync(TaskModel taskModel) => 
+            await repository.RemoveTaskAsync(taskModel.ToEntity());
     }
 }
