@@ -10,6 +10,7 @@ namespace Beeffective.Presentation.Main.Tasks
         private int urgency;
         private int importance;
         private string goal;
+        private string tags;
 
         public TaskViewModel()
         {
@@ -61,6 +62,15 @@ namespace Beeffective.Presentation.Main.Tasks
             set
             {
                 if (SetProperty(ref goal, value)) IsChanged = true;
+            }
+        }
+
+        public string Tags
+        {
+            get => tags;
+            set
+            {
+                if (SetProperty(ref tags, value)) IsChanged = true;
             }
         }
 

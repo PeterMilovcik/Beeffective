@@ -11,7 +11,8 @@ namespace Beeffective.Presentation.Main.Tasks
                 Title = viewModel.Title,
                 Urgency = viewModel.Urgency,
                 Importance = viewModel.Importance,
-                Goal = viewModel.Goal
+                Goal = viewModel.Goal,
+                Tags = viewModel.Tags
             };
 
         public static TaskViewModel ToViewModel(this TaskModel model) =>
@@ -22,6 +23,7 @@ namespace Beeffective.Presentation.Main.Tasks
                 Urgency = model.Urgency,
                 Importance = model.Importance,
                 Goal = model.Goal,
+                Tags = model.Tags,
                 IsChanged = false
             };
     }
