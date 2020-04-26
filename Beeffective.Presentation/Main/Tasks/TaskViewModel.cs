@@ -9,6 +9,7 @@ namespace Beeffective.Presentation.Main.Tasks
         private string title;
         private int urgency;
         private int importance;
+        private string goal;
 
         public TaskViewModel()
         {
@@ -53,6 +54,15 @@ namespace Beeffective.Presentation.Main.Tasks
         }
 
         public double Priority => Math.Sqrt(Math.Pow(Urgency, 2) + Math.Pow(Importance, 2));
+
+        public string Goal
+        {
+            get => goal;
+            set
+            {
+                if (SetProperty(ref goal, value)) IsChanged = true;
+            }
+        }
 
         public ICommand RemoveCommand { get; }
 

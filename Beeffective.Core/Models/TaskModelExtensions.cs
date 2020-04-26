@@ -10,7 +10,8 @@ namespace Beeffective.Core.Models
                 Id = model.Id,
                 Title = model.Title,
                 Urgency = model.Urgency,
-                Importance = model.Importance
+                Importance = model.Importance,
+                Goal = model.Goal,
             };
 
         public static TaskModel ToModel(this TaskEntity entity) =>
@@ -19,7 +20,8 @@ namespace Beeffective.Core.Models
                 Id = entity.Id,
                 Title = entity.Title,
                 Urgency = entity.Urgency,
-                Importance = entity.Importance
+                Importance = entity.Importance,
+                Goal = entity.Goal
             };
     }
 }

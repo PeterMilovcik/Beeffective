@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Beeffective.Presentation.Main.New
         private readonly IRepositoryService repository;
         private List<TaskModel> taskModels;
         private TaskViewModel newTaskViewModel;
+        private ObservableCollection<string> goals;
 
         [ImportingConstructor]
         public NewViewModel(IRepositoryService repository)
@@ -31,7 +33,12 @@ namespace Beeffective.Presentation.Main.New
             NewTask = new TaskViewModel();
         }
 
-        private async Task LoadTaskAsync() => taskModels = await repository.LoadTaskAsync();
+        private async Task LoadTaskAsync()
+        {
+            taskModels = await repository.LoadTaskAsync();
+            Goals = new ObservableCollection<string>(
+                taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Goal)).Select(t => t.Goal));
+        }
 
         public TaskViewModel NewTask
         {
@@ -41,6 +48,12 @@ namespace Beeffective.Presentation.Main.New
                 if (newTaskViewModel != null) UnsubscribeFrom(newTaskViewModel);
                 if (SetProperty(ref newTaskViewModel, value)) SubscribeTo(newTaskViewModel);
             }
+        }
+
+        public ObservableCollection<string> Goals
+        {
+            get => goals;
+            set => SetProperty(ref goals, value);
         }
 
         private void SubscribeTo(TaskViewModel taskViewModel) => 
@@ -69,7 +82,7 @@ namespace Beeffective.Presentation.Main.New
 
         private async Task SaveAsync()
         {
-            var newTaskModel = newTaskViewModel.ToModel();
+            var newTaskModel = NewTask.ToModel();
 
             foreach (var taskModel in taskModels)
             {
@@ -79,7 +92,7 @@ namespace Beeffective.Presentation.Main.New
             }
 
             await repository.AddTaskAsync(newTaskModel);
-            await LoadTaskAsync();
+            await InitializeAsync();
         }
     }
 }

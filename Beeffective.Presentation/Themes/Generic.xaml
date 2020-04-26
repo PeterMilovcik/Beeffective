@@ -24,9 +24,35 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="8,8,8,0" />
     </Style>
+
     <Style TargetType="materialDesign:PackIcon">
         <Setter Property="Width" Value="28" />
         <Setter Property="Height" Value="28" />
+    </Style>
+
+    <Style x:Key="AutoCompleteTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Grid x:Name="root">
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            AllowsTransparency="true"
+                            IsOpen="False"
+                            Placement="Bottom"
+                            PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}">
+                            <ListBox
+                                x:Name="PART_ItemList"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>
