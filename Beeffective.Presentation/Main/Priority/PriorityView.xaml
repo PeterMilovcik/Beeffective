@@ -13,6 +13,10 @@
         <ResourceDictionary Source="../../Themes/Generic.xaml" />
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
@@ -22,200 +26,228 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock
+            Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="5"
             Margin="4"
             HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            VerticalAlignment="Bottom"
             Foreground="{StaticResource MaterialDesignBodyLight}"
             Text="HINT: Reorder Importance and Urgency in order to auto-sort the Priority." />
 
-        <StackPanel Grid.Column="0" Margin="16,32,0,16">
-            <TextBlock
-                Margin="32"
-                FontSize="{StaticResource HeaderFontSize}"
-                Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="Importance"
-                TextAlignment="Center" />
-            <ListView
-                x:Name="ImportanceListView"
-                AllowDrop="True"
-                DragEnter="ImportanceListView_OnDragEnter"
-                Drop="ImportanceListView_OnDrop"
-                ItemsSource="{Binding ImportanceCollection}"
-                PreviewMouseLeftButtonDown="ListView_OnPreviewMouseLeftButtonDown"
-                PreviewMouseMove="ListView_OnPreviewMouseMove">
-                <ListView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon
-                                Grid.Column="0"
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,8,0"
-                                Kind="DragVertical"
-                                Opacity="0.5" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,16,0,0"
+            FontSize="{StaticResource HeaderFontSize}"
+            Foreground="{StaticResource PrimaryHueMidBrush}"
+            Text="Importance"
+            TextAlignment="Center" />
+        <ListView
+            x:Name="ImportanceListView"
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="16,0,0,16"
+            AllowDrop="True"
+            DragEnter="ImportanceListView_OnDragEnter"
+            Drop="ImportanceListView_OnDrop"
+            ItemsSource="{Binding ImportanceCollection}"
+            PreviewMouseLeftButtonDown="ListView_OnPreviewMouseLeftButtonDown"
+            PreviewMouseMove="ListView_OnPreviewMouseMove">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon
+                            Grid.Column="0"
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Kind="DragVertical"
+                            Opacity="0.5" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
                             <TextBlock
-                                Grid.Column="1"
                                 VerticalAlignment="Center"
-                                Text="{Binding Title}" />
-                            <Button
-                                Grid.Column="2"
-                                Width="20"
-                                Height="20"
-                                Padding="0"
-                                Command="{Binding RemoveCommand}"
-                                Opacity="0.75"
-                                Style="{StaticResource MaterialDesignFlatButton}">
-                                <materialDesign:PackIcon
-                                    Width="18"
-                                    Height="18"
-                                    Kind="Close" />
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                                Foreground="{StaticResource MaterialDesignBodyLight}"
+                                Text="{Binding Goal}" />
+                        </StackPanel>
+                        <Button
+                            Grid.Column="2"
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Command="{Binding RemoveCommand}"
+                            Opacity="0.75"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="Close" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <materialDesign:PackIcon
+            Grid.Row="0"
             Grid.Column="1"
-            Margin="0,80"
+            Margin="0,40"
             VerticalAlignment="Top"
             Foreground="{StaticResource PrimaryHueMidBrush}"
             Kind="ArrowRight" />
 
-        <StackPanel Grid.Column="2" Margin="0,32,0,16">
-            <TextBlock
-                Margin="32"
-                FontSize="{StaticResource HeaderFontSize}"
-                Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="Priority"
-                TextAlignment="Center" />
-            <ListView
-                x:Name="PriorityListView"
-                AllowDrop="True"
-                ItemsSource="{Binding PriorityCollection}">
-                <ListView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon
-                                Grid.Column="0"
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,8,0"
-                                Kind="CircleMedium"
-                                Opacity="0.5" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="0,16,0,0"
+            FontSize="{StaticResource HeaderFontSize}"
+            Foreground="{StaticResource PrimaryHueMidBrush}"
+            Text="Priority"
+            TextAlignment="Center" />
+        <ListView
+            x:Name="PriorityListView"
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="0,0,0,16"
+            AllowDrop="True"
+            ItemsSource="{Binding PriorityCollection}">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon
+                            Grid.Column="0"
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Kind="CircleMedium"
+                            Opacity="0.5" />
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
                             <TextBlock
-                                Grid.Column="1"
                                 VerticalAlignment="Center"
-                                Text="{Binding Title}" />
-                            <Button
-                                Grid.Column="2"
-                                Width="20"
-                                Height="20"
-                                Padding="0"
-                                Command="{Binding RemoveCommand}"
-                                Opacity="0.75"
-                                Style="{StaticResource MaterialDesignFlatButton}">
-                                <materialDesign:PackIcon
-                                    Width="18"
-                                    Height="18"
-                                    Kind="Close" />
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                                Foreground="{StaticResource MaterialDesignBodyLight}"
+                                Text="{Binding Goal}" />
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="2"
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Command="{Binding RemoveCommand}"
+                            Opacity="0.75"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="Close" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <materialDesign:PackIcon
+            Grid.Row="0"
             Grid.Column="3"
-            Margin="0,80"
+            Margin="0,40"
             VerticalAlignment="Top"
             Foreground="{StaticResource PrimaryHueMidBrush}"
             Kind="ArrowLeft" />
 
-        <StackPanel Grid.Column="4" Margin="0,32,16,16">
-            <TextBlock
-                Margin="32"
-                FontSize="{StaticResource HeaderFontSize}"
-                Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="Urgency"
-                TextAlignment="Center" />
-            <ListView
-                x:Name="UrgencyListView"
-                AllowDrop="True"
-                DragEnter="UrgencyListView_OnDragEnter"
-                Drop="UrgencyListView_OnDrop"
-                ItemsSource="{Binding UrgencyCollection}"
-                PreviewMouseLeftButtonDown="ListView_OnPreviewMouseLeftButtonDown"
-                PreviewMouseMove="ListView_OnPreviewMouseMove">
-                <ListView.ItemContainerStyle>
-                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon
-                                Grid.Column="0"
-                                Width="20"
-                                Height="20"
-                                Margin="0,0,8,0"
-                                Kind="DragVertical"
-                                Opacity="0.5" />
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="4"
+            Margin="0,16,0,0"
+            FontSize="{StaticResource HeaderFontSize}"
+            Foreground="{StaticResource PrimaryHueMidBrush}"
+            Text="Urgency"
+            TextAlignment="Center" />
+        <ListView
+            x:Name="UrgencyListView"
+            Grid.Row="1"
+            Grid.Column="4"
+            Margin="0,0,16,16"
+            AllowDrop="True"
+            DragEnter="UrgencyListView_OnDragEnter"
+            Drop="UrgencyListView_OnDrop"
+            ItemsSource="{Binding UrgencyCollection}"
+            PreviewMouseLeftButtonDown="ListView_OnPreviewMouseLeftButtonDown"
+            PreviewMouseMove="ListView_OnPreviewMouseMove">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon
+                            Grid.Column="0"
+                            Width="20"
+                            Height="20"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Kind="DragVertical"
+                            Opacity="0.5" />
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
                             <TextBlock
-                                Grid.Column="1"
                                 VerticalAlignment="Center"
-                                Text="{Binding Title}" />
-                            <Button
-                                Grid.Column="2"
-                                Width="20"
-                                Height="20"
-                                Padding="0"
-                                Command="{Binding RemoveCommand}"
-                                Opacity="0.75"
-                                Style="{StaticResource MaterialDesignFlatButton}">
-                                <materialDesign:PackIcon
-                                    Width="18"
-                                    Height="18"
-                                    Kind="Close" />
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                                Foreground="{StaticResource MaterialDesignBodyLight}"
+                                Text="{Binding Goal}" />
+                        </StackPanel>
+
+                        <Button
+                            Grid.Column="2"
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Command="{Binding RemoveCommand}"
+                            Opacity="0.75"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <materialDesign:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="Close" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
     </Grid>
 </UserControl>
