@@ -9,6 +9,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="3.1.0" />
     <PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="18.1.0.45" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="18.1.0.45" />
+    <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="18.1.0.46" />
     <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
   </ItemGroup>
 

@@ -5,26 +5,33 @@ namespace Beeffective.Presentation.Common
 {
     public class DelegateCommand : ICommand
     {
-        private readonly Func<object, bool> canExecute;
-        private readonly Action<object> action;
+        private readonly Func<object, bool> myCanExecute;
+        private readonly Action<object> myExecute;
 
-        public DelegateCommand(Action<object> action)
-            : this(obj => true, action)
+        public DelegateCommand(Action<object> execute)
+            : this(o => true, execute)
         {
         }
 
-        public DelegateCommand(Func<object, bool> canExecute, Action<object> action)
+        public DelegateCommand(Func<object, bool> canExecute, Action<object> execute)
         {
-            this.canExecute = canExecute;
-            this.action = action;
+            myCanExecute = canExecute;
+            myExecute = execute;
+        }
+
+        public bool CanExecute(object parameter) => myCanExecute(parameter);
+
+        public void Execute(object parameter)
+        {
+            if (myCanExecute(parameter) == false)
+            {
+                throw new InvalidOperationException();
+            }
+            myExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged;
 
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-
-        public bool CanExecute(object parameter) => canExecute(parameter);
-
-        public void Execute(object parameter) => action(parameter);
     }
 }

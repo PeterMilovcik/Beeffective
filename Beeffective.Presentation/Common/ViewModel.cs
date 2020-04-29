@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace Beeffective.Presentation.Common
 {
@@ -6,7 +7,7 @@ namespace Beeffective.Presentation.Common
     {
         private bool isChanged;
         private bool isBusy;
-
+        
         public bool IsChanged
         {
             get => isChanged;

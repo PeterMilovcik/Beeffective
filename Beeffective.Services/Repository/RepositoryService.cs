@@ -18,8 +18,11 @@ namespace Beeffective.Services.Repository
             this.repository = repository;
         }
 
-        public async Task<List<TaskModel>> LoadTaskAsync() => 
-            (await repository.LoadTaskAsync()).Select(e => e.ToModel()).ToList();
+        public async Task<List<TaskModel>> LoadTaskAsync()
+        {
+            var taskEntities = await repository.LoadTaskAsync();
+            return taskEntities.Select(e => e.ToModel()).ToList();
+        }
 
         public async Task<TaskModel> AddTaskAsync(TaskModel newTaskModel) => 
             (await repository.AddTaskAsync(newTaskModel.ToEntity())).ToModel();

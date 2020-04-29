@@ -51,13 +51,13 @@ namespace Beeffective.Presentation.Main.Priority
         public ObservableCollection<TaskViewModel> PriorityCollection
         {
             get => priorityCollection;
-            private set => SetProperty(ref priorityCollection, value);
+            set => SetProperty(ref priorityCollection, value);
         }
 
         public ObservableCollection<TaskViewModel> UrgencyCollection
         {
             get => urgencyCollection;
-            private set => SetProperty(ref urgencyCollection, value);
+            set => SetProperty(ref urgencyCollection, value);
         }
 
         public ObservableCollection<TaskViewModel> ImportanceCollection

@@ -9,10 +9,18 @@ namespace Beeffective.Data
     [Export(typeof(IRepository))]
     public class Repository : IRepository
     {
+        private readonly DataContext dataContext;
+
+        [ImportingConstructor]
+        public Repository(DataContext dataContext)
+        {
+            this.dataContext = dataContext;
+        }
+
         public async Task<List<TaskEntity>> LoadTaskAsync()
         {
-            await using DataContext context = new DataContext();
-            return await context.Tasks.ToListAsync();
+            await Task.Delay(500); // without this next lines still blocks the UI :-(
+            return await dataContext.Tasks.ToListAsync();
         }
 
         public async Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity)

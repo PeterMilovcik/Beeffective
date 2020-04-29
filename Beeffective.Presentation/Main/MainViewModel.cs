@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
@@ -35,9 +36,9 @@ namespace Beeffective.Presentation.Main
         private async Task ChangeContentAsync(ViewModel viewModel)
         {
             IsBusy = true;
-            Content = viewModel;
             try
             {
+                Content = viewModel;
                 await Content.InitializeAsync();
             }
             finally
