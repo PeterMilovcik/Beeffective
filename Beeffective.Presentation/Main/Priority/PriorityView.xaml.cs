@@ -88,9 +88,9 @@ namespace Beeffective.Presentation.Main.Priority
                     if (DataContext is PriorityViewModel viewModel)
                     {
                         if (isImportance)
-                            await viewModel.SwapImportanceAsync(dragged, dropped);
+                            await viewModel.InsertImportanceBefore(dragged, dropped);
                         else
-                            await viewModel.SwapUrgencyAsync(dragged, dropped);
+                            await viewModel.InsertUrgencyBefore(dragged, dropped);
                     }
                 }
             }
