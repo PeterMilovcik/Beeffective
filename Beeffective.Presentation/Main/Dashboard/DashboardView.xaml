@@ -28,18 +28,18 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock
+        <!--<TextBlock
             Grid.Row="0"
             Grid.Column="0"
             Margin="16,8,0,8"
             FontSize="{StaticResource HeaderFontSize}"
             Foreground="{StaticResource PrimaryHueMidBrush}"
             Text="Tasks"
-            TextAlignment="Center" />
+            TextAlignment="Center" />-->
 
         <ListView
             Grid.Row="1"
@@ -93,11 +93,9 @@
         <StackPanel
             Grid.Row="1"
             Grid.Column="1"
-            Margin="32,16,0,0"
-            HorizontalAlignment="Left">
+            Margin="32,16,16,0">
 
             <syncfusion:SfTextBoxExt
-                Width="{StaticResource TextBoxWidth}"
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"
@@ -108,7 +106,6 @@
                 Watermark="Title" />
 
             <syncfusion:SfTextBoxExt
-                Width="{StaticResource TextBoxWidth}"
                 Margin="0,16,0,0"
                 AutoCompleteMode="SuggestAppend"
                 AutoCompleteSource="{Binding Goals}"
@@ -135,7 +132,6 @@
             </syncfusion:SfTextBoxExt>
 
             <syncfusion:SfTextBoxExt
-                Width="{StaticResource TextBoxWidth}"
                 Margin="0,16,0,0"
                 AutoCompleteMode="SuggestAppend"
                 AutoCompleteSource="{Binding Tags}"
