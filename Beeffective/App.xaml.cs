@@ -21,7 +21,7 @@ namespace Beeffective
             base.OnStartup(e);
             var mainViewModel = Container.GetExportedValue<MainViewModel>();
             mainViewModel.Show();
-            await mainViewModel.Content.InitializeAsync();
+            await mainViewModel.ChangeContentAsync(mainViewModel.Dashboard);
         }
     }
 }

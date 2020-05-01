@@ -4,7 +4,7 @@ using Beeffective.Presentation.Common;
 namespace Beeffective.Presentation.Main.Calendar
 {
     [Export]
-    public class CalendarViewModel : ViewModel
+    public class CalendarViewModel : ContentViewModel
     {
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
@@ -13,7 +12,7 @@ using Beeffective.Services.Repository;
 namespace Beeffective.Presentation.Main.New
 {
     [Export]
-    public class NewViewModel : ViewModel
+    public class NewViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
         private List<TaskModel> taskModels;

@@ -13,7 +13,7 @@ using MaterialDesignThemes.Wpf;
 namespace Beeffective.Presentation.Main.Dashboard
 {
     [Export]
-    public class DashboardViewModel : ViewModel
+    public class DashboardViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
         private List<TaskViewModel> taskViewModels;

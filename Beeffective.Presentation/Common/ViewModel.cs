@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-
-namespace Beeffective.Presentation.Common
+﻿namespace Beeffective.Presentation.Common
 {
     public class ViewModel : Observable
     {
@@ -19,7 +16,5 @@ namespace Beeffective.Presentation.Common
             get => isBusy;
             set => SetProperty(ref isBusy, value);
         }
-
-        public virtual Task InitializeAsync() => Task.CompletedTask;
     }
 }

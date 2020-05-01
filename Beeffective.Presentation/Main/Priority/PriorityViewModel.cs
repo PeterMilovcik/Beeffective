@@ -13,7 +13,7 @@ using MaterialDesignThemes.Wpf;
 namespace Beeffective.Presentation.Main.Priority
 {
     [Export]
-    public class PriorityViewModel : ViewModel
+    public class PriorityViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
         private ObservableCollection<TaskViewModel> priorityCollection;

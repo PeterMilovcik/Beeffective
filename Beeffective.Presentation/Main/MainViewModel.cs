@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
@@ -17,7 +18,8 @@ namespace Beeffective.Presentation.Main
     public class MainViewModel : ViewModel
     {
         private readonly IMainView view;
-        private ViewModel content;
+        private ContentViewModel content;
+        private List<ContentViewModel> contentViewModels;
 
         [ImportingConstructor]
         public MainViewModel(IMainView view)
@@ -33,13 +35,16 @@ namespace Beeffective.Presentation.Main
             SettingsCommand = new DelegateCommand(async o => await ChangeContentAsync(Settings));
         }
 
-        private async Task ChangeContentAsync(ViewModel viewModel)
+        public async Task ChangeContentAsync(ContentViewModel viewModel)
         {
             IsBusy = true;
             try
             {
+                contentViewModels.ForEach(vm => vm.IsSelected = false);
                 Content = viewModel;
+                Content.IsSelected = true;
                 await Content.InitializeAsync();
+
             }
             finally
             {
@@ -50,7 +55,7 @@ namespace Beeffective.Presentation.Main
         public void Show()
         {
             view.Show();
-            Content = Dashboard;
+            contentViewModels = new List<ContentViewModel> {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
         }
 
         [Import]
@@ -88,7 +93,7 @@ namespace Beeffective.Presentation.Main
 
         public ICommand SettingsCommand { get; }
 
-        public ViewModel Content
+        public ContentViewModel Content
         {
             get => content;
             set => SetProperty(ref content, value);

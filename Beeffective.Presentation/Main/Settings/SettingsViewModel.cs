@@ -4,7 +4,7 @@ using Beeffective.Presentation.Common;
 namespace Beeffective.Presentation.Main.Settings
 {
     [Export]
-    public class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ContentViewModel
     {   
     }
 }
