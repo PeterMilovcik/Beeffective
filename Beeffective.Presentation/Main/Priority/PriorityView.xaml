@@ -5,8 +5,8 @@
     xmlns:c="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Beeffective.Presentation.Main.Priority"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -27,15 +27,24 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock
+        <StackPanel
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="5"
-            Margin="4"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
-            Foreground="{StaticResource MaterialDesignBodyLight}"
-            Text="HINT: Reorder Importance and Urgency in order to auto-sort the Priority." />
+            Orientation="Horizontal">
+            <md:PackIcon
+                Width="16"
+                Height="16"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Kind="Idea" />
+            <TextBlock
+                Margin="4"
+                Foreground="{StaticResource MaterialDesignBodyLight}"
+                Text="Reorder Importance and Urgency to auto-sort the Priority." />
+        </StackPanel>
 
         <TextBlock
             Grid.Row="0"
@@ -70,7 +79,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon
+                        <md:PackIcon
                             Grid.Column="0"
                             Width="20"
                             Height="20"
@@ -93,7 +102,7 @@
                             Command="{Binding RemoveCommand}"
                             Opacity="0.75"
                             Style="{StaticResource MaterialDesignFlatButton}">
-                            <materialDesign:PackIcon
+                            <md:PackIcon
                                 Width="18"
                                 Height="18"
                                 Kind="Close" />
@@ -103,7 +112,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <materialDesign:PackIcon
+        <md:PackIcon
             Grid.Row="0"
             Grid.Column="1"
             Margin="0,40"
@@ -140,7 +149,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon
+                        <md:PackIcon
                             Grid.Column="0"
                             Width="20"
                             Height="20"
@@ -165,7 +174,7 @@
                             Command="{Binding RemoveCommand}"
                             Opacity="0.75"
                             Style="{StaticResource MaterialDesignFlatButton}">
-                            <materialDesign:PackIcon
+                            <md:PackIcon
                                 Width="18"
                                 Height="18"
                                 Kind="Close" />
@@ -175,7 +184,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <materialDesign:PackIcon
+        <md:PackIcon
             Grid.Row="0"
             Grid.Column="3"
             Margin="0,40"
@@ -216,7 +225,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <materialDesign:PackIcon
+                        <md:PackIcon
                             Grid.Column="0"
                             Width="20"
                             Height="20"
@@ -241,7 +250,7 @@
                             Command="{Binding RemoveCommand}"
                             Opacity="0.75"
                             Style="{StaticResource MaterialDesignFlatButton}">
-                            <materialDesign:PackIcon
+                            <md:PackIcon
                                 Width="18"
                                 Height="18"
                                 Kind="Close" />
