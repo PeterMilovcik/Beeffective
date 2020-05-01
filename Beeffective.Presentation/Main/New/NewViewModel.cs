@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
@@ -30,8 +31,16 @@ namespace Beeffective.Presentation.Main.New
 
         public override async Task InitializeAsync()
         {
-            await LoadTaskAsync();
-            NewTask = new TaskViewModel();
+            try
+            {
+                IsBusy = true;
+                await LoadTaskAsync();
+                NewTask = new TaskViewModel();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private async Task LoadTaskAsync()
@@ -101,9 +110,9 @@ namespace Beeffective.Presentation.Main.New
 
         private async Task SaveAsync()
         {
-            IsBusy = true;
             try
-            { 
+            {
+                IsBusy = true;
                 var newTaskModel = NewTask.ToModel();
 
                 foreach (var taskModel in taskModels)

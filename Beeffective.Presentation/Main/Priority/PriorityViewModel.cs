@@ -31,6 +31,9 @@ namespace Beeffective.Presentation.Main.Priority
         {
             var taskModels = await repository.LoadTaskAsync();
             tasks = taskModels.Select(m => m.ToViewModel()).ToList();
+
+            
+
             SubscribeTo(tasks);
             Update(tasks);
         }
@@ -94,10 +97,18 @@ namespace Beeffective.Presentation.Main.Priority
                 var result = await DialogHost.Show(confirmationDialog);
                 if (result is true)
                 {
-                    await repository.RemoveTaskAsync(taskViewModel.ToModel());
-                    UnsubscribeFrom(taskViewModel);
-                    tasks.Remove(taskViewModel);
-                    Update(tasks);
+                    try
+                    {
+                        IsBusy = true;
+                        await repository.RemoveTaskAsync(taskViewModel.ToModel());
+                        UnsubscribeFrom(taskViewModel);
+                        tasks.Remove(taskViewModel);
+                        Update(tasks);
+                    }
+                    finally
+                    {
+                        IsBusy = false;
+                    }
                 }
             }
         }
