@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -95,7 +95,15 @@
             Grid.Column="1"
             Margin="32,16,16,0">
 
-            <syncfusion:SfTextBoxExt
+            <TextBlock
+                Margin="0,8,0,16"
+                FontSize="30"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Text="{Binding SelectedTask.Title}"
+                TextAlignment="Justify"
+                TextWrapping="Wrap" />
+
+            <sf:SfTextBoxExt
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"
@@ -105,7 +113,7 @@
                 Text="{Binding SelectedTask.Title, UpdateSourceTrigger=PropertyChanged}"
                 Watermark="Title" />
 
-            <syncfusion:SfTextBoxExt
+            <sf:SfTextBoxExt
                 Margin="0,16,0,0"
                 AutoCompleteMode="SuggestAppend"
                 AutoCompleteSource="{Binding Goals}"
@@ -120,7 +128,7 @@
                 Text="{Binding SelectedTask.Goal}"
                 TextHighlightMode="FirstOccurrence"
                 Watermark="Goal">
-                <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                <sf:SfTextBoxExt.AutoCompleteItemTemplate>
                     <DataTemplate>
                         <TextBlock
                             Margin="5,2"
@@ -128,10 +136,10 @@
                             Style="{StaticResource MaterialDesignTextBlock}"
                             Text="{Binding}" />
                     </DataTemplate>
-                </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
-            </syncfusion:SfTextBoxExt>
+                </sf:SfTextBoxExt.AutoCompleteItemTemplate>
+            </sf:SfTextBoxExt>
 
-            <syncfusion:SfTextBoxExt
+            <sf:SfTextBoxExt
                 Margin="0,16,0,0"
                 AutoCompleteMode="SuggestAppend"
                 AutoCompleteSource="{Binding Tags}"
@@ -149,7 +157,7 @@
                 TextHighlightMode="FirstOccurrence"
                 TokensWrapMode="Wrap"
                 Watermark="Space separated tags">
-                <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                <sf:SfTextBoxExt.AutoCompleteItemTemplate>
                     <DataTemplate>
                         <TextBlock
                             Margin="5,2"
@@ -157,8 +165,8 @@
                             Style="{StaticResource MaterialDesignTextBlock}"
                             Text="{Binding}" />
                     </DataTemplate>
-                </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
-            </syncfusion:SfTextBoxExt>
+                </sf:SfTextBoxExt.AutoCompleteItemTemplate>
+            </sf:SfTextBoxExt>
 
             <Grid Margin="0,16,0,0">
                 <Grid.ColumnDefinitions>
