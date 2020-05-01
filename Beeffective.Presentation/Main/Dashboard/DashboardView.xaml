@@ -2,20 +2,302 @@
     x:Class="Beeffective.Presentation.Main.Dashboard.DashboardView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Themes/Generic.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <system:Double x:Key="FontSize">16</system:Double>
+            <system:Double x:Key="TextBoxWidth">600</system:Double>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Label
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="Dashboard"
-            Foreground="{StaticResource PrimaryHueMidBrush}" />
+    <Grid Margin="16">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="16,8,0,8"
+            FontSize="{StaticResource HeaderFontSize}"
+            Foreground="{StaticResource PrimaryHueMidBrush}"
+            Text="Tasks"
+            TextAlignment="Center" />
+
+        <ListView
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="16,16,0,16"
+            ItemsSource="{Binding Tasks}"
+            SelectedItem="{Binding SelectedTask}">
+            <ListView.ItemContainerStyle>
+                <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <md:PackIcon
+                            Grid.Column="0"
+                            Width="16"
+                            Height="16"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center"
+                            Kind="HexagonOutline"
+                            Opacity="0.5" />
+                        <StackPanel Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                        </StackPanel>
+                        <Button
+                            Grid.Column="2"
+                            Width="20"
+                            Height="20"
+                            Padding="0"
+                            Command="{Binding RemoveCommand}"
+                            Opacity="0.75"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <md:PackIcon
+                                Width="18"
+                                Height="18"
+                                Kind="Close" />
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="32,16,0,0"
+            HorizontalAlignment="Left">
+
+            <syncfusion:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                Text="{Binding SelectedTask.Title, UpdateSourceTrigger=PropertyChanged}"
+                Watermark="Title" />
+
+            <syncfusion:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,0,0"
+                AutoCompleteMode="SuggestAppend"
+                AutoCompleteSource="{Binding Goals}"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                IgnoreCase="True"
+                SuggestionMode="Contains"
+                Text="{Binding SelectedTask.Goal}"
+                TextHighlightMode="FirstOccurrence"
+                Watermark="Goal">
+                <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Margin="5,2"
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            Text="{Binding}" />
+                    </DataTemplate>
+                </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+            </syncfusion:SfTextBoxExt>
+
+            <syncfusion:SfTextBoxExt
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,0,0"
+                AutoCompleteMode="SuggestAppend"
+                AutoCompleteSource="{Binding Tags}"
+                Background="{StaticResource MaterialDesignPaper}"
+                BorderThickness="0"
+                CaretBrush="{StaticResource PrimaryHueMidBrush}"
+                Delimiter=" "
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
+                IgnoreCase="True"
+                MultiSelectMode="Delimiter"
+                SuggestionMode="Contains"
+                Text="{Binding SelectedTask.Tags}"
+                TextHighlightMode="FirstOccurrence"
+                TokensWrapMode="Wrap"
+                Watermark="Space separated tags">
+                <syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Margin="5,2"
+                            Foreground="{StaticResource MaterialDesignDarkForeground}"
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            Text="{Binding}" />
+                    </DataTemplate>
+                </syncfusion:SfTextBoxExt.AutoCompleteItemTemplate>
+            </syncfusion:SfTextBoxExt>
+
+            <Grid Margin="0,16,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox
+                    x:Name="RepeatCheckBox"
+                    Grid.Column="0"
+                    Width="80"
+                    Margin="0,16,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Repeat"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource MaterialDesignFont}"
+                    Foreground="{StaticResource PrimaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    ToolTip="Repeat" />
+
+                <Grid
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Visibility="{Binding IsChecked, ElementName=RepeatCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        Grid.Column="0"
+                        md:HintAssist.Hint="Every"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBoxItem>
+                            Day
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Week
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Month
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Year
+                        </ComboBoxItem>
+                    </ComboBox>
+
+                    <DatePicker
+                        Grid.Column="1"
+                        Margin="16,0,0,0"
+                        md:HintAssist.Hint="From Date"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                    <md:TimePicker
+                        Grid.Column="2"
+                        Margin="16,0,0,0"
+                        md:HintAssist.Hint="From Time"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintTimePicker}" />
+
+                </Grid>
+
+            </Grid>
+
+            <Grid Margin="0,16,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <CheckBox
+                    x:Name="DueDateCheckBox"
+                    Grid.Column="0"
+                    Width="80"
+                    Margin="0,16,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="Due Date"
+                    Cursor="Hand"
+                    FontFamily="{StaticResource MaterialDesignFont}"
+                    Foreground="{StaticResource PrimaryHueMidBrush}"
+                    Style="{StaticResource MaterialDesignCheckBox}"
+                    ToolTip="Due Date" />
+
+                <Grid
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Visibility="{Binding IsChecked, ElementName=DueDateCheckBox, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <DatePicker
+                        md:HintAssist.Hint="Date"
+                        FontSize="{StaticResource FontSize}"
+                        Foreground="{StaticResource MaterialDesignDarkForeground}"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+                </Grid>
+
+            </Grid>
+
+            <TextBox
+                Height="130"
+                Margin="0,32,0,0"
+                VerticalAlignment="Top"
+                md:HintAssist.Hint="Description"
+                AcceptsReturn="True"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedTextFieldTextBoxEnabledComboBox}"
+                Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+
+            <Button
+                Margin="0,32,0,0"
+                Padding="0"
+                Command="{Binding SaveCommand}"
+                Content="SAVE"
+                FontFamily="{StaticResource MaterialDesignFont}"
+                FontSize="{StaticResource FontSize}"
+                Style="{StaticResource MaterialDesignRaisedButton}" />
+
+        </StackPanel>
+
+        <c:BusyIndicator
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
