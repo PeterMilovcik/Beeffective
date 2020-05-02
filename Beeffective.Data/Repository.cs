@@ -16,11 +16,27 @@ namespace Beeffective.Data
                 return context.Tasks.ToList();
             });
 
+        public Task<List<RecordEntity>> LoadRecordAsync() =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                return context.Records.ToList();
+            });
+
         public Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity) =>
             Task.Run(() =>
             {
                 using var context = new DataContext(); 
                 var entry = context.Tasks.Add(taskEntity);
+                context.SaveChanges();
+                return entry.Entity;
+            });
+
+        public Task<RecordEntity> AddRecordAsync(RecordEntity recordEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                var entry = context.Records.Add(recordEntity);
                 context.SaveChanges();
                 return entry.Entity;
             });
@@ -33,11 +49,27 @@ namespace Beeffective.Data
                 context.SaveChanges();
             });
 
+        public Task UpdateRecordAsync(RecordEntity recordEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.Update(recordEntity);
+                context.SaveChanges();
+            });
+
         public Task RemoveTaskAsync(TaskEntity taskEntity) =>
             Task.Run(() =>
             {
                 using var context = new DataContext();
                 context.Remove(taskEntity);
+                context.SaveChanges();
+            });
+
+        public Task RemoveRecordAsync(RecordEntity recordEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.Remove(recordEntity);
                 context.SaveChanges();
             });
     }

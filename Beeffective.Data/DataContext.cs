@@ -13,6 +13,7 @@ namespace Beeffective.Data
         }
 
         public DbSet<TaskEntity> Tasks { get; set; }
+        public DbSet<RecordEntity> Records { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
