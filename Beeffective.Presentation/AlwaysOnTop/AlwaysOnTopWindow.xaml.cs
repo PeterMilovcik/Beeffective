@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Windows;
-using Beeffective.Presentation.Main;
+using System.Windows.Input;
 
 namespace Beeffective.Presentation.AlwaysOnTop
 {
@@ -10,16 +10,20 @@ namespace Beeffective.Presentation.AlwaysOnTop
     {
         private const int LeftOffset = -200;
 
-        [ImportingConstructor]
-        public AlwaysOnTopWindow(MainViewModel viewModel)
+        public AlwaysOnTopWindow()
         {
-            DataContext = viewModel;
             InitializeComponent();
         }
 
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            UpdatePosition();
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
             UpdatePosition();
         }
 
@@ -32,6 +36,11 @@ namespace Beeffective.Presentation.AlwaysOnTop
                 ? SystemParameters.WorkArea.Width + LeftOffset
                 : SystemParameters.WorkArea.Width + LeftOffset - Width;
             Top = 0;
+        }
+
+        private void AlwaysOnTopWindow_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) DragMove();
         }
     }
 }

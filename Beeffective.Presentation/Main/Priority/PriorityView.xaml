@@ -132,7 +132,8 @@
             Grid.Column="2"
             Margin="0,0,0,16"
             AllowDrop="True"
-            ItemsSource="{Binding PriorityCollection}">
+            ItemsSource="{Binding PriorityCollection}"
+            SelectedItem="{Binding PriorityCollection.Selected}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

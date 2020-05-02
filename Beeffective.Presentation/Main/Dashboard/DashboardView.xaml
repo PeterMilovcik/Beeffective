@@ -46,7 +46,7 @@
             Grid.Column="0"
             Margin="16,16,0,16"
             ItemsSource="{Binding Tasks}"
-            SelectedItem="{Binding Tasks.Selected}">
+            SelectedItem="{Binding Tasks.Selected, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

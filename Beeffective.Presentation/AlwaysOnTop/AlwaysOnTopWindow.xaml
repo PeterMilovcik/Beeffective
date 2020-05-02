@@ -6,10 +6,13 @@
     Title="AlwaysOnTopWindow"
     AllowsTransparency="True"
     Background="Transparent"
+    MouseMove="AlwaysOnTopWindow_OnMouseMove"
+    ResizeMode="NoResize"
     SizeChanged="AlwaysOnTopWindow_OnSizeChanged"
     SizeToContent="WidthAndHeight"
     Topmost="True"
     WindowStyle="None">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,6 +27,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
+
         <Border
             Grid.Column="0"
             Grid.ColumnSpan="3"
@@ -31,6 +35,7 @@
             VerticalAlignment="Stretch"
             Background="{StaticResource MaterialDesignPaper}"
             Opacity="0.75" />
+
         <Button
             Grid.Column="0"
             Width="20"
@@ -43,6 +48,7 @@
                 Height="16"
                 Kind="Play" />
         </Button>
+
         <TextBlock
             Grid.Column="1"
             Margin="8,0"
@@ -51,6 +57,8 @@
             FontSize="16"
             FontWeight="Bold"
             Foreground="{StaticResource PrimaryHueMidBrush}"
-            Text="{Binding Dashboard.SelectedTask.Title}" />
+            Text="{Binding Tasks.Selected.Title}" />
+
     </Grid>
+
 </Window>
