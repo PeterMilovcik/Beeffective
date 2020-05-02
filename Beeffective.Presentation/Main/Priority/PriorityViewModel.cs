@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -16,10 +15,8 @@ namespace Beeffective.Presentation.Main.Priority
     public class PriorityViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
-        private ObservableCollection<TaskViewModel> priorityCollection;
         private ObservableCollection<TaskViewModel> urgencyCollection;
         private ObservableCollection<TaskViewModel> importanceCollection;
-        private List<TaskViewModel> taskViewModels;
 
         [ImportingConstructor]
         public PriorityViewModel(IRepositoryService repository)
@@ -29,31 +26,24 @@ namespace Beeffective.Presentation.Main.Priority
 
         public override async Task InitializeAsync()
         {
-            var taskModels = await repository.LoadTaskAsync();
-            taskViewModels = taskModels.Select(m => m.ToViewModel()).ToList();
-
+            await PriorityCollection.UpdateAsync();
             Subscribe();
             Update();
         }
 
-        private void Subscribe() => taskViewModels.ForEach(Subscribe);
+        [Import]
+        public PriorityObservableCollection PriorityCollection { get; set; }
+
+        private void Subscribe() => PriorityCollection.ToList().ForEach(Subscribe);
 
         private void Subscribe(TaskViewModel taskViewModel) => taskViewModel.Removing += OnTaskViewModelRemoving;
 
         private void Update()
         {
-            PriorityCollection = new ObservableCollection<TaskViewModel>(
-                taskViewModels.OrderBy(t => t.Priority));
             UrgencyCollection = new ObservableCollection<TaskViewModel>(
-                taskViewModels.OrderBy(t => t.Urgency));
+                PriorityCollection.OrderBy(t => t.Urgency));
             ImportanceCollection = new ObservableCollection<TaskViewModel>(
-                taskViewModels.OrderBy(t => t.Importance));
-        }
-
-        public ObservableCollection<TaskViewModel> PriorityCollection
-        {
-            get => priorityCollection;
-            set => SetProperty(ref priorityCollection, value);
+                PriorityCollection.OrderBy(t => t.Importance));
         }
 
         public ObservableCollection<TaskViewModel> UrgencyCollection
@@ -127,7 +117,7 @@ namespace Beeffective.Presentation.Main.Priority
                         IsBusy = true;
                         await repository.RemoveTaskAsync(taskViewModel.ToModel());
                         Unsubscribe(taskViewModel);
-                        taskViewModels.Remove(taskViewModel);
+                        PriorityCollection.Remove(taskViewModel);
                         Update();
                     }
                     finally

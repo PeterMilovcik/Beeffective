@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 using MaterialDesignThemes.Wpf;
@@ -16,9 +15,6 @@ namespace Beeffective.Presentation.Main.Dashboard
     public class DashboardViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
-        private List<TaskViewModel> taskViewModels;
-        private ObservableCollection<TaskViewModel> tasks;
-        private TaskViewModel selectedTask;
 
         [ImportingConstructor]
         public DashboardViewModel(IRepositoryService repository)
@@ -30,12 +26,9 @@ namespace Beeffective.Presentation.Main.Dashboard
         {
             try
             {
-                IsBusy = true;  
-                var taskModels = await repository.LoadTaskAsync();
-                taskViewModels = taskModels.Select(m => m.ToViewModel()).ToList();
-
+                IsBusy = true;
+                await Tasks.UpdateAsync();
                 Subscribe();
-                Update();
             }
             finally
             {
@@ -43,27 +36,12 @@ namespace Beeffective.Presentation.Main.Dashboard
             }
         }
 
-        private void Subscribe() => taskViewModels.ForEach(Subscribe);
+        [Import]
+        public PriorityObservableCollection Tasks { get; set; }
+
+        private void Subscribe() => Tasks.ToList().ForEach(Subscribe);
 
         private void Subscribe(TaskViewModel taskViewModel) => taskViewModel.Removing += OnTaskViewModelRemoving;
-
-        private void Update()
-        {
-            Tasks = new ObservableCollection<TaskViewModel>(
-                taskViewModels.OrderBy(t => t.Priority));
-        }
-
-        public ObservableCollection<TaskViewModel> Tasks
-        {
-            get => tasks;
-            set => SetProperty(ref tasks, value);
-        }
-
-        public TaskViewModel SelectedTask
-        {
-            get => selectedTask;
-            set => SetProperty(ref selectedTask, value);
-        }
 
         private async void OnTaskViewModelRemoving(object sender, EventArgs e)
         {
@@ -78,8 +56,7 @@ namespace Beeffective.Presentation.Main.Dashboard
                         IsBusy = true;
                         await repository.RemoveTaskAsync(taskViewModel.ToModel());
                         Unsubscribe(taskViewModel);
-                        taskViewModels.Remove(taskViewModel);
-                        Update();
+                        Tasks.Remove(taskViewModel);
                     }
                     finally
                     {

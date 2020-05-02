@@ -1,12 +1,10 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:Beeffective.Presentation.Controls"
-    xmlns:local="clr-namespace:Beeffective.Presentation"
+    xmlns:converters="clr-namespace:Beeffective.Presentation.Converters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    xmlns:wpfShapes="clr-namespace:WpfShapes;assembly=WpfShapes">
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Dark.xaml" />
@@ -108,5 +106,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
 
 </ResourceDictionary>

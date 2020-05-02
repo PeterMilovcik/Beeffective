@@ -46,7 +46,7 @@
             Grid.Column="0"
             Margin="16,16,0,16"
             ItemsSource="{Binding Tasks}"
-            SelectedItem="{Binding SelectedTask}">
+            SelectedItem="{Binding Tasks.Selected}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -99,7 +99,7 @@
                 Margin="0,8,0,16"
                 FontSize="30"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding SelectedTask.Title}"
+                Text="{Binding Tasks.Selected.Title}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 
@@ -110,7 +110,7 @@
                 FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding SelectedTask.Title, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Tasks.Selected.Title, UpdateSourceTrigger=PropertyChanged}"
                 Watermark="Title" />
 
             <sf:SfTextBoxExt
@@ -125,7 +125,7 @@
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
                 IgnoreCase="True"
                 SuggestionMode="Contains"
-                Text="{Binding SelectedTask.Goal}"
+                Text="{Binding Tasks.Selected.Goal}"
                 TextHighlightMode="FirstOccurrence"
                 Watermark="Goal">
                 <sf:SfTextBoxExt.AutoCompleteItemTemplate>
@@ -153,7 +153,7 @@
                 IgnoreCase="True"
                 MultiSelectMode="Delimiter"
                 SuggestionMode="Contains"
-                Text="{Binding SelectedTask.Tags}"
+                Text="{Binding Tasks.Selected.Tags}"
                 TextHighlightMode="FirstOccurrence"
                 TokensWrapMode="Wrap"
                 Watermark="Space separated tags">

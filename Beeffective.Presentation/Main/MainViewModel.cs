@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
+using Beeffective.Presentation.AlwaysOnTop;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
 using Beeffective.Presentation.Main.Dashboard;
@@ -20,6 +21,7 @@ namespace Beeffective.Presentation.Main
         private readonly IMainView view;
         private ContentViewModel content;
         private List<ContentViewModel> contentViewModels;
+        private IAlwaysOnTopWindow alwaysOnTopWindow;
 
         [ImportingConstructor]
         public MainViewModel(IMainView view)
@@ -50,12 +52,6 @@ namespace Beeffective.Presentation.Main
             {
                 IsBusy = false;
             }
-        }
-
-        public void Show()
-        {
-            view.Show();
-            contentViewModels = new List<ContentViewModel> {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
         }
 
         [Import]
@@ -97,6 +93,48 @@ namespace Beeffective.Presentation.Main
         {
             get => content;
             set => SetProperty(ref content, value);
+        }
+
+        [Import]
+        public PriorityObservableCollection Tasks { get; set; }
+
+        public IAlwaysOnTopWindow AlwaysOnTopWindow
+        {
+            get
+            {
+                if (alwaysOnTopWindow == null)
+                {
+                    // TODO: This is very bad! Find a good way how to fix this!
+                    // Couldn't import it because of cyclic dependencies.
+                    // maybe the PriorityObservableCollection could be passed there instead of this.
+                    // Is the reference to MainViewModel really necessary?
+                    alwaysOnTopWindow = new AlwaysOnTopWindow(this);
+                }
+                return alwaysOnTopWindow;
+            }
+        }
+
+        public void Show()
+        {
+            view.Show();
+            contentViewModels = new List<ContentViewModel>
+                {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
+            Tasks.PropertyChanged += OnTasksPropertyChanged;
+        }
+
+        private void OnTasksPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Tasks.IsSelected))
+            {
+                if (Tasks.IsSelected)
+                {
+                    AlwaysOnTopWindow.Show();
+                }
+                else
+                {
+                    AlwaysOnTopWindow.Hide();
+                }
+            }
         }
     }
 }
