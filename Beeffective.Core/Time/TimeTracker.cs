@@ -20,6 +20,8 @@ namespace Beeffective.Core.Time
 
         public DateTime StopTime { get; private set; }
 
+        public bool IsEnabled => timer.Enabled;
+
         public void StartTimer()
         {
             StartTime = DateTime.Now;
