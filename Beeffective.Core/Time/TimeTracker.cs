@@ -22,7 +22,7 @@ namespace Beeffective.Core.Time
 
         public bool IsEnabled => timer.Enabled;
 
-        public void StartTimer()
+        public void Start()
         {
             StartTime = DateTime.Now;
             timer.Start();
@@ -34,7 +34,7 @@ namespace Beeffective.Core.Time
 
         public event EventHandler Started;
 
-        public void StopTimer()
+        public void Stop()
         {
             timer.Stop();
             StopTime = DateTime.Now;
