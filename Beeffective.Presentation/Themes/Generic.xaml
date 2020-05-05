@@ -108,5 +108,6 @@
     </Style>
 
     <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+    <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
 
 </ResourceDictionary>

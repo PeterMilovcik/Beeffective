@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Record;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -11,11 +14,14 @@ namespace Beeffective.Presentation.Main.Tasks
         private int importance;
         private string goal;
         private string tags;
+        private ObservableCollection<RecordViewModel> records;
 
         public TaskViewModel()
         {
             RemoveCommand = new DelegateCommand(o => OnRemoving());
+            Records = new ObservableCollection<RecordViewModel>();
         }
+
 
         public int Id { get; set; }
 
@@ -54,6 +60,7 @@ namespace Beeffective.Presentation.Main.Tasks
             }
         }
 
+
         public double Priority => Math.Sqrt(Math.Pow(Urgency, 2) + Math.Pow(Importance, 2));
 
         public string Goal
@@ -74,11 +81,32 @@ namespace Beeffective.Presentation.Main.Tasks
             }
         }
 
+        public TimeSpan TimeSpent
+        {
+            get
+            {
+                var result = new TimeSpan();
+                foreach (var recordViewModel in Records)
+                {
+                    result = result.Add(recordViewModel.Duration);
+                }
+
+                return result;
+            }
+        }
+
+
         public ICommand RemoveCommand { get; }
 
         public event EventHandler Removing;
 
         protected virtual void OnRemoving() => 
             Removing?.Invoke(this, EventArgs.Empty);
+
+        public ObservableCollection<RecordViewModel> Records
+        {
+            get => records;
+            set => SetProperty(ref records, value);
+        }
     }
 }

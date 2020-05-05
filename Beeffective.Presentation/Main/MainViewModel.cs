@@ -104,5 +104,10 @@ namespace Beeffective.Presentation.Main
             contentViewModels = new List<ContentViewModel>
                 {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
         }
+
+        public void Close()
+        {
+            AlwaysOnTop.Close();
+        }
     }
 }

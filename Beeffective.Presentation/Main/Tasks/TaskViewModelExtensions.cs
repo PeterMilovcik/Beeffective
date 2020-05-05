@@ -1,4 +1,7 @@
-﻿using Beeffective.Core.Models;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using Beeffective.Core.Models;
+using Beeffective.Presentation.Main.Record;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -12,7 +15,8 @@ namespace Beeffective.Presentation.Main.Tasks
                 Urgency = viewModel.Urgency,
                 Importance = viewModel.Importance,
                 Goal = viewModel.Goal,
-                Tags = viewModel.Tags
+                Tags = viewModel.Tags,
+                Records = viewModel.Records.Select(r => r.ToModel()).ToList()
             };
 
         public static TaskViewModel ToViewModel(this TaskModel model) =>
@@ -24,6 +28,8 @@ namespace Beeffective.Presentation.Main.Tasks
                 Importance = model.Importance,
                 Goal = model.Goal,
                 Tags = model.Tags,
+                Records = new ObservableCollection<RecordViewModel>(
+                    model.Records.Select(r => r.ToViewModel())),
                 IsChanged = false
             };
     }

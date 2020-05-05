@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:c="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
@@ -60,6 +59,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <md:PackIcon
                             Grid.Column="0"
@@ -72,8 +72,12 @@
                         <StackPanel Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
                         </StackPanel>
-                        <Button
+                        <TextBlock
                             Grid.Column="2"
+                            Margin="8,0"
+                            Text="{Binding TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                        <Button
+                            Grid.Column="3"
                             Width="20"
                             Height="20"
                             Padding="0"

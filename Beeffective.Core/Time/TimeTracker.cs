@@ -53,5 +53,17 @@ namespace Beeffective.Core.Time
             Ticked?.Invoke(this, EventArgs.Empty);
 
         public event EventHandler Ticked;
+
+        public void Toggle()
+        {
+            if (IsEnabled)
+            {
+                Stop();
+            }
+            else
+            {
+                Start();
+            }
+        }
     }
 }

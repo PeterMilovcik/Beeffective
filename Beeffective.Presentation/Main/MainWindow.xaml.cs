@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.ComponentModel;
+using System.ComponentModel.Composition;
 
 namespace Beeffective.Presentation.Main
 {
@@ -8,6 +9,15 @@ namespace Beeffective.Presentation.Main
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (DataContext is MainViewModel viewModel)
+            {
+                viewModel.Close();
+            }
+            base.OnClosing(e);
         }
     }
 }

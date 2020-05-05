@@ -21,16 +21,39 @@ namespace Beeffective.Services.Repository
         public async Task<List<TaskModel>> LoadTaskAsync()
         {
             var taskEntities = await repository.LoadTaskAsync();
-            return taskEntities.Select(e => e.ToModel()).ToList();
+            var recordEntities = await repository.LoadRecordAsync();
+            return taskEntities.Select(e =>
+            {
+                var taskModel = e.ToModel();
+                taskModel.Records = recordEntities
+                    .Where(e1 => e1.TaskId == taskModel.Id)
+                    .Select(e2 => e2.ToModel()).ToList();
+                return taskModel;
+            }).ToList();
+        }
+
+        public async Task<List<RecordModel>> LoadRecordAsync()
+        {
+            var recordEntities = await repository.LoadRecordAsync();
+            return recordEntities.Select(e => e.ToModel()).ToList();
         }
 
         public async Task<TaskModel> AddTaskAsync(TaskModel newTaskModel) => 
             (await repository.AddTaskAsync(newTaskModel.ToEntity())).ToModel();
 
+        public async Task<RecordModel> AddRecordAsync(RecordModel newRecordModel) =>
+            (await repository.AddRecordAsync(newRecordModel.ToEntity())).ToModel();
+        
         public async Task UpdateTaskAsync(TaskModel taskModel) => 
             await repository.UpdateTaskAsync(taskModel.ToEntity());
 
+        public async Task UpdateRecordAsync(RecordModel recordModel) =>
+            await repository.UpdateRecordAsync(recordModel.ToEntity());
+
         public async Task RemoveTaskAsync(TaskModel taskModel) => 
             await repository.RemoveTaskAsync(taskModel.ToEntity());
+
+        public async Task RemoveRecordAsync(RecordModel recordModel) =>
+            await repository.RemoveRecordAsync(recordModel.ToEntity());
     }
 }

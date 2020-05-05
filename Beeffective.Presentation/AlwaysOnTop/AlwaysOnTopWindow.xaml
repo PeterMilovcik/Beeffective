@@ -42,22 +42,39 @@
             Height="20"
             Margin="2"
             Padding="0"
-            Opacity="0.75">
-            <md:PackIcon
-                Width="16"
-                Height="16"
-                Kind="Play" />
+            Command="{Binding TimeTrackerCommand}">
+            <md:PackIcon Width="16" Height="16">
+                <md:PackIcon.Style>
+                    <Style TargetType="md:PackIcon">
+                        <Setter Property="Kind" Value="Play" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsTimeTrackerEnabled}" Value="True">
+                                <Setter Property="Kind" Value="Stop" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </md:PackIcon.Style>
+            </md:PackIcon>
         </Button>
 
-        <TextBlock
+        <Button
             Grid.Column="1"
-            Margin="8,0"
-            VerticalAlignment="Center"
-            FontFamily="{StaticResource MaterialDesignFont}"
-            FontSize="16"
-            FontWeight="Bold"
-            Foreground="{StaticResource PrimaryHueMidBrush}"
-            Text="{Binding Tasks.Selected.Title}" />
+            Height="20"
+            Margin="2"
+            Padding="8,0"
+            md:ButtonProgressAssist.IndicatorForeground="{StaticResource MaterialDesignCardBackground}"
+            md:ButtonProgressAssist.IsIndeterminate="True"
+            md:ButtonProgressAssist.IsIndicatorVisible="{Binding IsTimeTrackerEnabled}"
+            md:ButtonProgressAssist.Opacity="0.25"
+            md:ButtonProgressAssist.Value="-1"
+            Style="{StaticResource MaterialDesignRaisedButton}">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Tasks.Selected.Title}" />
+                    <TextBlock Margin="4,0" Text="{Binding TimeSpent, StringFormat=({0}), Converter={StaticResource TimeSpanConverter}}" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
 
     </Grid>
 
