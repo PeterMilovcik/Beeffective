@@ -4,22 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Tasks;
-using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Priority
 {
     [Export]
     public class PriorityViewModel : ContentViewModel
     {
-        private readonly IRepositoryService repository;
+        private ObservableCollection<TaskViewModel> priorityCollection;
         private ObservableCollection<TaskViewModel> urgencyCollection;
         private ObservableCollection<TaskViewModel> importanceCollection;
-
-        [ImportingConstructor]
-        public PriorityViewModel(IRepositoryService repository)
-        {
-            this.repository = repository;
-        }
 
         public override async Task InitializeAsync()
         {
@@ -27,15 +20,20 @@ namespace Beeffective.Presentation.Main.Priority
             Update();
         }
 
-        [Import]
-        public PriorityObservableCollection PriorityCollection { get; set; }
-
         private void Update()
         {
+            PriorityCollection = new ObservableCollection<TaskViewModel>(
+                Tasks.OrderBy(t => t.Model.Priority));
             UrgencyCollection = new ObservableCollection<TaskViewModel>(
-                PriorityCollection.OrderBy(t => t.Model.Urgency));
+                Tasks.OrderBy(t => t.Model.Urgency));
             ImportanceCollection = new ObservableCollection<TaskViewModel>(
-                PriorityCollection.OrderBy(t => t.Model.Importance));
+                Tasks.OrderBy(t => t.Model.Importance));
+        }
+
+        public ObservableCollection<TaskViewModel> PriorityCollection
+        {
+            get => priorityCollection;
+            set => SetProperty(ref priorityCollection, value);
         }
 
         public ObservableCollection<TaskViewModel> UrgencyCollection
@@ -50,50 +48,32 @@ namespace Beeffective.Presentation.Main.Priority
             set => SetProperty(ref importanceCollection, value);
         }
 
-        public async Task InsertImportanceBefore(TaskViewModel what, TaskViewModel before)
+        public void InsertImportanceBefore(TaskViewModel what, TaskViewModel before)
         {
-            try
+            var oldIndex = ImportanceCollection.IndexOf(what);
+            var newIndex = ImportanceCollection.IndexOf(before);
+            ImportanceCollection.Move(oldIndex, newIndex);
+            for (int i = 0; i < ImportanceCollection.Count; i++)
             {
-                IsBusy = true;
-                var oldIndex = ImportanceCollection.IndexOf(what);
-                var newIndex = ImportanceCollection.IndexOf(before);
-                ImportanceCollection.Move(oldIndex, newIndex);
-                for (int i = 0; i < ImportanceCollection.Count; i++)
-                {
-                    var taskViewModel = ImportanceCollection[i];
-                    taskViewModel.Model.Importance = i;
-                    await repository.UpdateTaskAsync(taskViewModel.Model);
-                }
+                var taskViewModel = ImportanceCollection[i];
+                taskViewModel.Model.Importance = i;
+            }
 
-                Update();
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            Update();
         }
 
-        public async Task InsertUrgencyBefore(TaskViewModel what, TaskViewModel before)
+        public void InsertUrgencyBefore(TaskViewModel what, TaskViewModel before)
         {
-            try
+            var oldIndex = UrgencyCollection.IndexOf(what);
+            var newIndex = UrgencyCollection.IndexOf(before);
+            UrgencyCollection.Move(oldIndex, newIndex);
+            for (int i = 0; i < UrgencyCollection.Count; i++)
             {
-                IsBusy = true;
-                var oldIndex = UrgencyCollection.IndexOf(what);
-                var newIndex = UrgencyCollection.IndexOf(before);
-                UrgencyCollection.Move(oldIndex, newIndex);
-                for (int i = 0; i < UrgencyCollection.Count; i++)
-                {
-                    var taskViewModel = UrgencyCollection[i];
-                    taskViewModel.Model.Urgency = i;
-                    await repository.UpdateTaskAsync(taskViewModel.Model);
-                }
+                var taskViewModel = UrgencyCollection[i];
+                taskViewModel.Model.Urgency = i;
+            }
 
-                Update();
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            Update();
         }
     }
 }
