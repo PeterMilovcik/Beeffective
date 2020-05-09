@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+using System.Timers;
 using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
@@ -12,11 +12,16 @@ namespace Beeffective.Core.Models
         private int importance;
         private string goal;
         private string tags;
+        private RecordModel currentRecord;
+        private readonly Timer timer;
+        private bool isTimerEnabled;
 
         public TaskModel()
         {
+            timer = new Timer();
+            timer.Interval = 500;
+            timer.Elapsed += OnTimerElapsed;
             Records = new ObservableCollection<RecordModel>();
-            Records.CollectionChanged += OnRecordsCollectionChanged;
         }
 
         public int Id { get; set; }
@@ -69,17 +74,50 @@ namespace Beeffective.Core.Models
             get
             {
                 var result = new TimeSpan();
-                foreach (var recordViewModel in Records)
+                foreach (var recordModel in Records)
                 {
-                    result = result.Add(recordViewModel.Duration);
+                    result = result.Add(recordModel.Duration);
+                }
+
+                if (currentRecord != null)
+                {
+                    result = result.Add(currentRecord.Duration);
                 }
 
                 return result;
             }
         }
 
-        private void OnRecordsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public bool IsTimerEnabled
         {
+            get => isTimerEnabled;
+            set => SetProperty(ref isTimerEnabled, value).IfTrue(() =>
+            {
+                if (isTimerEnabled) StartTimer();
+                else StopTimer();
+            });
+        }
+
+        private void StartTimer()
+        {
+            currentRecord = new RecordModel {TaskId = Id, StartAt = DateTime.Now};
+            timer.Start();
+        }
+
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (currentRecord == null) return;
+            currentRecord.StopAt = DateTime.Now;
+            OnPropertyChanged(nameof(TimeSpent));
+        }
+
+        private void StopTimer()
+        {
+            timer.Stop();
+            currentRecord.StopAt = DateTime.Now;
+            Records.Add(currentRecord);
+            IsChanged = true;
+            currentRecord = null;
             OnPropertyChanged(nameof(TimeSpent));
         }
 

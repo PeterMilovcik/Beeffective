@@ -90,6 +90,6 @@ namespace Beeffective.Presentation.Main.Priority
         }
 
         public async Task SaveAsync() => 
-            await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model));
+            await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
     }
 }

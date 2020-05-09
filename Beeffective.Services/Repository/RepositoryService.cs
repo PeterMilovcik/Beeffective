@@ -59,7 +59,23 @@ namespace Beeffective.Services.Repository
         public async Task RemoveRecordAsync(RecordModel recordModel) =>
             await repository.RemoveRecordAsync(recordModel.ToEntity());
 
-        public async Task SaveTaskAsync(IEnumerable<TaskModel> taskModels) => 
+        public async Task SaveTaskAsync(List<TaskModel> taskModels)
+        {
+            foreach (var taskModel in taskModels)
+            {
+                foreach (var recordModel in taskModel.Records)
+                {
+                    if (recordModel.Id == 0)
+                    {
+                        await repository.AddRecordAsync(recordModel.ToEntity());
+                    }
+                    else
+                    {
+                        await repository.UpdateRecordAsync(recordModel.ToEntity());
+                    }
+                }
+            }
             await repository.SaveTaskAsync(taskModels.Select(tm => tm.ToEntity()));
+        }
     }
 }
