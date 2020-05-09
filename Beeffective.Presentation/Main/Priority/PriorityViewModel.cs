@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
-using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.Priority
 {
@@ -26,24 +23,19 @@ namespace Beeffective.Presentation.Main.Priority
 
         public override async Task InitializeAsync()
         {
-            await PriorityCollection.UpdateAsync();
-            Subscribe();
+            await base.InitializeAsync();
             Update();
         }
 
         [Import]
         public PriorityObservableCollection PriorityCollection { get; set; }
 
-        private void Subscribe() => PriorityCollection.ToList().ForEach(Subscribe);
-
-        private void Subscribe(TaskViewModel taskViewModel) => taskViewModel.Removing += OnTaskViewModelRemoving;
-
         private void Update()
         {
             UrgencyCollection = new ObservableCollection<TaskViewModel>(
-                PriorityCollection.OrderBy(t => t.Urgency));
+                PriorityCollection.OrderBy(t => t.Model.Urgency));
             ImportanceCollection = new ObservableCollection<TaskViewModel>(
-                PriorityCollection.OrderBy(t => t.Importance));
+                PriorityCollection.OrderBy(t => t.Model.Importance));
         }
 
         public ObservableCollection<TaskViewModel> UrgencyCollection
@@ -69,8 +61,8 @@ namespace Beeffective.Presentation.Main.Priority
                 for (int i = 0; i < ImportanceCollection.Count; i++)
                 {
                     var taskViewModel = ImportanceCollection[i];
-                    taskViewModel.Importance = i;
-                    await repository.UpdateTaskAsync(taskViewModel.ToModel());
+                    taskViewModel.Model.Importance = i;
+                    await repository.UpdateTaskAsync(taskViewModel.Model);
                 }
 
                 Update();
@@ -92,8 +84,8 @@ namespace Beeffective.Presentation.Main.Priority
                 for (int i = 0; i < UrgencyCollection.Count; i++)
                 {
                     var taskViewModel = UrgencyCollection[i];
-                    taskViewModel.Urgency = i;
-                    await repository.UpdateTaskAsync(taskViewModel.ToModel());
+                    taskViewModel.Model.Urgency = i;
+                    await repository.UpdateTaskAsync(taskViewModel.Model);
                 }
 
                 Update();
@@ -103,32 +95,5 @@ namespace Beeffective.Presentation.Main.Priority
                 IsBusy = false;
             }
         }
-
-        private async void OnTaskViewModelRemoving(object sender, EventArgs e)
-        {
-            if (sender is TaskViewModel taskViewModel)
-            {
-                var confirmationDialog = new AreYouSureDialog();
-                var result = await DialogHost.Show(confirmationDialog);
-                if (result is true)
-                {
-                    try
-                    {
-                        IsBusy = true;
-                        await repository.RemoveTaskAsync(taskViewModel.ToModel());
-                        Unsubscribe(taskViewModel);
-                        PriorityCollection.Remove(taskViewModel);
-                        Update();
-                    }
-                    finally
-                    {
-                        IsBusy = false;
-                    }
-                }
-            }
-        }
-
-        private void Unsubscribe(TaskViewModel taskViewModel) => 
-            taskViewModel.Removing -= OnTaskViewModelRemoving;
     }
 }

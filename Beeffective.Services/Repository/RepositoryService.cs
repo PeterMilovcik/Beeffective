@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,12 +23,14 @@ namespace Beeffective.Services.Repository
         {
             var taskEntities = await repository.LoadTaskAsync();
             var recordEntities = await repository.LoadRecordAsync();
-            return taskEntities.Select(e =>
+            return taskEntities.Select(taskEntity =>
             {
-                var taskModel = e.ToModel();
-                taskModel.Records = recordEntities
+                var taskModel = taskEntity.ToModel();
+                recordEntities
                     .Where(e1 => e1.TaskId == taskModel.Id)
-                    .Select(e2 => e2.ToModel()).ToList();
+                    .Select(e2 => e2.ToModel())
+                    .ToList()
+                    .ForEach(recordModel => taskModel.Records.Add(recordModel));
                 return taskModel;
             }).ToList();
         }
@@ -55,5 +58,8 @@ namespace Beeffective.Services.Repository
 
         public async Task RemoveRecordAsync(RecordModel recordModel) =>
             await repository.RemoveRecordAsync(recordModel.ToEntity());
+
+        public async Task SaveTaskAsync(IEnumerable<TaskModel> taskModels) => 
+            await repository.SaveTaskAsync(taskModels.Select(tm => tm.ToEntity()));
     }
 }

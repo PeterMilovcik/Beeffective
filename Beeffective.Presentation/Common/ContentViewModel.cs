@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-
-namespace Beeffective.Presentation.Common
+﻿namespace Beeffective.Presentation.Common
 {
-    public class ContentViewModel : ViewModel
+    public class ContentViewModel : TaskCollectionViewModel
     {
         private bool isSelected;
 
@@ -11,7 +9,5 @@ namespace Beeffective.Presentation.Common
             get => isSelected;
             set => SetProperty(ref isSelected, value);
         }
-
-        public virtual Task InitializeAsync() => Task.CompletedTask;
     }
 }

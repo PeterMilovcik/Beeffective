@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Beeffective.Presentation.Annotations;
 
-namespace Beeffective.Presentation.Common
+namespace Beeffective.Core
 {
     public class Observable : INotifyPropertyChanged
     {
@@ -16,7 +15,6 @@ namespace Beeffective.Presentation.Common
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

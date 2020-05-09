@@ -70,12 +70,12 @@
                             Kind="HexagonOutline"
                             Opacity="0.5" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Model.Title}" />
                         </StackPanel>
                         <TextBlock
                             Grid.Column="2"
                             Margin="8,0"
-                            Text="{Binding TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                            Text="{Binding Model.TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
                         <Button
                             Grid.Column="3"
                             Width="20"
@@ -103,7 +103,7 @@
                 Margin="0,8,0,16"
                 FontSize="30"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding Tasks.Selected.Title}"
+                Text="{Binding Tasks.Selected.Model.Title}"
                 TextAlignment="Justify"
                 TextWrapping="Wrap" />
 
@@ -114,7 +114,7 @@
                 FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding Tasks.Selected.Title, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding Tasks.Selected.Model.Title, UpdateSourceTrigger=PropertyChanged}"
                 Watermark="Title" />
 
             <sf:SfTextBoxExt
@@ -129,7 +129,7 @@
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
                 IgnoreCase="True"
                 SuggestionMode="Contains"
-                Text="{Binding Tasks.Selected.Goal}"
+                Text="{Binding Tasks.Selected.Model.Goal}"
                 TextHighlightMode="FirstOccurrence"
                 Watermark="Goal">
                 <sf:SfTextBoxExt.AutoCompleteItemTemplate>
@@ -157,7 +157,7 @@
                 IgnoreCase="True"
                 MultiSelectMode="Delimiter"
                 SuggestionMode="Contains"
-                Text="{Binding Tasks.Selected.Tags}"
+                Text="{Binding Tasks.Selected.Model.Tags}"
                 TextHighlightMode="FirstOccurrence"
                 TokensWrapMode="Wrap"
                 Watermark="Space separated tags">

@@ -72,5 +72,13 @@ namespace Beeffective.Data
                 context.Remove(recordEntity);
                 context.SaveChanges();
             });
+
+        public Task SaveTaskAsync(IEnumerable<TaskEntity> taskEntities) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.UpdateRange(taskEntities);
+                context.SaveChanges();
+            });
     }
 }

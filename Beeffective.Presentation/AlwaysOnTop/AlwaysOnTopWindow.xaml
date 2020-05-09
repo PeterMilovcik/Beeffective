@@ -70,7 +70,7 @@
             Style="{StaticResource MaterialDesignRaisedButton}">
             <Button.Content>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Tasks.Selected.Title}" />
+                    <TextBlock Text="{Binding Tasks.Selected.Model.Title}" />
                     <TextBlock Margin="4,0" Text="{Binding TimeSpent, StringFormat=({0}), Converter={StaticResource TimeSpanConverter}}" />
                 </StackPanel>
             </Button.Content>

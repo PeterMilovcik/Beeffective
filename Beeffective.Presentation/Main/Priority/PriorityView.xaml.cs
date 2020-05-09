@@ -83,8 +83,8 @@ namespace Beeffective.Presentation.Main.Priority
                 if (listViewItem != null)
                 {
                     var dropped = (TaskViewModel)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
-                    Debug.WriteLine($"dragged = {dragged.Title}");
-                    Debug.WriteLine($"dropped = {dropped.Title}");
+                    Debug.WriteLine($"dragged = {dragged.Model.Title}");
+                    Debug.WriteLine($"dropped = {dropped.Model.Title}");
                     if (DataContext is PriorityViewModel viewModel)
                     {
                         if (isImportance)

@@ -15,7 +15,6 @@ namespace Beeffective.Presentation.Main.New
     public class NewViewModel : ContentViewModel
     {
         private readonly IRepositoryService repository;
-        private List<TaskModel> taskModels;
         private TaskViewModel newTaskViewModel;
         private ObservableCollection<string> goals;
         private ObservableCollection<string> tags;
@@ -28,13 +27,15 @@ namespace Beeffective.Presentation.Main.New
                 o => CanSave(),async o => await SaveAsync());
         }
 
-        public override async Task InitializeAsync()
+        public override Task InitializeAsync()
         {
             try
             {
                 IsBusy = true;
-                await LoadTaskAsync();
-                NewTask = new TaskViewModel();
+
+                Update();
+
+                return base.InitializeAsync();
             }
             finally
             {
@@ -42,20 +43,23 @@ namespace Beeffective.Presentation.Main.New
             }
         }
 
-        private async Task LoadTaskAsync()
+        private void Update()
         {
-            taskModels = await repository.LoadTaskAsync();
-            Goals = new ObservableCollection<string>(
-                taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Goal)).Select(t => t.Goal).Distinct());
-            Tags = new ObservableCollection<string>(ParseTags());
+            Goals = new ObservableCollection<string>(GetGoals());
+            Tags = new ObservableCollection<string>(GetTags());
+            NewTask = new TaskViewModel(new TaskModel());
         }
 
-        private IEnumerable<string> ParseTags()
+        private IEnumerable<string> GetGoals() => Tasks
+            .Where(t => !string.IsNullOrWhiteSpace(t.Model.Goal))
+            .Select(t => t.Model.Goal).Distinct();
+
+        private IEnumerable<string> GetTags()
         {
             var result = new List<string>();
-            foreach (var taskModel in taskModels.Where(t => !string.IsNullOrWhiteSpace(t.Tags)))
+            foreach (var taskModel in Tasks.Where(t => !string.IsNullOrWhiteSpace(t.Model.Tags)))
             {
-                result.AddRange(taskModel.Tags.Trim().Split(" "));
+                result.AddRange(taskModel.Model.Tags.Trim().Split(" "));
             }
 
             return result.Distinct();
@@ -91,7 +95,7 @@ namespace Beeffective.Presentation.Main.New
 
         private void OnTaskViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(newTaskViewModel.Title))
+            if (e.PropertyName == nameof(newTaskViewModel.Model.Title))
             {
                 SaveCommand.RaiseCanExecuteChanged();
             }
@@ -102,8 +106,8 @@ namespace Beeffective.Presentation.Main.New
         private bool CanSave()
         {
             if (newTaskViewModel == null) return false;
-            if (string.IsNullOrWhiteSpace(newTaskViewModel.Title)) return false;
-            if (taskModels.Any(m => m.Title == newTaskViewModel.Title)) return false;
+            if (string.IsNullOrWhiteSpace(newTaskViewModel.Model.Title)) return false;
+            if (Tasks.Any(m => m.Model.Title == newTaskViewModel.Model.Title)) return false;
             return true;
         }
 
@@ -112,17 +116,19 @@ namespace Beeffective.Presentation.Main.New
             try
             {
                 IsBusy = true;
-                var newTaskModel = NewTask.ToModel();
+                var newTaskModel = NewTask.Model;
 
-                foreach (var taskModel in taskModels)
+                foreach (var taskViewModel in Tasks)
                 {
-                    taskModel.Urgency++;
-                    taskModel.Importance++;
-                    await repository.UpdateTaskAsync(taskModel);
+                    taskViewModel.Model.Urgency++;
+                    taskViewModel.Model.Importance++;
+                    await repository.UpdateTaskAsync(taskViewModel.Model);
                 }
 
                 await repository.AddTaskAsync(newTaskModel);
-                await InitializeAsync();
+                await Tasks.LoadAsync();
+
+                Update();
             }
             finally
             {

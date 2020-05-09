@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
-using Beeffective.Presentation.Common;
+using Beeffective.Core;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 
@@ -28,15 +28,6 @@ namespace Beeffective.Presentation.Main.Priority
             this.repository = repository;
             collection = new ObservableCollection<TaskViewModel>();
             collection.CollectionChanged += OnCollectionChanged;
-        }
-
-        public async Task UpdateAsync()
-        {
-            var list = (await repository.LoadTaskAsync())
-                .Select(m => m.ToViewModel()).ToList()
-                .OrderBy(vm => vm.Priority).ToList();
-            collection.Clear();
-            list.ForEach(Add);
         }
 
         public TaskViewModel Selected
@@ -88,5 +79,17 @@ namespace Beeffective.Presentation.Main.Priority
         public int Count => collection.Count;
 
         public bool IsReadOnly => false;
+
+        public async Task LoadAsync()
+        {
+            var list = (await repository.LoadTaskAsync())
+                .Select(taskModel => new TaskViewModel(taskModel)).ToList()
+                .OrderBy(vm => vm.Model.Priority).ToList();
+            collection.Clear();
+            list.ForEach(Add);
+        }
+
+        public async Task SaveAsync() => 
+            await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model));
     }
 }

@@ -14,5 +14,6 @@ namespace Beeffective.Data
         Task UpdateRecordAsync(RecordEntity recordEntity);
         Task RemoveTaskAsync(TaskEntity taskEntity);
         Task RemoveRecordAsync(RecordEntity recordEntity);
+        Task SaveTaskAsync(IEnumerable<TaskEntity> taskEntities);
     }
 }

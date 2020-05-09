@@ -98,15 +98,25 @@ namespace Beeffective.Presentation.Main
         [Import]
         public AlwaysOnTopViewModel AlwaysOnTop { get; set; }
 
-        public void Show()
+        public async Task Show()
         {
             view.Show();
             contentViewModels = new List<ContentViewModel>
                 {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
+            await LoadAsync();
         }
 
-        public void Close()
+        [Import]
+        public PriorityObservableCollection Tasks { get; set; }
+
+        private async Task LoadAsync()
         {
+            await Tasks.LoadAsync();
+        }
+
+        public async Task Close()
+        {
+            await Tasks.SaveAsync();
             AlwaysOnTop.Close();
         }
     }

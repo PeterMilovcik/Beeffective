@@ -86,11 +86,11 @@
                             Kind="DragVertical"
                             Opacity="0.5" />
                         <StackPanel Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Model.Title}" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource MaterialDesignBodyLight}"
-                                Text="{Binding Goal}" />
+                                Text="{Binding Model.Goal}" />
                         </StackPanel>
                         <Button
                             Grid.Column="2"
@@ -158,11 +158,11 @@
                             Opacity="0.5" />
 
                         <StackPanel Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Model.Title}" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource MaterialDesignBodyLight}"
-                                Text="{Binding Goal}" />
+                                Text="{Binding Model.Goal}" />
                         </StackPanel>
 
                         <Button
@@ -234,11 +234,11 @@
                             Opacity="0.5" />
 
                         <StackPanel Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Model.Title}" />
                             <TextBlock
                                 VerticalAlignment="Center"
                                 Foreground="{StaticResource MaterialDesignBodyLight}"
-                                Text="{Binding Goal}" />
+                                Text="{Binding Model.Goal}" />
                         </StackPanel>
 
                         <Button

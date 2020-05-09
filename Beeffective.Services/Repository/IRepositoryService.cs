@@ -14,5 +14,6 @@ namespace Beeffective.Services.Repository
         Task UpdateRecordAsync(RecordModel recordModel);
         Task RemoveTaskAsync(TaskModel taskModel);
         Task RemoveRecordAsync(RecordModel recordModel);
+        Task SaveTaskAsync(IEnumerable<TaskModel> taskModels);
     }
 }

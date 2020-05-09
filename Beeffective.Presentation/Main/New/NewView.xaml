@@ -40,7 +40,7 @@
                 FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding NewTask.Title, UpdateSourceTrigger=PropertyChanged}"
+                Text="{Binding NewTask.Model.Title, UpdateSourceTrigger=PropertyChanged}"
                 Watermark="Title" />
 
             <sf:SfTextBoxExt
@@ -85,7 +85,7 @@
                 IgnoreCase="True"
                 MultiSelectMode="Delimiter"
                 SuggestionMode="Contains"
-                Text="{Binding NewTask.Tags}"
+                Text="{Binding NewTask.Model.Tags}"
                 TextHighlightMode="FirstOccurrence"
                 TokensWrapMode="Wrap"
                 Watermark="Space separated tags">
