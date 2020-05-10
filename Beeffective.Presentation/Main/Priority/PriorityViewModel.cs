@@ -14,6 +14,12 @@ namespace Beeffective.Presentation.Main.Priority
         private ObservableCollection<TaskViewModel> urgencyCollection;
         private ObservableCollection<TaskViewModel> importanceCollection;
 
+        [ImportingConstructor]
+        public PriorityViewModel(PriorityObservableCollection tasks) : base(tasks)
+        {
+            Tasks.CollectionChanged += (sender, args) => Update();
+        }
+
         public override async Task InitializeAsync()
         {
             await base.InitializeAsync();

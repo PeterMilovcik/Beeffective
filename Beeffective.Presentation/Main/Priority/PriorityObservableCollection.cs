@@ -21,6 +21,8 @@ namespace Beeffective.Presentation.Main.Priority
         private TaskViewModel selected;
         private bool isSelected;
         private readonly ObservableCollection<TaskViewModel> collection;
+        private ObservableCollection<string> goals;
+        private ObservableCollection<string> tags;
 
         [ImportingConstructor]
         public PriorityObservableCollection(IRepositoryService repository)
@@ -61,11 +63,45 @@ namespace Beeffective.Presentation.Main.Priority
         IEnumerator IEnumerable.GetEnumerator() => 
             GetEnumerator();
 
-        public void Add(TaskViewModel item) => 
+        public void Add(TaskViewModel item)
+        {
             collection.Add(item);
+            UpdateGoalsAndTasks();
+        }
 
-        public void Clear() => 
+        public void Clear()
+        {
             collection.Clear();
+            UpdateGoalsAndTasks();
+        }
+
+        public bool Remove(TaskViewModel item)
+        {
+            bool result = collection.Remove(item);
+            UpdateGoalsAndTasks();
+            return result;
+        }
+
+        private void UpdateGoalsAndTasks()
+        {
+            Goals = new ObservableCollection<string>(GetGoals());
+            Tags = new ObservableCollection<string>(GetTags());
+        }
+
+        private IEnumerable<string> GetGoals() => collection
+            .Where(t => !string.IsNullOrWhiteSpace(t.Model.Goal))
+            .Select(t => t.Model.Goal).Distinct();
+
+        private IEnumerable<string> GetTags()
+        {
+            var result = new List<string>();
+            foreach (var taskModel in collection.Where(t => !string.IsNullOrWhiteSpace(t.Model.Tags)))
+            {
+                result.AddRange(taskModel.Model.Tags.Trim().Split(" "));
+            }
+
+            return result.Distinct();
+        }
 
         public bool Contains(TaskViewModel item) => 
             collection.Contains(item);
@@ -73,12 +109,21 @@ namespace Beeffective.Presentation.Main.Priority
         public void CopyTo(TaskViewModel[] array, int arrayIndex) => 
             collection.CopyTo(array, arrayIndex);
 
-        public bool Remove(TaskViewModel item) => 
-            collection.Remove(item);
-
         public int Count => collection.Count;
 
         public bool IsReadOnly => false;
+
+        public ObservableCollection<string> Goals
+        {
+            get => goals;
+            set => SetProperty(ref goals, value);
+        }
+
+        public ObservableCollection<string> Tags
+        {
+            get => tags;
+            set => SetProperty(ref tags, value);
+        }
 
         public async Task LoadAsync()
         {

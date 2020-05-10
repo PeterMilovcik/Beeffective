@@ -47,7 +47,7 @@
                 Width="{StaticResource TextBoxWidth}"
                 Margin="0,16,16,0"
                 AutoCompleteMode="SuggestAppend"
-                AutoCompleteSource="{Binding Goals}"
+                AutoCompleteSource="{Binding Tasks.Goals}"
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"
@@ -56,7 +56,7 @@
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
                 IgnoreCase="True"
                 SuggestionMode="Contains"
-                Text="{Binding NewTask.Goal}"
+                Text="{Binding NewTask.Model.Goal}"
                 TextHighlightMode="FirstOccurrence"
                 Watermark="Goal">
                 <sf:SfTextBoxExt.AutoCompleteItemTemplate>
@@ -74,7 +74,7 @@
                 Width="{StaticResource TextBoxWidth}"
                 Margin="0,16,16,0"
                 AutoCompleteMode="SuggestAppend"
-                AutoCompleteSource="{Binding Tags}"
+                AutoCompleteSource="{Binding Tasks.Tags}"
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"

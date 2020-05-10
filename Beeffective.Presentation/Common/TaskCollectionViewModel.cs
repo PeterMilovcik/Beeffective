@@ -12,11 +12,16 @@ namespace Beeffective.Presentation.Common
 {
     public class TaskCollectionViewModel : Initializable
     {
-        [Import]
-        public IRepositoryService Repository { get; set; }
+        [ImportingConstructor]
+        public TaskCollectionViewModel(PriorityObservableCollection tasks)
+        {
+            Tasks = tasks;
+        }
+
+        public PriorityObservableCollection Tasks { get; }
 
         [Import]
-        public PriorityObservableCollection Tasks { get; set; }
+        public IRepositoryService Repository { get; set; }
 
         public async Task LoadTaskAsync()
         {
