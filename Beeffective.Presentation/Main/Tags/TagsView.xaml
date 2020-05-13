@@ -97,12 +97,14 @@
             Grid.Column="1"
             Margin="16"
             ItemsSource="{Binding SelectedTag.Tasks}">
+
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                     <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
                 </Style>
             </ListView.ItemContainerStyle>
+
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

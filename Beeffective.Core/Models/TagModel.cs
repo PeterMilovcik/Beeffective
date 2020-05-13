@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
 {
@@ -7,6 +9,7 @@ namespace Beeffective.Core.Models
     {
         private string name;
         private TimeSpan timeSpent;
+        private List<TaskModel> tasks;
 
         public TagModel()
         {
@@ -25,7 +28,31 @@ namespace Beeffective.Core.Models
             set => SetProperty(ref timeSpent, value);
         }
 
-        public List<TaskModel> Tasks { get; }
+        public List<TaskModel> Tasks
+        {
+            get => tasks;
+            set => SetProperty(ref tasks, value).IfTrue(() =>
+            {
+                foreach (var taskModel in tasks)
+                {
+                    taskModel.PropertyChanged += OnTaskPropertyChanged;
+                }
+            });
+        }
+
+        private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TaskModel.TimeSpent))
+            {
+                var newTimeSpent = TimeSpan.Zero;
+                foreach (var taskModel in Tasks)
+                {
+                    newTimeSpent = newTimeSpent.Add(taskModel.TimeSpent);
+                }
+
+                TimeSpent = newTimeSpent;
+            }
+        }
 
         public bool Equals(TagModel other)
         {

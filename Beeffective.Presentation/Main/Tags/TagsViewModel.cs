@@ -15,7 +15,7 @@ namespace Beeffective.Presentation.Main.Tags
         {
         }
 
-        public TagModel SelectedGoal
+        public TagModel SelectedTag
         {
             get => selectedTag;
             set => SetProperty(ref selectedTag, value);
