@@ -44,7 +44,7 @@
             Grid.Row="1"
             Grid.Column="0"
             Margin="16,16,0,16"
-            ItemsSource="{Binding Tasks}"
+            ItemsSource="{Binding PriorityCollection}"
             SelectedItem="{Binding Tasks.Selected, Mode=TwoWay}">
             <ListView.ItemContainerStyle>
                 <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
