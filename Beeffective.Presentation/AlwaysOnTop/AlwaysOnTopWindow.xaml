@@ -3,9 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     Title="AlwaysOnTopWindow"
     Width="500"
-    Height="23"
+    Height="46"
     AllowsTransparency="True"
     Background="Transparent"
     Left="1200"
@@ -24,65 +25,141 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+    <StackPanel>
+        <Grid Height="23" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
-        <Border
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Background="{StaticResource MaterialDesignPaper}"
-            Opacity="0.75" />
+            <Border
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Opacity="0.75">
 
-        <Button
-            Grid.Column="0"
-            Width="20"
-            Height="20"
-            Margin="2"
-            Padding="0"
-            Command="{Binding TimeTrackerCommand}">
-            <md:PackIcon Width="16" Height="16">
-                <md:PackIcon.Style>
-                    <Style TargetType="md:PackIcon">
-                        <Setter Property="Kind" Value="Play" />
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Tasks.Selected.Model.IsTimerEnabled}" Value="True">
-                                <Setter Property="Kind" Value="Stop" />
+                            <DataTrigger Binding="{Binding IsTimerElapsed}" Value="True">
+                                <Setter Property="Background" Value="#d50000" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </md:PackIcon.Style>
-            </md:PackIcon>
-        </Button>
+                </Border.Style>
 
-        <Grid
-            Grid.Column="1"
-            Height="20"
-            Margin="4,0"
-            md:ButtonProgressAssist.IndicatorForeground="{StaticResource MaterialDesignCardBackground}"
-            md:ButtonProgressAssist.IsIndeterminate="True"
-            md:ButtonProgressAssist.IsIndicatorVisible="{Binding Tasks.Selected.Model.IsTimerEnabled}"
-            md:ButtonProgressAssist.Opacity="0.25"
-            md:ButtonProgressAssist.Value="-1"
-            TextElement.FontFamily="{StaticResource MaterialDesignFont}"
-            TextElement.FontSize="16"
-            TextElement.Foreground="{StaticResource MaterialDesignBody}">
-            <TextBlock
+            </Border>
+
+            <Button
+                Grid.Column="0"
+                Width="20"
+                Height="20"
+                Padding="0"
+                Command="{Binding TimeTrackerCommand}">
+                <md:PackIcon Width="16" Height="16">
+                    <md:PackIcon.Style>
+                        <Style TargetType="md:PackIcon">
+                            <Setter Property="Kind" Value="Play" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Tasks.Selected.Model.IsTimerEnabled}" Value="True">
+                                    <Setter Property="Kind" Value="Stop" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </md:PackIcon.Style>
+                </md:PackIcon>
+            </Button>
+
+            <Grid
+                Grid.Column="1"
+                Height="20"
                 Margin="4,0"
-                VerticalAlignment="Center"
-                Text="{Binding Tasks.Selected.Model.Title}" />
-            <TextBlock
-                Margin="4,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Text="{Binding Tasks.Selected.Model.TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                md:ButtonProgressAssist.IndicatorForeground="{StaticResource MaterialDesignCardBackground}"
+                md:ButtonProgressAssist.IsIndeterminate="True"
+                md:ButtonProgressAssist.IsIndicatorVisible="{Binding Tasks.Selected.Model.IsTimerEnabled}"
+                md:ButtonProgressAssist.Opacity="0.25"
+                md:ButtonProgressAssist.Value="-1"
+                TextElement.FontFamily="{StaticResource MaterialDesignFont}"
+                TextElement.FontSize="16"
+                TextElement.Foreground="{StaticResource MaterialDesignBody}">
+
+                <TextBlock
+                    Margin="4,0"
+                    VerticalAlignment="Center"
+                    Text="{Binding Tasks.Selected.Model.Title}" />
+
+                <TextBlock
+                    Margin="4,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{Binding RemainingTime, Converter={StaticResource TimeSpanConverter}}" />
+
+            </Grid>
+
         </Grid>
 
-    </Grid>
+        <Grid Visibility="{Binding IsTimePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                Height="21"
+                Padding="0"
+                Command="{Binding StartTimerCommand}"
+                Content="5 min">
+                <Button.CommandParameter>
+                    <system:Int32>1</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Column="1"
+                Height="21"
+                Padding="0"
+                Command="{Binding StartTimerCommand}"
+                Content="15 min">
+                <Button.CommandParameter>
+                    <system:Int32>15</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Column="2"
+                Height="21"
+                Padding="0"
+                Command="{Binding StartTimerCommand}"
+                Content="30 min">
+                <Button.CommandParameter>
+                    <system:Int32>30</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Column="3"
+                Height="21"
+                Padding="0"
+                Command="{Binding StartTimerCommand}"
+                Content="60 min">
+                <Button.CommandParameter>
+                    <system:Int32>60</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+            <Button
+                Grid.Column="4"
+                Height="21"
+                Padding="0"
+                Command="{Binding StartTimerCommand}"
+                Content="120 min">
+                <Button.CommandParameter>
+                    <system:Int32>120</system:Int32>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
 
+    </StackPanel>
 </Window>
