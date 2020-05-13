@@ -68,7 +68,7 @@
                             Height="16"
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"
-                            Kind="TargetArrow"
+                            Kind="TagOutline"
                             Opacity="0.5" />
                         <TextBlock
                             Grid.Column="1"
