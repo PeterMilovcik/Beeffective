@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Beeffective.Core.Models
 {
@@ -6,6 +7,11 @@ namespace Beeffective.Core.Models
     {
         private string name;
         private TimeSpan timeSpent;
+
+        public TagModel()
+        {
+            Tasks = new List<TaskModel>();
+        }
 
         public string Name
         {
@@ -18,6 +24,8 @@ namespace Beeffective.Core.Models
             get => timeSpent;
             set => SetProperty(ref timeSpent, value);
         }
+
+        public List<TaskModel> Tasks { get; }
 
         public bool Equals(TagModel other)
         {

@@ -146,6 +146,10 @@ namespace Beeffective.Presentation.Main.Priority
                 {
                     var tagModel = result.Single(tm => tm.Name == tagName);
                     tagModel.TimeSpent = tagModel.TimeSpent.Add(taskViewModel.Model.TimeSpent);
+                    if (!tagModel.Tasks.Contains(taskViewModel.Model))
+                    {
+                        tagModel.Tasks.Add(taskViewModel.Model);
+                    }
                 }
             }
 
