@@ -106,7 +106,7 @@ namespace Beeffective.Presentation.Main.Priority
             var result = new HashSet<GoalModel>();
             foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Goal)))
             {
-                var goalModel = new GoalModel {Name = taskViewModel.Model.Goal};
+                var goalModel = new GoalModel { Name = taskViewModel.Model.Goal };
                 result.Add(goalModel);
             }
 
@@ -114,6 +114,13 @@ namespace Beeffective.Presentation.Main.Priority
             {
                 var goalModel = result.Single(gm => gm.Name == taskViewModel.Model.Goal);
                 goalModel.TimeSpent = goalModel.TimeSpent.Add(taskViewModel.Model.TimeSpent);
+            }
+
+            foreach (var goalModel in result)
+            {
+                goalModel.Tasks = collection
+                    .Where(t => t.Model.Goal == goalModel.Name)
+                    .Select(t => t.Model);
             }
 
             return result;

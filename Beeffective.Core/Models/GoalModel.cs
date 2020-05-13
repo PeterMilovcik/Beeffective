@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
 {
@@ -6,6 +9,7 @@ namespace Beeffective.Core.Models
     {
         private string name;
         private TimeSpan timeSpent;
+        private IEnumerable<TaskModel> tasks;
 
         public string Name
         {
@@ -17,6 +21,32 @@ namespace Beeffective.Core.Models
         {
             get => timeSpent;
             set => SetProperty(ref timeSpent, value);
+        }
+
+        public IEnumerable<TaskModel> Tasks
+        {
+            get => tasks;
+            set => SetProperty(ref tasks, value).IfTrue(() =>
+            {
+                foreach (var taskModel in tasks)
+                {
+                    taskModel.PropertyChanged += OnTaskPropertyChanged;
+                }
+            });
+        }
+
+        private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TaskModel.TimeSpent))
+            {
+                var newTimeSpent = TimeSpan.Zero;
+                foreach (var taskModel in Tasks)
+                {
+                    newTimeSpent = newTimeSpent.Add(taskModel.TimeSpent);
+                }
+
+                TimeSpent = newTimeSpent;
+            }
         }
 
         public bool Equals(GoalModel other)
