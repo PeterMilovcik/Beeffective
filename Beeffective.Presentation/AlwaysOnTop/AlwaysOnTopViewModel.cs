@@ -1,12 +1,7 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Diagnostics;
-using Beeffective.Core.Models;
-using Beeffective.Core.Time;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Priority;
-using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.AlwaysOnTop
 {

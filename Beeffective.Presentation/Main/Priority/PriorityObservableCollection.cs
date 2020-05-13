@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core;
+using Beeffective.Core.Models;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 
@@ -21,8 +23,8 @@ namespace Beeffective.Presentation.Main.Priority
         private TaskViewModel selected;
         private bool isSelected;
         private readonly ObservableCollection<TaskViewModel> collection;
-        private ObservableCollection<string> goals;
-        private ObservableCollection<string> tags;
+        private ObservableCollection<GoalModel> goals;
+        private ObservableCollection<TagModel> tags;
 
         [ImportingConstructor]
         public PriorityObservableCollection(IRepositoryService repository)
@@ -30,6 +32,8 @@ namespace Beeffective.Presentation.Main.Priority
             this.repository = repository;
             collection = new ObservableCollection<TaskViewModel>();
             collection.CollectionChanged += OnCollectionChanged;
+            Goals = new ObservableCollection<GoalModel>();
+            Tags = new ObservableCollection<TagModel>();
         }
 
         public TaskViewModel Selected
@@ -65,9 +69,18 @@ namespace Beeffective.Presentation.Main.Priority
 
         public void Add(TaskViewModel item)
         {
+            if (item == null) return;
             collection.Add(item);
+            item.PropertyChanged += OnTaskViewModelPropertyChanged;
+            item.Model.PropertyChanged += OnTaskModelPropertyChanged;
             UpdateGoalsAndTasks();
         }
+
+        private void OnTaskViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) => 
+            UpdateGoalsAndTasks();
+
+        private void OnTaskModelPropertyChanged(object sender, PropertyChangedEventArgs e) => 
+            UpdateGoalsAndTasks();
 
         public void Clear()
         {
@@ -84,23 +97,52 @@ namespace Beeffective.Presentation.Main.Priority
 
         private void UpdateGoalsAndTasks()
         {
-            Goals = new ObservableCollection<string>(GetGoals());
-            Tags = new ObservableCollection<string>(GetTags());
+            Goals = new ObservableCollection<GoalModel>(GetGoals());
+            Tags = new ObservableCollection<TagModel>(GetTags());
         }
 
-        private IEnumerable<string> GetGoals() => collection
-            .Where(t => !string.IsNullOrWhiteSpace(t.Model.Goal))
-            .Select(t => t.Model.Goal).Distinct();
-
-        private IEnumerable<string> GetTags()
+        private IEnumerable<GoalModel> GetGoals()
         {
-            var result = new List<string>();
-            foreach (var taskModel in collection.Where(t => !string.IsNullOrWhiteSpace(t.Model.Tags)))
+            var result = new HashSet<GoalModel>();
+            foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Goal)))
             {
-                result.AddRange(taskModel.Model.Tags.Trim().Split(" "));
+                var goalModel = new GoalModel {Name = taskViewModel.Model.Goal};
+                result.Add(goalModel);
             }
 
-            return result.Distinct();
+            foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Goal)))
+            {
+                var goalModel = result.Single(gm => gm.Name == taskViewModel.Model.Goal);
+                goalModel.TimeSpent = goalModel.TimeSpent.Add(taskViewModel.Model.TimeSpent);
+            }
+
+            return result;
+        }
+
+        private IEnumerable<TagModel> GetTags()
+        {
+            var result = new HashSet<TagModel>();
+            foreach (var taskViewModel in collection.Where(t => !string.IsNullOrWhiteSpace(t.Model.Tags)))
+            {
+                var tagNames = taskViewModel.Model.Tags.Trim().Split(" ");
+                foreach (var tagName in tagNames)
+                {
+                    var tagModel = new TagModel {Name = tagName};
+                    result.Add(tagModel);
+                }
+            }
+
+            foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Tags)))
+            {
+                var tagNames = taskViewModel.Model.Tags.Trim().Split(" ");
+                foreach (var tagName in tagNames)
+                {
+                    var tagModel = result.Single(tm => tm.Name == tagName);
+                    tagModel.TimeSpent = tagModel.TimeSpent.Add(taskViewModel.Model.TimeSpent);
+                }
+            }
+
+            return result;
         }
 
         public bool Contains(TaskViewModel item) => 
@@ -113,13 +155,13 @@ namespace Beeffective.Presentation.Main.Priority
 
         public bool IsReadOnly => false;
 
-        public ObservableCollection<string> Goals
+        public ObservableCollection<GoalModel> Goals
         {
             get => goals;
             set => SetProperty(ref goals, value);
         }
 
-        public ObservableCollection<string> Tags
+        public ObservableCollection<TagModel> Tags
         {
             get => tags;
             set => SetProperty(ref tags, value);
@@ -130,7 +172,7 @@ namespace Beeffective.Presentation.Main.Priority
             var list = (await repository.LoadTaskAsync())
                 .Select(taskModel => new TaskViewModel(taskModel)).ToList()
                 .OrderBy(vm => vm.Model.Priority).ToList();
-            collection.Clear();
+            Clear();
             list.ForEach(Add);
         }
 

@@ -65,7 +65,7 @@
                             Margin="5,2"
                             Foreground="{StaticResource MaterialDesignDarkForeground}"
                             Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding}" />
+                            Text="{Binding Name}" />
                     </DataTemplate>
                 </sf:SfTextBoxExt.AutoCompleteItemTemplate>
             </sf:SfTextBoxExt>
@@ -95,7 +95,7 @@
                             Margin="5,2"
                             Foreground="{StaticResource MaterialDesignDarkForeground}"
                             Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding}" />
+                            Text="{Binding Name}" />
                     </DataTemplate>
                 </sf:SfTextBoxExt.AutoCompleteItemTemplate>
             </sf:SfTextBoxExt>
