@@ -25,6 +25,8 @@ namespace Beeffective.Presentation.Main.Priority
         private readonly ObservableCollection<TaskViewModel> collection;
         private ObservableCollection<GoalModel> goals;
         private ObservableCollection<TagModel> tags;
+        private ObservableCollection<string> goalNames;
+        private ObservableCollection<string> tagNames;
 
         [ImportingConstructor]
         public PriorityObservableCollection(IRepositoryService repository)
@@ -98,7 +100,9 @@ namespace Beeffective.Presentation.Main.Priority
         private void UpdateGoalsAndTasks()
         {
             Goals = new ObservableCollection<GoalModel>(GetGoals());
+            GoalNames = new ObservableCollection<string>(Goals.Select(g => g.Name));
             Tags = new ObservableCollection<TagModel>(GetTags());
+            TagNames = new ObservableCollection<string>(Tags.Select(t => t.Name));
         }
 
         private IEnumerable<GoalModel> GetGoals()
@@ -172,10 +176,22 @@ namespace Beeffective.Presentation.Main.Priority
             set => SetProperty(ref goals, value);
         }
 
+        public ObservableCollection<string> GoalNames
+        {
+            get => goalNames;
+            set => SetProperty(ref goalNames, value);
+        }
+
         public ObservableCollection<TagModel> Tags
         {
             get => tags;
             set => SetProperty(ref tags, value);
+        }
+
+        public ObservableCollection<string> TagNames
+        {
+            get => tagNames;
+            set => SetProperty(ref tagNames, value);
         }
 
         public async Task LoadAsync()

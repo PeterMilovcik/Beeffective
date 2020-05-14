@@ -24,7 +24,7 @@
         <StackPanel Margin="64,64,0,0" HorizontalAlignment="Left">
 
             <TextBlock
-                VerticalAlignment="Center"
+                VerticalAlignment="Stretch"
                 FontFamily="{StaticResource MaterialDesignFont}"
                 FontSize="{StaticResource HeaderFontSize}"
                 FontWeight="ExtraBold"
@@ -33,48 +33,47 @@
 
             <sf:SfTextBoxExt
                 Width="{StaticResource TextBoxWidth}"
+                Height="35"
                 Margin="0,16,16,0"
+                VerticalContentAlignment="Center"
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"
                 FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-                Text="{Binding NewTask.Model.Title, UpdateSourceTrigger=PropertyChanged}"
-                Watermark="Title" />
-
-            <sf:SfTextBoxExt
-                Width="{StaticResource TextBoxWidth}"
-                Margin="0,16,16,0"
-                AutoCompleteMode="SuggestAppend"
-                AutoCompleteSource="{Binding Tasks.Goals}"
-                Background="{StaticResource MaterialDesignPaper}"
-                BorderThickness="0"
-                CaretBrush="{StaticResource PrimaryHueMidBrush}"
-                FontSize="{StaticResource FontSize}"
-                Foreground="{StaticResource MaterialDesignDarkForeground}"
-                HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
-                IgnoreCase="True"
-                SuggestionMode="Contains"
-                Text="{Binding NewTask.Model.Goal}"
-                TextHighlightMode="FirstOccurrence"
-                Watermark="Goal">
-                <sf:SfTextBoxExt.AutoCompleteItemTemplate>
+                Text="{Binding NewTask.Model.Title, UpdateSourceTrigger=PropertyChanged}">
+                <sf:SfTextBoxExt.WatermarkTemplate>
                     <DataTemplate>
-                        <TextBlock
-                            Margin="5,2"
-                            Foreground="{StaticResource MaterialDesignDarkForeground}"
-                            Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding Name}" />
+                        <TextBlock VerticalAlignment="Center" Text="Title" />
                     </DataTemplate>
-                </sf:SfTextBoxExt.AutoCompleteItemTemplate>
+                </sf:SfTextBoxExt.WatermarkTemplate>
             </sf:SfTextBoxExt>
 
+            <ComboBox
+                Width="{StaticResource TextBoxWidth}"
+                Margin="0,16,16,0"
+                md:HintAssist.Hint="Search"
+                md:HintAssist.HintOpacity=".5"
+                Background="{StaticResource MaterialDesignPaper}"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEditable="True"
+                ItemsSource="{Binding Tasks.GoalNames}"
+                Style="{StaticResource MaterialDesignComboBox}"
+                Text="{Binding NewTask.Model.Goal}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
             <sf:SfTextBoxExt
                 Width="{StaticResource TextBoxWidth}"
                 Margin="0,16,16,0"
                 AutoCompleteMode="SuggestAppend"
-                AutoCompleteSource="{Binding Tasks.Tags}"
+                AutoCompleteSource="{Binding Tasks.TagNames}"
                 Background="{StaticResource MaterialDesignPaper}"
                 BorderThickness="0"
                 CaretBrush="{StaticResource PrimaryHueMidBrush}"
@@ -83,19 +82,23 @@
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 HighlightedTextColor="{StaticResource PrimaryHueMidBrush}"
                 IgnoreCase="True"
-                MultiSelectMode="Delimiter"
+                MultiSelectMode="Token"
                 SuggestionMode="Contains"
                 Text="{Binding NewTask.Model.Tags}"
                 TextHighlightMode="FirstOccurrence"
-                TokensWrapMode="Wrap"
-                Watermark="Space separated tags">
+                TokensWrapMode="Wrap">
+                <sf:SfTextBoxExt.WatermarkTemplate>
+                    <DataTemplate>
+                        <TextBlock VerticalAlignment="Center" Text="Space separated tags" />
+                    </DataTemplate>
+                </sf:SfTextBoxExt.WatermarkTemplate>
                 <sf:SfTextBoxExt.AutoCompleteItemTemplate>
                     <DataTemplate>
                         <TextBlock
                             Margin="5,2"
                             Foreground="{StaticResource MaterialDesignDarkForeground}"
                             Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding Name}" />
+                            Text="{Binding}" />
                     </DataTemplate>
                 </sf:SfTextBoxExt.AutoCompleteItemTemplate>
             </sf:SfTextBoxExt>
