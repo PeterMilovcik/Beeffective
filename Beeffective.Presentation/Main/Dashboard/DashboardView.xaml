@@ -11,7 +11,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,7 +21,7 @@
             <system:Double x:Key="TextBoxWidth">600</system:Double>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid Margin="16">
 
         <Grid.RowDefinitions>
@@ -140,7 +140,7 @@
                             Margin="5,2"
                             Foreground="{StaticResource MaterialDesignDarkForeground}"
                             Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding}" />
+                            Text="{Binding Name}" />
                     </DataTemplate>
                 </sf:SfTextBoxExt.AutoCompleteItemTemplate>
             </sf:SfTextBoxExt>
@@ -169,7 +169,7 @@
                             Margin="5,2"
                             Foreground="{StaticResource MaterialDesignDarkForeground}"
                             Style="{StaticResource MaterialDesignTextBlock}"
-                            Text="{Binding}" />
+                            Text="{Binding Name}" />
                     </DataTemplate>
                 </sf:SfTextBoxExt.AutoCompleteItemTemplate>
             </sf:SfTextBoxExt>

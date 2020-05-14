@@ -28,7 +28,7 @@ namespace Beeffective.Presentation.Extensions
                 result += $"{timeSpan.Seconds}s";
             }
 
-            if (timeSpan <= TimeSpan.Zero)
+            if (timeSpan < TimeSpan.Zero)
             {
                 result += "- ";
                 if (timeSpan.Days < 0)

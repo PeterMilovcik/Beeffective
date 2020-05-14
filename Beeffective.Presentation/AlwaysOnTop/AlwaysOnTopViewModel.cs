@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Timers;
+using Beeffective.Core.Extensions;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Priority;
 
@@ -45,7 +46,8 @@ namespace Beeffective.Presentation.AlwaysOnTop
         public TimeSpan RemainingTime
         {
             get => remainingTime;
-            set => SetProperty(ref remainingTime, value);
+            set => SetProperty(ref remainingTime, value)
+                .IfTrue(() => IsTimerElapsed = RemainingTime < TimeSpan.Zero);
         }
 
         public bool IsTimerElapsed
@@ -56,11 +58,15 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void TimeTrack()
         {
-            IsTimePickerVisible = !IsTimePickerVisible;
             if (Tasks.Selected.Model.IsTimerEnabled)
             {
                 Tasks.Selected.Model.IsTimerEnabled = false;
                 timer.Stop();
+                RemainingTime = TimeSpan.Zero;
+            }
+            else
+            {
+                IsTimePickerVisible = true;
             }
         }
 
@@ -92,13 +98,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         public void Close() => view.Close();
 
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        {
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e) => 
             RemainingTime = RemainingTime.Add(TimeSpan.FromMilliseconds(-timer.Interval));
-            if (RemainingTime <= TimeSpan.Zero)
-            {
-                IsTimerElapsed = true;
-            }
-        }
     }
 }

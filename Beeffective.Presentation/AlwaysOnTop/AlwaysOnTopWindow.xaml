@@ -116,7 +116,7 @@
                 Command="{Binding StartTimerCommand}"
                 Content="5 min">
                 <Button.CommandParameter>
-                    <system:Int32>1</system:Int32>
+                    <system:Int32>5</system:Int32>
                 </Button.CommandParameter>
             </Button>
             <Button
