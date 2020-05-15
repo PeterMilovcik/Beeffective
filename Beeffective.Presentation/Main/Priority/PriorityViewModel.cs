@@ -18,6 +18,7 @@ namespace Beeffective.Presentation.Main.Priority
         public PriorityViewModel(PriorityObservableCollection tasks) : base(tasks)
         {
             Tasks.CollectionChanged += (sender, args) => Update();
+            Tasks.Changed += (sender, args) => Update();
         }
 
         public override async Task InitializeAsync()
@@ -29,11 +30,11 @@ namespace Beeffective.Presentation.Main.Priority
         private void Update()
         {
             PriorityCollection = new ObservableCollection<TaskViewModel>(
-                Tasks.OrderBy(t => t.Model.Priority));
+                Tasks.Where(t => !t.Model.IsFinished).OrderBy(t => t.Model.Priority));
             UrgencyCollection = new ObservableCollection<TaskViewModel>(
-                Tasks.OrderBy(t => t.Model.Urgency));
+                Tasks.Where(t => !t.Model.IsFinished).OrderBy(t => t.Model.Urgency));
             ImportanceCollection = new ObservableCollection<TaskViewModel>(
-                Tasks.OrderBy(t => t.Model.Importance));
+                Tasks.Where(t => !t.Model.IsFinished).OrderBy(t => t.Model.Importance));
         }
 
         public ObservableCollection<TaskViewModel> PriorityCollection

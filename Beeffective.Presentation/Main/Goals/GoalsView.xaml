@@ -118,16 +118,56 @@
                             Height="16"
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"
-                            Kind="HexagonOutline"
-                            Opacity="0.5" />
+                            Opacity="0.5">
+
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon">
+                                    <Setter Property="Kind" Value="CheckboxBlankOutline" />
+
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFinished}" Value="True">
+                                            <Setter Property="Kind" Value="CheckboxMarkedOutline" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+
+                        </materialDesign:PackIcon>
+
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{Binding Title}" />
+                            Text="{Binding Title}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource MaterialDesignBody}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFinished}" Value="True">
+                                            <Setter Property="Foreground" Value="{StaticResource MaterialDesignBodyLight}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
                         <TextBlock
                             Grid.Column="2"
                             Margin="8,0"
-                            Text="{Binding TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                            Text="{Binding TimeSpent, Converter={StaticResource TimeSpanConverter}}">
+
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource MaterialDesignBody}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsFinished}" Value="True">
+                                            <Setter Property="Foreground" Value="{StaticResource MaterialDesignBodyLight}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+
+                        </TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

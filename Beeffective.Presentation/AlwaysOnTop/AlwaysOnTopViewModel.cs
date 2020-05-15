@@ -93,14 +93,19 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             if (e.PropertyName == nameof(Tasks.IsSelected))
             {
-                if (Tasks.IsSelected)
-                {
-                    view.Show();
-                }
-                else
-                {
-                    view.Hide();
-                }
+                UpdateViewVisibility();
+            }
+        }
+
+        private void UpdateViewVisibility()
+        {
+            if (Tasks.IsSelected)
+            {
+                view.Show();
+            }
+            else
+            {
+                view.Hide();
             }
         }
 
@@ -112,6 +117,11 @@ namespace Beeffective.Presentation.AlwaysOnTop
             if (Tasks.Selected == null) return;
             if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
             Tasks.Selected.Model.IsFinished = true;
+            Tasks.Selected = null;
+            Tasks.NotifyPropertyChange(nameof(Tasks.Unfinished));
+            Tasks.NotifyPropertyChange(nameof(Tasks.Finished));
+            Tasks.NotifyChange();
+            UpdateViewVisibility();
         }
 
         public void Close() => view.Close();

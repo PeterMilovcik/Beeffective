@@ -9,13 +9,13 @@ namespace Beeffective.Core
         {
             if (Equals(storage, value)) return false;
             storage = value;
-            OnPropertyChanged(propertyName);
+            NotifyPropertyChange(propertyName);
             return true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => 
+        public virtual void NotifyPropertyChange([CallerMemberName] string propertyName = null) => 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

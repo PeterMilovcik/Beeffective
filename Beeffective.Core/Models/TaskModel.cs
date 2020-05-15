@@ -40,7 +40,7 @@ namespace Beeffective.Core.Models
             {
                 SetProperty(ref urgency, value).IfTrue(() =>
                 {
-                    OnPropertyChanged(nameof(Priority));
+                    NotifyPropertyChange(nameof(Priority));
                     IsChanged = true;
                 });
             }
@@ -51,7 +51,7 @@ namespace Beeffective.Core.Models
             get => importance;
             set => SetProperty(ref importance, value).IfTrue(() =>
             {
-                OnPropertyChanged(nameof(Priority));
+                NotifyPropertyChange(nameof(Priority));
                 IsChanged = true;
             });
         }
@@ -109,7 +109,7 @@ namespace Beeffective.Core.Models
         {
             if (currentRecord == null) return;
             currentRecord.StopAt = DateTime.Now;
-            OnPropertyChanged(nameof(TimeSpent));
+            NotifyPropertyChange(nameof(TimeSpent));
         }
 
         private void StopTimer()
@@ -119,7 +119,7 @@ namespace Beeffective.Core.Models
             Records.Add(currentRecord);
             IsChanged = true;
             currentRecord = null;
-            OnPropertyChanged(nameof(TimeSpent));
+            NotifyPropertyChange(nameof(TimeSpent));
         }
 
         public ObservableCollection<RecordModel> Records { get; }

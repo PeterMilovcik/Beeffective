@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
-using Beeffective.Core;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
@@ -15,7 +14,7 @@ namespace Beeffective.Presentation.Main.Priority
 {
     [Export]
     public class PriorityObservableCollection :
-        Observable,
+        Changeable,
         ICollection<TaskViewModel>,
         INotifyCollectionChanged
     {
@@ -46,7 +45,7 @@ namespace Beeffective.Presentation.Main.Priority
                 if (SetProperty(ref selected, value))
                 {
                     IsSelected = selected != null;
-                    OnPropertyChanged(nameof(Selected));
+                    NotifyPropertyChange(nameof(Selected));
                 }
             }
         }
@@ -205,5 +204,9 @@ namespace Beeffective.Presentation.Main.Priority
 
         public async Task SaveAsync() => 
             await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
+
+        public IEnumerable<TaskViewModel> Unfinished => collection.Where(t => t.Model.IsFinished == false);
+        
+        public IEnumerable<TaskViewModel> Finished => collection.Where(t => t.Model.IsFinished);
     }
 }

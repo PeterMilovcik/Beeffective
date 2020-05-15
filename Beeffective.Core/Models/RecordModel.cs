@@ -17,7 +17,7 @@ namespace Beeffective.Core.Models
             set => SetProperty(ref startAt, value).IfTrue(() =>
             {
                 IsChanged = true;
-                OnPropertyChanged(nameof(Duration));
+                NotifyPropertyChange(nameof(Duration));
             });
         }
 
@@ -27,7 +27,7 @@ namespace Beeffective.Core.Models
             set => SetProperty(ref stopAt, value).IfTrue(() =>
             {
                 IsChanged = true;
-                OnPropertyChanged(nameof(Duration));
+                NotifyPropertyChange(nameof(Duration));
             });
         }
 

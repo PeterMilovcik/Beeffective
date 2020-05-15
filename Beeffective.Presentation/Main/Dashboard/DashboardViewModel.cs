@@ -17,6 +17,7 @@ namespace Beeffective.Presentation.Main.Dashboard
         public DashboardViewModel(PriorityObservableCollection tasks) : base(tasks)
         {
             Tasks.CollectionChanged += (sender, args) => Update();
+            Tasks.Changed += (sender, args) => Update();
         }
 
         public override async Task InitializeAsync()
@@ -27,8 +28,9 @@ namespace Beeffective.Presentation.Main.Dashboard
 
         private void Update()
         {
-            PriorityCollection = new ObservableCollection<TaskViewModel>(
-                Tasks.OrderBy(t => t.Model.Priority));
+            PriorityCollection = new ObservableCollection<TaskViewModel>(Tasks
+                .Where(t => !t.Model.IsFinished)
+                .OrderBy(t => t.Model.Priority));
         }
 
         public ObservableCollection<TaskViewModel> PriorityCollection

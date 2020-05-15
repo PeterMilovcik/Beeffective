@@ -17,7 +17,7 @@ namespace Beeffective.Presentation.Main.Record
             get => startAt;
             set
             {
-                if (SetProperty(ref startAt, value)) OnPropertyChanged(nameof(Duration));
+                if (SetProperty(ref startAt, value)) NotifyPropertyChange(nameof(Duration));
             }
         }
 
@@ -26,7 +26,7 @@ namespace Beeffective.Presentation.Main.Record
             get => stopAt;
             set
             {
-                if (SetProperty(ref stopAt, value)) OnPropertyChanged(nameof(Duration));
+                if (SetProperty(ref stopAt, value)) NotifyPropertyChange(nameof(Duration));
             }
         }
 
