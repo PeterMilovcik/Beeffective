@@ -12,7 +12,8 @@ namespace Beeffective.Core.Models
                 Urgency = model.Urgency,
                 Importance = model.Importance,
                 Goal = model.Goal,
-                Tags = model.Tags
+                Tags = model.Tags,
+                IsFinished = model.IsFinished
             };
 
         public static TaskModel ToModel(this TaskEntity entity) =>
@@ -23,7 +24,8 @@ namespace Beeffective.Core.Models
                 Urgency = entity.Urgency,
                 Importance = entity.Importance,
                 Goal = entity.Goal,
-                Tags = entity.Tags
+                Tags = entity.Tags,
+                IsFinished = entity.IsFinished
             };
     }
 }

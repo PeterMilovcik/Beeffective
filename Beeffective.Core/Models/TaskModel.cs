@@ -15,6 +15,7 @@ namespace Beeffective.Core.Models
         private RecordModel currentRecord;
         private readonly Timer timer;
         private bool isTimerEnabled;
+        private bool isFinished;
 
         public TaskModel()
         {
@@ -122,5 +123,11 @@ namespace Beeffective.Core.Models
         }
 
         public ObservableCollection<RecordModel> Records { get; }
+
+        public bool IsFinished
+        {
+            get => isFinished;
+            set => SetProperty(ref isFinished, value);
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             TimeTrackerCommand = new DelegateCommand(obj => TimeTrack());
             StartTimerCommand = new DelegateCommand(StartTimer);
+            FinishCommand = new DelegateCommand(obj => Finish());
             timer = new Timer();
             timer.Interval = 1000;
             timer.Elapsed += OnTimerElapsed;
@@ -36,6 +37,8 @@ namespace Beeffective.Presentation.AlwaysOnTop
         public DelegateCommand TimeTrackerCommand { get; }
 
         public DelegateCommand StartTimerCommand { get; }
+
+        public DelegateCommand FinishCommand { get; }
 
         public bool IsTimePickerVisible
         {
@@ -60,14 +63,19 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             if (Tasks.Selected.Model.IsTimerEnabled)
             {
-                Tasks.Selected.Model.IsTimerEnabled = false;
-                timer.Stop();
-                RemainingTime = TimeSpan.Zero;
+                StopTimer();
             }
             else
             {
                 IsTimePickerVisible = true;
             }
+        }
+
+        private void StopTimer()
+        {
+            Tasks.Selected.Model.IsTimerEnabled = false;
+            timer.Stop();
+            RemainingTime = TimeSpan.Zero;
         }
 
         private void StartTimer(object obj)
@@ -96,9 +104,16 @@ namespace Beeffective.Presentation.AlwaysOnTop
             }
         }
 
-        public void Close() => view.Close();
-
         private void OnTimerElapsed(object sender, ElapsedEventArgs e) => 
             RemainingTime = RemainingTime.Add(TimeSpan.FromMilliseconds(-timer.Interval));
+
+        private void Finish()
+        {
+            if (Tasks.Selected == null) return;
+            if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
+            Tasks.Selected.Model.IsFinished = true;
+        }
+
+        public void Close() => view.Close();
     }
 }

@@ -63,6 +63,7 @@
                 Height="23"
                 Padding="0"
                 Command="{Binding TimeTrackerCommand}">
+
                 <md:PackIcon Width="16" Height="16">
                     <md:PackIcon.Style>
                         <Style TargetType="md:PackIcon">
@@ -75,6 +76,7 @@
                         </Style>
                     </md:PackIcon.Style>
                 </md:PackIcon>
+
             </Button>
 
             <Grid
