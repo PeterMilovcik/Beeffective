@@ -5,11 +5,11 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     Title="AlwaysOnTopWindow"
-    Width="400"
+    Width="500"
     Height="46"
     AllowsTransparency="True"
     Background="Transparent"
-    Left="1300"
+    Left="1200"
     MouseMove="AlwaysOnTopWindow_OnMouseMove"
     ResizeMode="NoResize"
     Top="0"
@@ -27,17 +27,21 @@
 
     <StackPanel>
         <Grid Height="23" VerticalAlignment="Top">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Border
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="2,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
+                CornerRadius="2"
                 Opacity="0.75">
 
                 <Border.Style>
@@ -55,8 +59,8 @@
 
             <Button
                 Grid.Column="0"
-                Width="20"
-                Height="20"
+                Width="23"
+                Height="23"
                 Padding="0"
                 Command="{Binding TimeTrackerCommand}">
                 <md:PackIcon Width="16" Height="16">
@@ -99,9 +103,22 @@
 
             </Grid>
 
+            <Button
+                Grid.Column="3"
+                Width="23"
+                Height="23"
+                Padding="0"
+                Command="{Binding FinishCommand}">
+                <md:PackIcon
+                    Width="16"
+                    Height="16"
+                    Kind="Check" />
+            </Button>
+
         </Grid>
 
         <Grid Visibility="{Binding IsTimePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -109,6 +126,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <Button
                 Grid.Column="0"
                 Height="21"
@@ -119,6 +137,7 @@
                     <system:Int32>5</system:Int32>
                 </Button.CommandParameter>
             </Button>
+
             <Button
                 Grid.Column="1"
                 Height="21"
@@ -129,6 +148,7 @@
                     <system:Int32>15</system:Int32>
                 </Button.CommandParameter>
             </Button>
+
             <Button
                 Grid.Column="2"
                 Height="21"
@@ -139,6 +159,7 @@
                     <system:Int32>30</system:Int32>
                 </Button.CommandParameter>
             </Button>
+
             <Button
                 Grid.Column="3"
                 Height="21"
@@ -149,6 +170,7 @@
                     <system:Int32>60</system:Int32>
                 </Button.CommandParameter>
             </Button>
+
             <Button
                 Grid.Column="4"
                 Height="21"
@@ -159,7 +181,9 @@
                     <system:Int32>120</system:Int32>
                 </Button.CommandParameter>
             </Button>
+
         </Grid>
 
     </StackPanel>
+
 </Window>
