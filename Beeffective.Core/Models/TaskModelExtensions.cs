@@ -13,7 +13,8 @@ namespace Beeffective.Core.Models
                 Importance = model.Importance,
                 Goal = model.Goal,
                 Tags = model.Tags,
-                IsFinished = model.IsFinished
+                IsFinished = model.IsFinished,
+                DueTo = model.DueTo
             };
 
         public static TaskModel ToModel(this TaskEntity entity) =>
@@ -25,7 +26,8 @@ namespace Beeffective.Core.Models
                 Importance = entity.Importance,
                 Goal = entity.Goal,
                 Tags = entity.Tags,
-                IsFinished = entity.IsFinished
+                IsFinished = entity.IsFinished,
+                DueTo = entity.DueTo
             };
     }
 }

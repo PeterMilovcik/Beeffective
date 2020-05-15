@@ -16,6 +16,10 @@ namespace Beeffective.Presentation.AlwaysOnTop
         private TimeSpan remainingTime;
         private readonly Timer timer;
         private bool isTimerElapsed;
+        private bool isRepeatQuestionVisible;
+        private bool isRepeatPickerVisible;
+        private int repeatEvery;
+        private string repeatInterval;
 
         [ImportingConstructor]
         public AlwaysOnTopViewModel(IAlwaysOnTopWindow view, PriorityObservableCollection tasks)
@@ -27,9 +31,13 @@ namespace Beeffective.Presentation.AlwaysOnTop
             TimeTrackerCommand = new DelegateCommand(obj => TimeTrack());
             StartTimerCommand = new DelegateCommand(StartTimer);
             FinishCommand = new DelegateCommand(obj => Finish());
+            ShowRepeatQuestionCommand = new DelegateCommand(obj => ShowRepeatQuestion());
+            ShowRepeatPickerCommand = new DelegateCommand(obj => ShowRepeatPicker());
+            RepeatCommand = new DelegateCommand(obj => Repeat());
             timer = new Timer();
             timer.Interval = 1000;
             timer.Elapsed += OnTimerElapsed;
+            RepeatInterval = "week";
         }
 
         public PriorityObservableCollection Tasks { get; set; }
@@ -38,7 +46,14 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         public DelegateCommand StartTimerCommand { get; }
 
+        public DelegateCommand ShowRepeatQuestionCommand { get; }
+
+        public DelegateCommand ShowRepeatPickerCommand { get; }
+
         public DelegateCommand FinishCommand { get; }
+
+        public DelegateCommand RepeatCommand { get; }
+
 
         public bool IsTimePickerVisible
         {
@@ -118,10 +133,75 @@ namespace Beeffective.Presentation.AlwaysOnTop
             if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
             Tasks.Selected.Model.IsFinished = true;
             Tasks.Selected = null;
+            IsRepeatQuestionVisible = false;
+            IsRepeatPickerVisible = false;
             Tasks.NotifyPropertyChange(nameof(Tasks.Unfinished));
             Tasks.NotifyPropertyChange(nameof(Tasks.Finished));
             Tasks.NotifyChange();
             UpdateViewVisibility();
+        }
+
+        private void ShowRepeatQuestion()
+        {
+            IsRepeatQuestionVisible = true;
+        }
+
+        public bool IsRepeatQuestionVisible
+        {
+            get => isRepeatQuestionVisible;
+            set => SetProperty(ref isRepeatQuestionVisible, value);
+        }
+
+        private void ShowRepeatPicker()
+        {
+            IsRepeatQuestionVisible = false;
+            IsRepeatPickerVisible = true;
+        }
+
+        public bool IsRepeatPickerVisible
+        {
+            get => isRepeatPickerVisible;
+            set => SetProperty(ref isRepeatPickerVisible, value);
+        }
+
+        private void Repeat()
+        {
+            if (Tasks.Selected == null) return;
+            if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
+            var timeSpan = TimeSpan.Zero;
+            switch (RepeatInterval)
+            {
+                case "day": 
+                    timeSpan = TimeSpan.FromDays(RepeatEvery);
+                    break;
+                case "week":
+                    timeSpan = TimeSpan.FromDays(RepeatEvery * 7);
+                    break;
+                case "month":
+                    timeSpan = TimeSpan.FromDays(RepeatEvery * 7 * 4);
+                    break;
+                case "year":
+                    timeSpan = TimeSpan.FromDays(RepeatEvery * 365);
+                    break;
+            }
+            Tasks.Selected.Model.DueTo = Tasks.Selected.Model.DueTo?.Add(timeSpan) ?? DateTime.Now.Add(timeSpan);
+            Tasks.Selected = null;
+            IsRepeatQuestionVisible = false;
+            IsRepeatPickerVisible = false;
+            Tasks.NotifyChange();
+            UpdateViewVisibility();
+        }
+
+        public int RepeatEvery
+        {
+            get => repeatEvery;
+            set => SetProperty(ref repeatEvery, value);
+        }
+
+        public string RepeatInterval
+        {
+            get => repeatInterval;
+            set => SetProperty(ref repeatInterval, value);
         }
 
         public void Close() => view.Close();

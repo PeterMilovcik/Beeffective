@@ -16,6 +16,7 @@ namespace Beeffective.Core.Models
         private readonly Timer timer;
         private bool isTimerEnabled;
         private bool isFinished;
+        private DateTime? dueTo;
 
         public TaskModel()
         {
@@ -127,7 +128,13 @@ namespace Beeffective.Core.Models
         public bool IsFinished
         {
             get => isFinished;
-            set => SetProperty(ref isFinished, value);
+            set => SetProperty(ref isFinished, value).IfTrue(() => IsChanged = true);
+        }
+
+        public DateTime? DueTo
+        {
+            get => dueTo;
+            set => SetProperty(ref dueTo, value).IfTrue(() => IsChanged = true);
         }
     }
 }

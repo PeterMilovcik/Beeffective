@@ -1,4 +1,6 @@
-﻿namespace Beeffective.Data.Entities
+﻿using System;
+
+namespace Beeffective.Data.Entities
 {
     public class TaskEntity
     {
@@ -9,5 +11,6 @@
         public string Goal { get; set; }
         public string Tags { get; set; }
         public bool IsFinished { get; set; }
+        public DateTime? DueTo { get; set; }
     }
 }
