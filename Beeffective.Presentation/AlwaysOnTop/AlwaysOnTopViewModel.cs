@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Timers;
@@ -20,6 +22,11 @@ namespace Beeffective.Presentation.AlwaysOnTop
         private bool isRepeatPickerVisible;
         private int repeatEvery;
         private string repeatInterval;
+        private DateTime dueToDate;
+        private TimeSpan dueToTime;
+        private DateTime originalDueDate;
+        private TimeSpan repeatIntervalTimeSpan;
+
 
         [ImportingConstructor]
         public AlwaysOnTopViewModel(IAlwaysOnTopWindow view, PriorityObservableCollection tasks)
@@ -37,7 +44,9 @@ namespace Beeffective.Presentation.AlwaysOnTop
             timer = new Timer();
             timer.Interval = 1000;
             timer.Elapsed += OnTimerElapsed;
+            RepeatEvery = 1;
             RepeatInterval = "week";
+            RepeatIntervals = new List<string> {"day", "week", "month", "year"};
         }
 
         public PriorityObservableCollection Tasks { get; set; }
@@ -54,6 +63,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         public DelegateCommand RepeatCommand { get; }
 
+        public IEnumerable<string> RepeatIntervals { get; }
 
         public bool IsTimePickerVisible
         {
@@ -156,6 +166,20 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             IsRepeatQuestionVisible = false;
             IsRepeatPickerVisible = true;
+            if (Tasks.Selected == null) return;
+            var dueTo = Tasks.Selected.Model.DueTo;
+            if (dueTo == null)
+            {
+                DueToDate = DateTime.Now.Date;
+                DueToTime = DateTime.Now.TimeOfDay;
+            }
+            else
+            {
+                DueToDate = dueTo.Value.Date;
+                DueToTime = dueTo.Value.TimeOfDay;
+            }
+
+            originalDueDate = DueToDate.Add(DueToTime);
         }
 
         public bool IsRepeatPickerVisible
@@ -168,10 +192,45 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             if (Tasks.Selected == null) return;
             if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
+            
+            Tasks.Selected.Model.DueTo = DueToDate.Add(DueToTime);
+            Tasks.Selected = null;
+            IsRepeatQuestionVisible = false;
+            IsRepeatPickerVisible = false;
+            Tasks.NotifyChange();
+            UpdateViewVisibility();
+        }
+
+        public DateTime DueToDate
+        {
+            get => dueToDate;
+            set => SetProperty(ref dueToDate, value);
+        }
+
+        public TimeSpan DueToTime
+        {
+            get => dueToTime;
+            set => SetProperty(ref dueToTime, value);
+        }
+
+        public int RepeatEvery
+        {
+            get => repeatEvery;
+            set => SetProperty(ref repeatEvery, value).IfTrue(UpdateRepeatIntervalTimeSpan);
+        }
+
+        public string RepeatInterval
+        {
+            get => repeatInterval;
+            set => SetProperty(ref repeatInterval, value).IfTrue(UpdateRepeatIntervalTimeSpan);
+        }
+
+        private void UpdateRepeatIntervalTimeSpan()
+        {
             var timeSpan = TimeSpan.Zero;
             switch (RepeatInterval)
             {
-                case "day": 
+                case "day":
                     timeSpan = TimeSpan.FromDays(RepeatEvery);
                     break;
                 case "week":
@@ -184,24 +243,11 @@ namespace Beeffective.Presentation.AlwaysOnTop
                     timeSpan = TimeSpan.FromDays(RepeatEvery * 365);
                     break;
             }
-            Tasks.Selected.Model.DueTo = Tasks.Selected.Model.DueTo?.Add(timeSpan) ?? DateTime.Now.Add(timeSpan);
-            Tasks.Selected = null;
-            IsRepeatQuestionVisible = false;
-            IsRepeatPickerVisible = false;
-            Tasks.NotifyChange();
-            UpdateViewVisibility();
-        }
 
-        public int RepeatEvery
-        {
-            get => repeatEvery;
-            set => SetProperty(ref repeatEvery, value);
-        }
-
-        public string RepeatInterval
-        {
-            get => repeatInterval;
-            set => SetProperty(ref repeatInterval, value);
+            repeatIntervalTimeSpan = timeSpan;
+            // TODO: UI not updated 
+            DueToDate = originalDueDate.Add(repeatIntervalTimeSpan).Date;
+            DueToTime = originalDueDate.Add(repeatIntervalTimeSpan).TimeOfDay;
         }
 
         public void Close() => view.Close();
