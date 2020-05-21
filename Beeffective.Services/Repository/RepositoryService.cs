@@ -23,7 +23,7 @@ namespace Beeffective.Services.Repository
         {
             var taskEntities = await repository.LoadTaskAsync();
             var recordEntities = await repository.LoadRecordAsync();
-            return taskEntities.Select(taskEntity =>
+            var taskModels = taskEntities.Select(taskEntity =>
             {
                 var taskModel = taskEntity.ToModel();
                 recordEntities
@@ -33,6 +33,20 @@ namespace Beeffective.Services.Repository
                     .ForEach(recordModel => taskModel.Records.Add(recordModel));
                 return taskModel;
             }).ToList();
+
+            var urgency = 0;
+            foreach (var taskModel in taskModels
+                .Where(tm => tm.DueTo.HasValue).
+                OrderBy(tm => tm.DueTo.Value))
+            {
+                taskModel.Urgency = urgency;
+                urgency++;
+            }
+            foreach (var taskModel in taskModels.Where(tm => !tm.DueTo.HasValue))
+            {
+                taskModel.Urgency = urgency;
+            }
+            return taskModels;
         }
 
         public async Task<List<RecordModel>> LoadRecordAsync()
