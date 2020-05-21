@@ -280,6 +280,73 @@
 
             </Grid>
 
+            <Grid Margin="0,32,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="-1440"
+                    Content="-1 d" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="-60"
+                    Content="-1 h" />
+                <Button
+                    Grid.Column="2"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="-10"
+                    Content="-10 m" />
+                <Button
+                    Grid.Column="3"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="-1"
+                    Content="-1 m" />
+                <Border
+                    Grid.Column="4"
+                    BorderBrush="{StaticResource PrimaryHueMidBrush}"
+                    BorderThickness="1">
+                    <TextBlock
+                        Margin="8,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource MaterialDesignFont}"
+                        FontSize="16"
+                        Foreground="{StaticResource PrimaryHueMidBrush}"
+                        Text="{Binding Tasks.Selected.Model.TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                </Border>
+                <Button
+                    Grid.Column="5"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="1"
+                    Content="+1 m" />
+                <Button
+                    Grid.Column="6"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="10"
+                    Content="+10 m" />
+                <Button
+                    Grid.Column="7"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="60"
+                    Content="+1 h" />
+                <Button
+                    Grid.Column="8"
+                    Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
+                    CommandParameter="1440"
+                    Content="+1 d" />
+            </Grid>
+
             <TextBox
                 Height="130"
                 Margin="0,32,0,0"

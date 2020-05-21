@@ -20,6 +20,5 @@ namespace Beeffective.Presentation.Main.Tags
             get => selectedTag;
             set => SetProperty(ref selectedTag, value);
         }
-
     }
 }
