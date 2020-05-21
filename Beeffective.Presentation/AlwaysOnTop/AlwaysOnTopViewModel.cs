@@ -180,6 +180,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
             }
 
             originalDueDate = DueToDate.Add(DueToTime);
+            UpdateRepeatIntervalTimeSpan();
         }
 
         public bool IsRepeatPickerVisible
@@ -192,7 +193,6 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             if (Tasks.Selected == null) return;
             if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
-            
             Tasks.Selected.Model.DueTo = DueToDate.Add(DueToTime);
             Tasks.Selected = null;
             IsRepeatQuestionVisible = false;
