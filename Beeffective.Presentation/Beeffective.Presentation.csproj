@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MaterialDesignThemes" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.1.2" />
     <PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="18.1.0.45" />
     <PackageReference Include="Syncfusion.SfInput.WPF" Version="18.1.0.45" />
     <PackageReference Include="Syncfusion.SfProgressBar.WPF" Version="18.1.0.46" />
