@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
@@ -38,6 +39,5 @@ namespace Beeffective.Presentation.Main.Dashboard
             get => priorityCollection;
             set => SetProperty(ref priorityCollection, value);
         }
-
     }
 }

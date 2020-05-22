@@ -134,7 +134,14 @@ namespace Beeffective.Core.Models
         public DateTime? DueTo
         {
             get => dueTo;
-            set => SetProperty(ref dueTo, value).IfTrue(() => IsChanged = true);
+            set => SetProperty(ref dueTo, value).IfTrue(() =>
+            {
+                
+                IsChanged = true;
+                NotifyPropertyChange(nameof(HasDueTo));
+            });
         }
+
+        public bool HasDueTo => DueTo.HasValue;
     }
 }

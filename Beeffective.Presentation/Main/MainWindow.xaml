@@ -20,6 +20,7 @@
     Height="450"
     WindowState="Maximized"
     mc:Ignorable="d">
+
     <Window.InputBindings>
         <KeyBinding
             Key="N"
@@ -46,6 +47,7 @@
             Command="{Binding CalendarCommand}"
             Modifiers="Control" />
     </Window.InputBindings>
+
     <Window.Resources>
 
         <ResourceDictionary>
@@ -81,29 +83,79 @@
         </ResourceDictionary>
 
     </Window.Resources>
-    <materialDesign:DialogHost>
-        <Grid Background="{StaticResource MaterialDesignBackground}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <c:Background Grid.Column="0" Grid.ColumnSpan="2" />
-            <menu:MenuView
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch" />
-            <Grid
-                Grid.Column="1"
-                Margin="16"
-                Background="{StaticResource MaterialDesignPaper}"
-                Opacity="0.5" />
 
-            <ContentControl
-                Grid.Column="1"
-                Margin="16"
-                Content="{Binding Content}" />
+    <Grid>
 
-            <c:BusyIndicator Grid.Column="1" />
-        </Grid>
-    </materialDesign:DialogHost>
+        <materialDesign:DrawerHost>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <materialDesign:ColorZone
+                    Grid.Row="0"
+                    Padding="16"
+                    Mode="PrimaryMid">
+                    <DockPanel>
+
+                        <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal">
+                            <Button
+                                VerticalAlignment="Center"
+                                Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                CommandParameter="{x:Static Dock.Left}"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                <materialDesign:PackIcon Kind="HamburgerMenu" />
+                            </Button>
+                            <TextBlock
+                                Margin="16,0"
+                                VerticalAlignment="Center"
+                                FontFamily="{StaticResource MaterialDesignFont}"
+                                FontSize="26"
+                                FontWeight="Bold"
+                                Text="Beeffective" />
+                        </StackPanel>
+
+                    </DockPanel>
+                </materialDesign:ColorZone>
+
+                <materialDesign:DialogHost Grid.Row="1">
+
+                    <Grid Background="{StaticResource MaterialDesignBackground}">
+                        <c:Background Grid.Column="0" />
+                        <Grid
+                            Margin="16"
+                            Background="{StaticResource MaterialDesignPaper}"
+                            Opacity="0.5" />
+
+                        <c:BusyIndicator />
+
+                        <ContentControl Margin="16" Content="{Binding Content}" />
+
+                    </Grid>
+
+                </materialDesign:DialogHost>
+
+            </Grid>
+
+            <materialDesign:DrawerHost.LeftDrawerContent>
+
+                <Grid Background="{StaticResource MaterialDesignBackground}">
+
+                    <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+
+                    <menu:MenuView
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Stretch" />
+
+                </Grid>
+
+            </materialDesign:DrawerHost.LeftDrawerContent>
+
+        </materialDesign:DrawerHost>
+
+    </Grid>
+
 </Window>

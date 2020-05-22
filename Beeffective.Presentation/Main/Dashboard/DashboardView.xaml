@@ -261,6 +261,7 @@
                     Cursor="Hand"
                     FontFamily="{StaticResource MaterialDesignFont}"
                     Foreground="{StaticResource PrimaryHueMidBrush}"
+                    IsChecked="{Binding Tasks.Selected.Model.HasDueTo, Mode=OneWayToSource}"
                     Style="{StaticResource MaterialDesignCheckBox}"
                     ToolTip="Due Date" />
 
@@ -294,28 +295,47 @@
                 </Grid.ColumnDefinitions>
                 <Button
                     Grid.Column="0"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="-1440"
                     Content="-1 d" />
                 <Button
                     Grid.Column="1"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="-60"
                     Content="-1 h" />
                 <Button
                     Grid.Column="2"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="-10"
                     Content="-10 m" />
                 <Button
                     Grid.Column="3"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="-1"
                     Content="-1 m" />
                 <Border
                     Grid.Column="4"
+                    Height="23"
+                    Margin="0,0,8,0"
                     BorderBrush="{StaticResource PrimaryHueMidBrush}"
-                    BorderThickness="1">
+                    BorderThickness="1"
+                    CornerRadius="2">
                     <TextBlock
                         Margin="8,0"
                         HorizontalAlignment="Center"
@@ -327,21 +347,36 @@
                 </Border>
                 <Button
                     Grid.Column="5"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="1"
                     Content="+1 m" />
                 <Button
                     Grid.Column="6"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="10"
                     Content="+10 m" />
                 <Button
                     Grid.Column="7"
+                    Height="23"
+                    Margin="0,0,8,0"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="60"
                     Content="+1 h" />
                 <Button
                     Grid.Column="8"
+                    Height="23"
+                    Padding="0"
+                    VerticalContentAlignment="Center"
                     Command="{Binding Tasks.Selected.AdjustTimeSpentCommand}"
                     CommandParameter="1440"
                     Content="+1 d" />
@@ -359,15 +394,6 @@
                 Style="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
                 TextWrapping="Wrap"
                 VerticalScrollBarVisibility="Auto" />
-
-            <Button
-                Margin="0,32,0,0"
-                Padding="0"
-                Command="{Binding SaveCommand}"
-                Content="SAVE"
-                FontFamily="{StaticResource MaterialDesignFont}"
-                FontSize="{StaticResource FontSize}"
-                Style="{StaticResource MaterialDesignRaisedButton}" />
 
         </StackPanel>
 
