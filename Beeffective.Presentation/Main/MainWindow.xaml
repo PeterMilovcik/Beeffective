@@ -100,22 +100,79 @@
                     Mode="PrimaryMid">
                     <DockPanel>
 
-                        <StackPanel materialDesign:RippleAssist.IsCentered="True" Orientation="Horizontal">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
                             <Button
+                                Grid.Column="0"
                                 VerticalAlignment="Center"
                                 Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                                 CommandParameter="{x:Static Dock.Left}"
                                 Style="{StaticResource MaterialDesignIconForegroundButton}">
                                 <materialDesign:PackIcon Kind="HamburgerMenu" />
                             </Button>
-                            <TextBlock
-                                Margin="16,0"
+
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="16,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                    FontSize="14"
+                                    Text="{Binding Tasks.Selected.Model.Goal}" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="16,0"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                    FontSize="26"
+                                    FontWeight="Bold"
+                                    Text="{Binding Tasks.Selected.Model.Title}" />
+
+                            </Grid>
+
+                            <Button
+                                Grid.Column="2"
                                 VerticalAlignment="Center"
-                                FontFamily="{StaticResource MaterialDesignFont}"
-                                FontSize="26"
-                                FontWeight="Bold"
-                                Text="{Binding Tasks.Selected.Model.Title}" />
-                        </StackPanel>
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                <materialDesign:PackIcon Kind="Edit" />
+                            </Button>
+
+                            <Button
+                                Grid.Column="3"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                <materialDesign:PackIcon Kind="Play" />
+                            </Button>
+
+                            <Button
+                                Grid.Column="4"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                <materialDesign:PackIcon Kind="CheckBold" />
+                            </Button>
+
+                            <Button
+                                Grid.Column="5"
+                                VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                <materialDesign:PackIcon Kind="TrashCan" />
+                            </Button>
+
+                        </Grid>
 
                     </DockPanel>
                 </materialDesign:ColorZone>
