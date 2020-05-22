@@ -11,11 +11,11 @@ namespace Beeffective.Presentation.Main
             InitializeComponent();
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override async void OnClosing(CancelEventArgs e)
         {
             if (DataContext is MainViewModel viewModel)
             {
-                viewModel.Close();
+                await viewModel.Close();
             }
             base.OnClosing(e);
         }

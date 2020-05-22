@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
@@ -21,12 +22,13 @@ namespace Beeffective.Presentation.Main
         private readonly IMainView view;
         private ContentViewModel content;
         private List<ContentViewModel> contentViewModels;
-        private IAlwaysOnTopWindow alwaysOnTopWindow;
 
         [ImportingConstructor]
         public MainViewModel(IMainView view)
         {
             this.view = view;
+            this.view.Activated += OnViewActivated;
+            this.view.Deactivated += OnViewDeactivated;
             view.DataContext = this;
             NewCommand = new DelegateCommand(async o => await ChangeContentAsync(New));
             DashboardCommand = new DelegateCommand(async o => await ChangeContentAsync(Dashboard));
@@ -112,6 +114,16 @@ namespace Beeffective.Presentation.Main
         private async Task LoadAsync()
         {
             await Tasks.LoadAsync();
+        }
+
+        private void OnViewActivated(object? sender, EventArgs e)
+        {
+            AlwaysOnTop.Hide();
+        }
+
+        private void OnViewDeactivated(object? sender, EventArgs e)
+        {
+            AlwaysOnTop.Show();
         }
 
         public async Task Close()

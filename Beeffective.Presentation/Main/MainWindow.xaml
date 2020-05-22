@@ -114,7 +114,7 @@
                                 FontFamily="{StaticResource MaterialDesignFont}"
                                 FontSize="26"
                                 FontWeight="Bold"
-                                Text="Beeffective" />
+                                Text="{Binding Tasks.Selected.Model.Title}" />
                         </StackPanel>
 
                     </DockPanel>

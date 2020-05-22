@@ -251,5 +251,12 @@ namespace Beeffective.Presentation.AlwaysOnTop
         }
 
         public void Close() => view.Close();
+
+        public void Hide() => view.Hide();
+
+        public void Show()
+        {
+            if (Tasks.Selected != null) view.Show();
+        }
     }
 }
