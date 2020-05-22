@@ -142,6 +142,12 @@ namespace Beeffective.Core.Models
             });
         }
 
-        public bool HasDueTo => DueTo.HasValue;
+        public bool HasDueTo
+        {
+            get => DueTo.HasValue;
+            set
+            {
+            }
+        }
     }
 }

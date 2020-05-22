@@ -13,7 +13,6 @@
     xmlns:new="clr-namespace:Beeffective.Presentation.Main.New"
     xmlns:priority="clr-namespace:Beeffective.Presentation.Main.Priority"
     xmlns:settings="clr-namespace:Beeffective.Presentation.Main.Settings"
-    xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:tags="clr-namespace:Beeffective.Presentation.Main.Tags"
     Title="Beeffective"
     Width="800"
@@ -105,9 +104,6 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <Button
@@ -119,65 +115,87 @@
                                 <materialDesign:PackIcon Kind="HamburgerMenu" />
                             </Button>
 
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-
-                                <TextBlock
-                                    Grid.Row="0"
-                                    Margin="16,0"
-                                    VerticalAlignment="Center"
-                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                    FontSize="14"
-                                    Text="{Binding Tasks.Selected.Model.Goal}" />
-
-                                <TextBlock
-                                    Grid.Row="1"
-                                    Margin="16,0"
-                                    VerticalAlignment="Center"
-                                    FontFamily="{StaticResource MaterialDesignFont}"
-                                    FontSize="26"
-                                    FontWeight="Bold"
-                                    Text="{Binding Tasks.Selected.Model.Title}" />
-
-                            </Grid>
-
-                            <Button
-                                Grid.Column="2"
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="16,0"
                                 VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignIconForegroundButton}">
-                                <materialDesign:PackIcon Kind="Edit" />
-                            </Button>
+                                FontFamily="{StaticResource MaterialDesignFont}"
+                                FontSize="26"
+                                FontWeight="Bold"
+                                Text="{Binding Tasks.Selected.Model.Title}" />
 
-                            <Button
-                                Grid.Column="3"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignIconForegroundButton}">
-                                <materialDesign:PackIcon Kind="Play" />
-                            </Button>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
 
-                            <Button
-                                Grid.Column="4"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignIconForegroundButton}">
-                                <materialDesign:PackIcon Kind="CheckBold" />
-                            </Button>
+                                <Button VerticalAlignment="Center" Style="{StaticResource MaterialDesignIconForegroundButton}">
+                                    <materialDesign:PackIcon Kind="AddThick" />
+                                </Button>
 
-                            <Button
-                                Grid.Column="5"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignIconForegroundButton}">
-                                <materialDesign:PackIcon Kind="TrashCan" />
-                            </Button>
+                                <Button VerticalAlignment="Center" Command="{Binding Tasks.Selected.EditTaskCommand}">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <materialDesign:PackIcon Kind="Edit" />
+                                </Button>
+
+                                <Button VerticalAlignment="Center">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <materialDesign:PackIcon Kind="Play" />
+                                </Button>
+
+                                <Button VerticalAlignment="Center">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <materialDesign:PackIcon Kind="CheckBold" />
+                                </Button>
+                                <Button VerticalAlignment="Center">
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    <materialDesign:PackIcon Kind="TrashCan" />
+                                </Button>
+
+                            </StackPanel>
 
                         </Grid>
 
                     </DockPanel>
                 </materialDesign:ColorZone>
 
-                <materialDesign:DialogHost Grid.Row="1">
+                <materialDesign:DialogHost
+                    Grid.Row="1"
+                    CloseOnClickAway="True"
+                    Identifier="MainDialogHost">
 
                     <Grid Background="{StaticResource MaterialDesignBackground}">
                         <c:Background Grid.Column="0" />

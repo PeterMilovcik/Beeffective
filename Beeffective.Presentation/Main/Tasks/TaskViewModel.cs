@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Security.Permissions;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.EditTask;
+using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -13,6 +15,7 @@ namespace Beeffective.Presentation.Main.Tasks
             Model = model;
             RemoveCommand = new DelegateCommand(o => OnRemoving());
             AdjustTimeSpentCommand = new DelegateCommand(AdjustTimeSpent);
+            EditTaskCommand = new DelegateCommand(async obj => await EditTaskAsync());
         }
 
         public TaskModel Model { get; }
@@ -37,6 +40,15 @@ namespace Beeffective.Presentation.Main.Tasks
                 Model.Records.Add(newRecord);
                 Model.NotifyPropertyChange(nameof(Model.TimeSpent));
             }
+        }
+
+        public DelegateCommand EditTaskCommand { get; }
+
+        private async Task EditTaskAsync()
+        {
+            var editTaskView = new EditTaskView();
+            editTaskView.DataContext = this;
+            await DialogHost.Show(editTaskView, "MainDialogHost");
         }
     }
 }
