@@ -245,7 +245,6 @@ namespace Beeffective.Presentation.AlwaysOnTop
             }
 
             repeatIntervalTimeSpan = timeSpan;
-            // TODO: UI not updated 
             DueToDate = originalDueDate.Add(repeatIntervalTimeSpan).Date;
             DueToTime = originalDueDate.Add(repeatIntervalTimeSpan).TimeOfDay;
         }
