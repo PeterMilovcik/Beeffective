@@ -1,6 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controlzEx="clr-namespace:ControlzEx;assembly=MaterialDesignThemes.Wpf"
     xmlns:converters="clr-namespace:Beeffective.Presentation.Converters"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
@@ -110,6 +111,10 @@
     </Style>
 
     <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+    <materialDesign:NullableToVisibilityConverter
+        x:Key="InvertedNullVisibilityConverter"
+        NotNullValue="Collapsed"
+        NullValue="Visible" />
     <converters:TimeSpanConverter x:Key="TimeSpanConverter" />
 
 </ResourceDictionary>

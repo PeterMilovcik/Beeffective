@@ -12,6 +12,7 @@ using Beeffective.Presentation.Main.New;
 using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.Main.Settings;
 using Beeffective.Presentation.Main.Tags;
+using Beeffective.Presentation.Main.TopBar;
 
 namespace Beeffective.Presentation.Main
 {
@@ -54,6 +55,9 @@ namespace Beeffective.Presentation.Main
                 IsBusy = false;
             }
         }
+
+        [Import]
+        public TopBarViewModel TopBar { get; set; }
 
         [Import]
         public NewViewModel New { get; set; }
