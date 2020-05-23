@@ -15,7 +15,7 @@ namespace Beeffective.Presentation.Main
         {
             if (DataContext is MainViewModel viewModel)
             {
-                await viewModel.Close();
+                await viewModel.CloseAsync();
             }
             base.OnClosing(e);
         }

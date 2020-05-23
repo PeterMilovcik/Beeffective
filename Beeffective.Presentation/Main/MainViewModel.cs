@@ -103,7 +103,7 @@ namespace Beeffective.Presentation.Main
         [Import]
         public AlwaysOnTopViewModel AlwaysOnTop { get; set; }
 
-        public async Task Show()
+        public async Task ShowAsync()
         {
             view.Show();
             contentViewModels = new List<ContentViewModel>
@@ -120,7 +120,7 @@ namespace Beeffective.Presentation.Main
 
         private void OnViewDeactivated(object sender, EventArgs e) => AlwaysOnTop.Show();
 
-        public async Task Close()
+        public async Task CloseAsync()
         {
             await Tasks.SaveAsync();
             AlwaysOnTop.Close();
