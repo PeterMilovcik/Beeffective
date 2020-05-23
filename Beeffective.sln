@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beeffective.Presentation", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beeffective.Services", "Beeffective.Services\Beeffective.Services.csproj", "{10D7DD88-6EE7-4BC5-B211-847B2756284C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beeffective.Core", "Beeffective.Core\Beeffective.Core.csproj", "{F3F795AD-9D2D-4141-AE46-7BB08A840B2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beeffective.Core", "Beeffective.Core\Beeffective.Core.csproj", "{F3F795AD-9D2D-4141-AE46-7BB08A840B2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beeffective.Data", "Beeffective.Data\Beeffective.Data.csproj", "{D81556E0-C4AC-4A50-BD1D-C8406A974853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beeffective.Data", "Beeffective.Data\Beeffective.Data.csproj", "{D81556E0-C4AC-4A50-BD1D-C8406A974853}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beeffective.Tests", "Beeffective.Tests\Beeffective.Tests.csproj", "{31006E7B-FC78-46E8-83C5-75F1CB2DDBB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D81556E0-C4AC-4A50-BD1D-C8406A974853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D81556E0-C4AC-4A50-BD1D-C8406A974853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D81556E0-C4AC-4A50-BD1D-C8406A974853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31006E7B-FC78-46E8-83C5-75F1CB2DDBB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31006E7B-FC78-46E8-83C5-75F1CB2DDBB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31006E7B-FC78-46E8-83C5-75F1CB2DDBB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31006E7B-FC78-46E8-83C5-75F1CB2DDBB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
