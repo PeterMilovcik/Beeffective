@@ -114,20 +114,11 @@ namespace Beeffective.Presentation.Main
         [Import]
         public PriorityObservableCollection Tasks { get; set; }
 
-        private async Task LoadAsync()
-        {
-            await Tasks.LoadAsync();
-        }
+        private async Task LoadAsync() => await Tasks.LoadAsync();
 
-        private void OnViewActivated(object? sender, EventArgs e)
-        {
-            AlwaysOnTop.Hide();
-        }
+        private void OnViewActivated(object sender, EventArgs e) => AlwaysOnTop.Hide();
 
-        private void OnViewDeactivated(object? sender, EventArgs e)
-        {
-            AlwaysOnTop.Show();
-        }
+        private void OnViewDeactivated(object sender, EventArgs e) => AlwaysOnTop.Show();
 
         public async Task Close()
         {
