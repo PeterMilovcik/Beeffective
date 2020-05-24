@@ -21,7 +21,7 @@ namespace Beeffective.Presentation.Main
     {
         private readonly IMainView view;
         private ContentViewModel content;
-        private List<ContentViewModel> contentViewModels;
+        public List<ContentViewModel> ContentViewModels { get; private set; }
 
         [ImportingConstructor]
         public MainViewModel(IMainView view)
@@ -37,6 +37,7 @@ namespace Beeffective.Presentation.Main
             TagsCommand = new DelegateCommand(async o => await ChangeContentAsync(Tags));
             CalendarCommand = new DelegateCommand(async o => await ChangeContentAsync(Calendar));
             SettingsCommand = new DelegateCommand(async o => await ChangeContentAsync(Settings));
+            ContentViewModels = new List<ContentViewModel>();
         }
 
         public async Task ChangeContentAsync(ContentViewModel viewModel)
@@ -44,7 +45,7 @@ namespace Beeffective.Presentation.Main
             IsBusy = true;
             try
             {
-                contentViewModels.ForEach(vm => vm.IsSelected = false);
+                ContentViewModels.ForEach(vm => vm.IsSelected = false);
                 Content = viewModel;
                 Content.IsSelected = true;
                 await Content.InitializeAsync();
@@ -106,7 +107,7 @@ namespace Beeffective.Presentation.Main
         public async Task ShowAsync()
         {
             view.Show();
-            contentViewModels = new List<ContentViewModel>
+            ContentViewModels = new List<ContentViewModel>
                 {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
             await LoadAsync();
         }

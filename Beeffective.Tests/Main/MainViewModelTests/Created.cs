@@ -55,5 +55,8 @@ namespace Beeffective.Tests.Main.MainViewModelTests
 
         [Test]
         public void SettingsCommand_NotNull() => SUT.SettingsCommand.Should().NotBeNull();
+
+        [Test]
+        public void ContentViewModels_NotNull() => SUT.ContentViewModels.Should().NotBeNull();
     }
 }

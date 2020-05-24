@@ -19,5 +19,4 @@ namespace Beeffective.Tests
             return container;
         }
     }
-
 }
