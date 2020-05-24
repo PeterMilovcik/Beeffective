@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Beeffective.Data.Entities;
+using Beeffective.Tests.Builders;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -13,15 +13,7 @@ namespace Beeffective.Tests.MainViewModelTests
         public override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
-            taskEntity = new TaskEntity();
-            taskEntity.Id = 1;
-            taskEntity.Title = "Test Task";
-            taskEntity.Goal = "Test Goal";
-            taskEntity.DueTo = DateTime.Now.AddDays(1);
-            taskEntity.Importance = 5;
-            taskEntity.Urgency = 3;
-            taskEntity.IsFinished = false;
-            taskEntity.Tags = "TestTag1 TestTag2";
+            taskEntity = new TaskEntityBuilder().Create();
             Repository.TaskEntities.Add(taskEntity);
             SUT.ShowAsync().GetAwaiter().GetResult();
         }
