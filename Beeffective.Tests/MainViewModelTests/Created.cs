@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace Beeffective.Tests.Main.MainViewModelTests
+namespace Beeffective.Tests.MainViewModelTests
 {
     public class Created : TestFixture
     {

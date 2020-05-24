@@ -10,12 +10,14 @@ namespace Beeffective.Presentation.Main.TopBar
     {
         private string title;
         private bool isAddMenuOpen;
+        private const string DefaultTitle = "Beeffective";
 
         [ImportingConstructor]
         public TopBarViewModel(PriorityObservableCollection tasks) : base(tasks)
         {
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
+            Title = DefaultTitle;
         }
 
         public string Title
@@ -26,7 +28,7 @@ namespace Beeffective.Presentation.Main.TopBar
 
         private void OnTasksPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Title = Tasks.IsSelected ? Tasks.Selected.Model.Title : "Beeffective";
+            Title = Tasks.IsSelected ? Tasks.Selected.Model.Title : DefaultTitle;
         }
 
         public DelegateCommand AddCommand { get; }
