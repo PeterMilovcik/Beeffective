@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Priority;
+using Beeffective.Presentation.NewGoal;
+using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.TopBar
 {
@@ -17,6 +20,7 @@ namespace Beeffective.Presentation.Main.TopBar
         {
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
+            AddGoalCommand = new DelegateCommand(async obj => await AddGoalAsync());
             Title = DefaultTitle;
         }
 
@@ -42,6 +46,14 @@ namespace Beeffective.Presentation.Main.TopBar
         {
             get => isAddMenuOpen;
             set => SetProperty(ref isAddMenuOpen, value);
+        }
+
+        public DelegateCommand AddGoalCommand { get; }
+
+        private async Task AddGoalAsync()
+        {
+            var newGoalView = new NewGoalView();
+            await DialogHost.Show(newGoalView);
         }
     }
 }

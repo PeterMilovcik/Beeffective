@@ -126,40 +126,26 @@
 
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
 
-                                <Button
-                                    VerticalAlignment="Center"
-                                    Command="{Binding TopBar.AddCommand}"
-                                    Style="{StaticResource MaterialDesignIconForegroundButton}">
-                                    <Button.ContextMenu>
-                                        <ContextMenu IsOpen="{Binding TopBar.IsAddMenuOpen}">
-                                            <MenuItem>
-                                                <MenuItem.Header>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="Bullseyearrow" />
-                                                        <TextBlock Margin="8,0" Text="Add Goal" />
-                                                    </StackPanel>
-                                                </MenuItem.Header>
-                                            </MenuItem>
-                                            <MenuItem>
-                                                <MenuItem.Header>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="BriefcaseOutline" />
-                                                        <TextBlock Margin="8,0" Text="Add Project" />
-                                                    </StackPanel>
-                                                </MenuItem.Header>
-                                            </MenuItem>
-                                            <MenuItem>
-                                                <MenuItem.Header>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="CardTextOutline" />
-                                                        <TextBlock Margin="8,0" Text="Add Task" />
-                                                    </StackPanel>
-                                                </MenuItem.Header>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                    <materialDesign:PackIcon Kind="AddThick" />
-                                </Button>
+                                <materialDesign:PopupBox>
+
+                                    <materialDesign:PopupBox.ToggleContent>
+                                        <materialDesign:PackIcon Kind="AddThick" />
+                                    </materialDesign:PopupBox.ToggleContent>
+
+                                    <StackPanel>
+
+                                        <Button
+                                            Command="{Binding TopBar.AddGoalCommand}"
+                                            Content="Add Goal"
+                                            Style="{StaticResource MaterialDesignFlatButton}" />
+
+                                        <Button Content="Add Project" Style="{StaticResource MaterialDesignFlatButton}" />
+
+                                        <Button Content="Add Task" Style="{StaticResource MaterialDesignFlatButton}" />
+
+                                    </StackPanel>
+
+                                </materialDesign:PopupBox>
 
                                 <Button VerticalAlignment="Center" Command="{Binding Tasks.Selected.EditTaskCommand}">
                                     <Button.Style>
