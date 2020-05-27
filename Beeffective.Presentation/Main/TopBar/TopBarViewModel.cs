@@ -92,7 +92,7 @@ namespace Beeffective.Presentation.Main.TopBar
 
         private bool CanAddGoal(object arg) => 
             !string.IsNullOrWhiteSpace(NewGoal?.Model.Title) && 
-            Tasks.Goals.Select(g => g.Model.Title).All(t => t != NewGoal.Model.Title);
+            !Tasks.Goals.Select(g => g.Model.Title).Contains(NewGoal.Model.Title);
 
         private void AddGoal(object obj)
         {

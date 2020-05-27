@@ -33,13 +33,13 @@
             <TextBox
                 Margin="16"
                 Style="{StaticResource BeeffectiveTitle2}"
-                Text="{Binding NewGoal.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding NewGoal.Model.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBox
                 Height="130"
                 Margin="16"
                 Style="{StaticResource BeeffectiveDescription}"
-                Text="{Binding NewGoal.Description}" />
+                Text="{Binding NewGoal.Model.Description}" />
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
