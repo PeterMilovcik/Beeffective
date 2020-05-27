@@ -33,7 +33,7 @@
             <TextBox
                 Margin="16"
                 Style="{StaticResource BeeffectiveTitle2}"
-                Text="{Binding NewGoal.Title}" />
+                Text="{Binding NewGoal.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBox
                 Height="130"
@@ -46,6 +46,7 @@
                 <Button
                     Width="124"
                     Margin="0,8,16,16"
+                    Command="{Binding AddGoalCommand}"
                     Content="ADD GOAL"
                     IsDefault="True"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}" />
