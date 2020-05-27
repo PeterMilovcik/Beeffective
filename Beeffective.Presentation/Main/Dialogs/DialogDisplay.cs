@@ -7,6 +7,10 @@ namespace Beeffective.Presentation.Main.Dialogs
     [Export(typeof(IDialogDisplay))]
     public class DialogDisplay : IDialogDisplay
     {
-        public Task ShowAsync(object dialogView) => DialogHost.Show(dialogView);
+        public Task ShowAsync(object dialogView) => 
+            DialogHost.Show(dialogView);
+
+        public void CloseDialog() => 
+            DialogHost.CloseDialogCommand.Execute(null,null);
     }
 }

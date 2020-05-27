@@ -11,5 +11,8 @@ namespace Beeffective.Tests.Doubles
 
         public Task ShowAsync(object dialogView) => 
             Task.Run(() => { IsDialogShown = true; });
+
+        public void CloseDialog() => 
+            IsDialogShown = false;
     }
 }

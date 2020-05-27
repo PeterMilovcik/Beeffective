@@ -1,7 +1,9 @@
 ﻿using Beeffective.Data;
 using Beeffective.Presentation.Main;
+using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.TopBar;
 using Repository = Beeffective.Tests.Doubles.Repository;
+using DialogDisplay = Beeffective.Tests.Doubles.DialogDisplay;
 
 namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTests
 {
@@ -12,9 +14,11 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
             base.OneTimeSetUp();
             MainViewModel = Container.GetExportedValue<MainViewModel>();
             Repository = Container.GetExportedValue<IRepository>() as Repository;
+            DialogDisplay = Container.GetExportedValue<IDialogDisplay>() as DialogDisplay;
         }
 
         protected MainViewModel MainViewModel { get; private set; }
         protected Repository Repository { get; private set; }
+        protected DialogDisplay DialogDisplay { get; private set; }
     }
 }

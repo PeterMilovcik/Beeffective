@@ -43,5 +43,13 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
             SUT.NewGoal.Model.Title = goalTitle;
             SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
         }
+
+        [Test]
+        public void Execute_CloseDialog()
+        {
+            SUT.NewGoal.Model.Title = "New Goal Title";
+            SUT.SaveGoalCommand.Execute(null);
+            DialogDisplay.IsDialogShown.Should().BeFalse();
+        }
     }
 }
