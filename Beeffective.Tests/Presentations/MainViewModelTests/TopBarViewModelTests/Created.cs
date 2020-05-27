@@ -14,7 +14,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
             SUT.ShowAddGoalDialogCommand.Should().NotBeNull();
 
         [Test]
-        public void AddGoalCommand_NotNull() =>
-            SUT.AddGoalCommand.Should().NotBeNull();
+        public void SaveGoalCommand_NotNull() =>
+            SUT.SaveGoalCommand.Should().NotBeNull();
     }
 }

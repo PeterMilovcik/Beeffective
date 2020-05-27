@@ -27,7 +27,7 @@ namespace Beeffective.Presentation.Main.TopBar
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
             ShowAddGoalDialogCommand = new AsyncCommand(ShowAddGoalDialogAsync);
-            AddGoalCommand = new DelegateCommand(CanAddGoal, AddGoal);
+            SaveGoalCommand = new DelegateCommand(CanAddGoal, AddGoal);
             Title = DefaultTitle;
         }
 
@@ -84,11 +84,11 @@ namespace Beeffective.Presentation.Main.TopBar
         {
             if (e.PropertyName == nameof(NewGoal.Model.Title))
             {
-                AddGoalCommand.RaiseCanExecuteChanged();
+                SaveGoalCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public DelegateCommand AddGoalCommand { get; }
+        public DelegateCommand SaveGoalCommand { get; }
 
         private bool CanAddGoal(object arg) => 
             !string.IsNullOrWhiteSpace(NewGoal?.Model.Title) && 

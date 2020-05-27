@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTests
 {
-    public class AddGoalCommand : TestFixture
+    public class SaveGoalCommand : TestFixture
     {
         public override void OneTimeSetUp()
         {
@@ -18,21 +18,21 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
         public void NewGoalTitleIsNull_CanExecute_False()
         {
             SUT.NewGoal.Model.Title = null;
-            SUT.AddGoalCommand.CanExecute(null).Should().BeFalse();
+            SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
         }
 
         [Test]
         public void NewGoalTitleIsWhitespace_CanExecute_False()
         {
             SUT.NewGoal.Model.Title = " ";
-            SUT.AddGoalCommand.CanExecute(null).Should().BeFalse();
+            SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
         }
 
         [Test]
         public void NewGoalTitleIsNotWhitespace_CanExecute_True()
         {
             SUT.NewGoal.Model.Title = "New Goal Title";
-            SUT.AddGoalCommand.CanExecute(null).Should().BeTrue();
+            SUT.SaveGoalCommand.CanExecute(null).Should().BeTrue();
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
             var goalTitle = "New Goal Title";
             SUT.Tasks.Goals.Add(new GoalViewModel(new GoalModel {Title = goalTitle}));
             SUT.NewGoal.Model.Title = goalTitle;
-            SUT.AddGoalCommand.CanExecute(null).Should().BeFalse();
+            SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
         }
     }
 }

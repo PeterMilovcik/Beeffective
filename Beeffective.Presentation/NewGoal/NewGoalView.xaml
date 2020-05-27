@@ -46,7 +46,7 @@
                 <Button
                     Width="124"
                     Margin="0,8,16,16"
-                    Command="{Binding AddGoalCommand}"
+                    Command="{Binding SaveGoalCommand}"
                     Content="ADD GOAL"
                     IsDefault="True"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}" />
