@@ -26,6 +26,7 @@ namespace Beeffective.Presentation.Main.TopBar
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
             ShowAddGoalDialogCommand = new AsyncCommand(ShowAddGoalDialogAsync);
+            AddGoalCommand = new DelegateCommand(AddGoal);
             Title = DefaultTitle;
         }
 
@@ -69,6 +70,13 @@ namespace Beeffective.Presentation.Main.TopBar
         {
             get => newGoal;
             set => SetProperty(ref newGoal, value);
+        }
+
+        public DelegateCommand AddGoalCommand { get; }
+
+        private void AddGoal(object obj)
+        {
+            
         }
     }
 }
