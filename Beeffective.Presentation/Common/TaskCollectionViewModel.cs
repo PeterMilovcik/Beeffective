@@ -45,7 +45,7 @@ namespace Beeffective.Presentation.Common
                     {
                         IsBusy = true;
                         await Repository.RemoveTaskAsync(taskViewModel.Model);
-                        Unsubscribe(taskViewModel);
+                        UnsubscribeFrom(taskViewModel);
                         Tasks.Remove(taskViewModel);
                     }
                     finally
@@ -56,7 +56,7 @@ namespace Beeffective.Presentation.Common
             }
         }
 
-        private void Unsubscribe(TaskViewModel taskViewModel) =>
+        private void UnsubscribeFrom(TaskViewModel taskViewModel) =>
             taskViewModel.Removing -= OnTaskViewModelRemoving;
 
         public async Task SaveTaskAsync()

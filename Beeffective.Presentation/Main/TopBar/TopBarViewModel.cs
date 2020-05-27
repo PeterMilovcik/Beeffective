@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using Beeffective.Core.Extensions;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.NewGoal;
-using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.TopBar
 {
@@ -26,7 +26,7 @@ namespace Beeffective.Presentation.Main.TopBar
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
             ShowAddGoalDialogCommand = new AsyncCommand(ShowAddGoalDialogAsync);
-            AddGoalCommand = new DelegateCommand(AddGoal);
+            AddGoalCommand = new DelegateCommand(CanAddGoal, AddGoal);
             Title = DefaultTitle;
         }
 
@@ -69,10 +69,27 @@ namespace Beeffective.Presentation.Main.TopBar
         public GoalViewModel NewGoal
         {
             get => newGoal;
-            set => SetProperty(ref newGoal, value);
+            set
+            {
+                if (Equals(newGoal, value)) return;
+                if (newGoal != null) newGoal.PropertyChanged -= OnGoalViewModelPropertyChanged;
+                newGoal = value;
+                newGoal.PropertyChanged += OnGoalViewModelPropertyChanged;
+                NotifyPropertyChange();
+            }
+        }
+
+        private void OnGoalViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(NewGoal.Title))
+            {
+                AddGoalCommand.RaiseCanExecuteChanged();
+            }
         }
 
         public DelegateCommand AddGoalCommand { get; }
+
+        private bool CanAddGoal(object arg) => !string.IsNullOrWhiteSpace(NewGoal?.Title);
 
         private void AddGoal(object obj)
         {
