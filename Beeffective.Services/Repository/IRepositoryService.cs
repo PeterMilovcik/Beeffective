@@ -8,6 +8,7 @@ namespace Beeffective.Services.Repository
     {
         Task<List<TaskModel>> LoadTaskAsync();
         Task<List<RecordModel>> LoadRecordAsync();
+        Task<List<GoalModel>> LoadGoalsAsync();
         Task<TaskModel> AddTaskAsync(TaskModel newTaskModel);
         Task<RecordModel> AddRecordAsync(RecordModel newRecordModel);
         Task UpdateTaskAsync(TaskModel taskModel);

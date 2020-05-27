@@ -55,6 +55,12 @@ namespace Beeffective.Services.Repository
             return recordEntities.Select(e => e.ToModel()).ToList();
         }
 
+        public async Task<List<GoalModel>> LoadGoalsAsync()
+        {
+            var goalEntities = await repository.LoadGoalsAsync();
+            return goalEntities.Select(e => e.ToModel()).ToList();
+        }
+
         public async Task<TaskModel> AddTaskAsync(TaskModel newTaskModel) => 
             (await repository.AddTaskAsync(newTaskModel.ToEntity())).ToModel();
 

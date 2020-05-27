@@ -4,7 +4,7 @@ using Beeffective.Tests.Builders;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Beeffective.Tests.MainViewModelTests.TopBarViewModelTests
+namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTests
 {
     public class SelectTask : TestFixture
     {

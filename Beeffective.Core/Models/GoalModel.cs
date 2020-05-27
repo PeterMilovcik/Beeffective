@@ -10,6 +10,10 @@ namespace Beeffective.Core.Models
         private string name;
         private TimeSpan timeSpent;
         private IEnumerable<TaskModel> tasks;
+        private string title;
+        private string description;
+
+        public int Id { get; set; }
 
         public string Name
         {
@@ -33,6 +37,18 @@ namespace Beeffective.Core.Models
                     taskModel.PropertyChanged += OnTaskPropertyChanged;
                 }
             });
+        }
+
+        public string Title
+        {
+            get => title;
+            set => SetProperty(ref title, value);
+        }
+
+        public string Description
+        {
+            get => description;
+            set => SetProperty(ref description, value);
         }
 
         private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)

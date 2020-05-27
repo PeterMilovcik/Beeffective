@@ -1,17 +1,17 @@
-﻿using Beeffective.Presentation.Main.Goals;
+﻿using Beeffective.Core.Models;
 using FluentAssertions;
 using FluentAssertions.Events;
 using NUnit.Framework;
 
-namespace Beeffective.Tests.MainViewModelTests.Goals.GoalViewModelTests
+namespace Beeffective.Tests.Core.Models.GoalModelTests
 {
     public class ChangeTitle : TestFixture
     {
-        private IMonitor<GoalViewModel> monitor;
+        private IMonitor<GoalModel> monitor;
 
-        public override void OneTimeSetUp()
+        public override void SetUp()
         {
-            base.OneTimeSetUp();
+            base.SetUp();
             monitor = SUT.Monitor();
             SUT.Title = "New Title";
         }

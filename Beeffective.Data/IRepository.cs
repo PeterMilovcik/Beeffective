@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Beeffective.Data.Entities;
 
@@ -9,6 +8,7 @@ namespace Beeffective.Data
     {
         Task<List<TaskEntity>> LoadTaskAsync();
         Task<List<RecordEntity>> LoadRecordAsync();
+        Task<List<GoalEntity>> LoadGoalsAsync();
         Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity);
         Task<RecordEntity> AddRecordAsync(RecordEntity recordEntity);
         Task UpdateTaskAsync(TaskEntity taskEntity);

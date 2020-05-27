@@ -1,22 +1,17 @@
-﻿using Beeffective.Presentation.Common;
+﻿using System;
+using Beeffective.Core.Models;
+using Beeffective.Presentation.Annotations;
+using Beeffective.Presentation.Common;
 
 namespace Beeffective.Presentation.Main.Goals
 {
     public class GoalViewModel : ViewModel
     {
-        private string title;
-        private string description;
-
-        public string Title
+        public GoalViewModel([NotNull] GoalModel model)
         {
-            get => title;
-            set => SetProperty(ref title, value);
+            Model = model ?? throw new ArgumentNullException(nameof(model));
         }
 
-        public string Description
-        {
-            get => description;
-            set => SetProperty(ref description, value);
-        }
+        public GoalModel Model { get; }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Linq;
 using System.Threading.Tasks;
-using Beeffective.Core.Extensions;
+using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Goals;
@@ -61,7 +62,7 @@ namespace Beeffective.Presentation.Main.TopBar
 
         private async Task ShowAddGoalDialogAsync()
         {
-            NewGoal = new GoalViewModel();
+            NewGoal = new GoalViewModel(new GoalModel());
             NewGoalView.DataContext = this;
             await dialogDisplay.ShowAsync(NewGoalView);
         }
@@ -72,16 +73,16 @@ namespace Beeffective.Presentation.Main.TopBar
             set
             {
                 if (Equals(newGoal, value)) return;
-                if (newGoal != null) newGoal.PropertyChanged -= OnGoalViewModelPropertyChanged;
+                if (newGoal != null) newGoal.Model.PropertyChanged -= OnGoalModelPropertyChanged;
                 newGoal = value;
-                newGoal.PropertyChanged += OnGoalViewModelPropertyChanged;
+                newGoal.Model.PropertyChanged += OnGoalModelPropertyChanged;
                 NotifyPropertyChange();
             }
         }
 
-        private void OnGoalViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnGoalModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(NewGoal.Title))
+            if (e.PropertyName == nameof(NewGoal.Model.Title))
             {
                 AddGoalCommand.RaiseCanExecuteChanged();
             }
@@ -89,7 +90,9 @@ namespace Beeffective.Presentation.Main.TopBar
 
         public DelegateCommand AddGoalCommand { get; }
 
-        private bool CanAddGoal(object arg) => !string.IsNullOrWhiteSpace(NewGoal?.Title);
+        private bool CanAddGoal(object arg) => 
+            !string.IsNullOrWhiteSpace(NewGoal?.Model.Title) && 
+            Tasks.Goals.Select(g => g.Model.Title).All(t => t != NewGoal.Model.Title);
 
         private void AddGoal(object obj)
         {

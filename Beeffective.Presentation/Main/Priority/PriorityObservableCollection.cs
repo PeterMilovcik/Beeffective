@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 
@@ -23,9 +24,7 @@ namespace Beeffective.Presentation.Main.Priority
         private TaskViewModel selected;
         private bool isSelected;
         private readonly ObservableCollection<TaskViewModel> collection;
-        private ObservableCollection<GoalModel> goals;
         private ObservableCollection<TagModel> tags;
-        private ObservableCollection<string> goalNames;
         private ObservableCollection<string> tagNames;
 
         [ImportingConstructor]
@@ -34,7 +33,7 @@ namespace Beeffective.Presentation.Main.Priority
             this.repository = repository;
             collection = new ObservableCollection<TaskViewModel>();
             collection.CollectionChanged += OnCollectionChanged;
-            Goals = new ObservableCollection<GoalModel>();
+            Goals = new ObservableCollection<GoalViewModel>();
             Tags = new ObservableCollection<TagModel>();
         }
 
@@ -75,59 +74,32 @@ namespace Beeffective.Presentation.Main.Priority
             collection.Add(item);
             item.PropertyChanged += OnTaskViewModelPropertyChanged;
             item.Model.PropertyChanged += OnTaskModelPropertyChanged;
-            UpdateGoalsAndTasks();
+            UpdateTags();
         }
 
         private void OnTaskViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) => 
-            UpdateGoalsAndTasks();
+            UpdateTags();
 
         private void OnTaskModelPropertyChanged(object sender, PropertyChangedEventArgs e) => 
-            UpdateGoalsAndTasks();
+            UpdateTags();
 
         public void Clear()
         {
             collection.Clear();
-            UpdateGoalsAndTasks();
+            UpdateTags();
         }
 
         public bool Remove(TaskViewModel item)
         {
             bool result = collection.Remove(item);
-            UpdateGoalsAndTasks();
+            UpdateTags();
             return result;
         }
 
-        private void UpdateGoalsAndTasks()
+        private void UpdateTags()
         {
-            Goals = new ObservableCollection<GoalModel>(GetGoals());
-            GoalNames = new ObservableCollection<string>(Goals.Select(g => g.Name));
             Tags = new ObservableCollection<TagModel>(GetTags());
             TagNames = new ObservableCollection<string>(Tags.Select(t => t.Name));
-        }
-
-        private IEnumerable<GoalModel> GetGoals()
-        {
-            var result = new HashSet<GoalModel>();
-            foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Goal)))
-            {
-                var goalModel = new GoalModel { Name = taskViewModel.Model.Goal };
-                result.Add(goalModel);
-            }
-
-            foreach (var taskViewModel in collection.Where(tvm => !string.IsNullOrEmpty(tvm.Model.Goal)))
-            {
-                var goalModel = result.Single(gm => gm.Name == taskViewModel.Model.Goal);
-                goalModel.TimeSpent = goalModel.TimeSpent.Add(taskViewModel.Model.TimeSpent);
-            }
-
-            foreach (var goalModel in result)
-            {
-                goalModel.Tasks = collection
-                    .Where(t => t.Model.Goal == goalModel.Name)
-                    .Select(t => t.Model);
-            }
-
-            return result;
         }
 
         private IEnumerable<TagModel> GetTags()
@@ -170,17 +142,7 @@ namespace Beeffective.Presentation.Main.Priority
 
         public bool IsReadOnly => false;
 
-        public ObservableCollection<GoalModel> Goals
-        {
-            get => goals;
-            set => SetProperty(ref goals, value);
-        }
-
-        public ObservableCollection<string> GoalNames
-        {
-            get => goalNames;
-            set => SetProperty(ref goalNames, value);
-        }
+        public ObservableCollection<GoalViewModel> Goals { get; }
 
         public ObservableCollection<TagModel> Tags
         {
@@ -196,11 +158,16 @@ namespace Beeffective.Presentation.Main.Priority
 
         public async Task LoadAsync()
         {
-            var list = (await repository.LoadTaskAsync())
+            var tasks = (await repository.LoadTaskAsync())
                 .Select(taskModel => new TaskViewModel(taskModel)).ToList()
                 .OrderBy(vm => vm.Model.Priority).ToList();
             Clear();
-            list.ForEach(Add);
+            tasks.ForEach(Add);
+            Goals.Clear();
+            var goals = (await repository.LoadGoalsAsync())
+                .Select(gm => new GoalViewModel(gm))
+                .OrderBy(gm => gm.Model.Title).ToList();
+            goals.ForEach(g => Goals.Add(g));
         }
 
         public async Task SaveAsync() => 

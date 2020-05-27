@@ -14,15 +14,20 @@ namespace Beeffective.Tests.Doubles
         {
             TaskEntities = new List<TaskEntity>();
             RecordEntities = new List<RecordEntity>();
+            GoalEntities = new List<GoalEntity>();
         }
 
         public List<TaskEntity> TaskEntities { get; }
         
         public List<RecordEntity> RecordEntities { get; }
+        
+        public List<GoalEntity> GoalEntities { get; }
 
         public Task<List<TaskEntity>> LoadTaskAsync() => Task.FromResult(TaskEntities);
 
         public Task<List<RecordEntity>> LoadRecordAsync() => Task.FromResult(RecordEntities);
+
+        public Task<List<GoalEntity>> LoadGoalsAsync() => Task.FromResult(GoalEntities);
 
         public Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity) =>
             Task.Run(() =>

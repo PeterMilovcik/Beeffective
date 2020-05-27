@@ -23,6 +23,13 @@ namespace Beeffective.Data
                 return context.Records.ToList();
             });
 
+        public Task<List<GoalEntity>> LoadGoalsAsync() =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                return context.Goals.ToList();
+            });
+
         public Task<TaskEntity> AddTaskAsync(TaskEntity taskEntity) =>
             Task.Run(() =>
             {
