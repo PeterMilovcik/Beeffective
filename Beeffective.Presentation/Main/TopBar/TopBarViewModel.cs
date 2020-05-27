@@ -13,6 +13,7 @@ namespace Beeffective.Presentation.Main.TopBar
     {
         private string title;
         private bool isAddMenuOpen;
+        private bool isAddGoalDialogOpen;
         private const string DefaultTitle = "Beeffective";
 
         [ImportingConstructor]
@@ -20,7 +21,7 @@ namespace Beeffective.Presentation.Main.TopBar
         {
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
-            AddGoalCommand = new DelegateCommand(async obj => await AddGoalAsync());
+            ShowAddGoalDialogCommand = new DelegateCommand(async obj => await ShowAddGoalDialogAsync());
             Title = DefaultTitle;
         }
 
@@ -48,9 +49,9 @@ namespace Beeffective.Presentation.Main.TopBar
             set => SetProperty(ref isAddMenuOpen, value);
         }
 
-        public DelegateCommand AddGoalCommand { get; }
+        public DelegateCommand ShowAddGoalDialogCommand { get; }
 
-        private async Task AddGoalAsync()
+        private async Task ShowAddGoalDialogAsync()
         {
             var newGoalView = new NewGoalView();
             await DialogHost.Show(newGoalView);

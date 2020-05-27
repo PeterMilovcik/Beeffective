@@ -13,7 +13,9 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Yellow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Yellow.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
     <system:Double x:Key="HeaderFontSize">36</system:Double>
+    <system:Double x:Key="FontSize">16</system:Double>
 
     <Style
         x:Key="MenuButton"
@@ -108,6 +110,49 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="BeeffectiveTitle" TargetType="syncfusion:SfTextBoxExt">
+        <Setter Property="Height" Value="35" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{StaticResource MaterialDesignPaper}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CaretBrush" Value="{StaticResource PrimaryHueMidBrush}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
+        <Setter Property="HighlightedTextColor" Value="{StaticResource PrimaryHueMidBrush}" />
+        <Setter Property="WatermarkTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock VerticalAlignment="Center" Text="Title" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="BeeffectiveTitle2"
+        BasedOn="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+        TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="materialDesign:HintAssist.Hint" Value="Title" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+    </Style>
+
+    <Style
+        x:Key="BeeffectiveDescription"
+        BasedOn="{StaticResource MaterialDesignOutlinedTextFieldTextBox}"
+        TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="materialDesign:HintAssist.Hint" Value="Description" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="FontSize" Value="{StaticResource FontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>
 
     <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />

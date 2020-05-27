@@ -17,6 +17,7 @@
     Title="Beeffective"
     Width="800"
     Height="450"
+    UseLayoutRounding="True"
     WindowState="Maximized"
     mc:Ignorable="d">
 
@@ -135,7 +136,7 @@
                                     <StackPanel>
 
                                         <Button
-                                            Command="{Binding TopBar.AddGoalCommand}"
+                                            Command="{Binding TopBar.ShowAddGoalDialogCommand}"
                                             Content="Add Goal"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
