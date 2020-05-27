@@ -73,11 +73,11 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
-                            Text="{Binding Name}" />
+                            Text="{Binding Model.Title}" />
                         <TextBlock
                             Grid.Column="2"
                             Margin="8,0"
-                            Text="{Binding TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
+                            Text="{Binding Model.TimeSpent, Converter={StaticResource TimeSpanConverter}}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

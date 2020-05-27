@@ -1,4 +1,5 @@
-﻿using Beeffective.Core.Models;
+﻿using System.Linq;
+using Beeffective.Core.Models;
 using Beeffective.Presentation.Main.Goals;
 using FluentAssertions;
 using NUnit.Framework;
@@ -53,6 +54,22 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
             SUT.Tasks.Goals.Add(new GoalViewModel(new GoalModel{ Title = NewGoalTitle }));
             SUT.NewGoal = new GoalViewModel(new GoalModel { Title = NewGoalTitle });
             SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
+        }
+
+        [Test]
+        public void Execute_DialogIsClosed()
+        {
+            SUT.NewGoal = new GoalViewModel(new GoalModel { Title = NewGoalTitle });
+            SUT.SaveGoalCommand.Execute(null);
+            DialogDisplay.IsDialogShown.Should().BeFalse();
+        }
+
+        [Test]
+        public void Execute_GoalsContainNewGoal()
+        {
+            SUT.NewGoal = new GoalViewModel(new GoalModel { Title = NewGoalTitle });
+            SUT.SaveGoalCommand.Execute(null);
+            SUT.Tasks.Goals.SingleOrDefault(g => g.Model.Title == NewGoalTitle).Should().NotBeNull();
         }
     }
 }

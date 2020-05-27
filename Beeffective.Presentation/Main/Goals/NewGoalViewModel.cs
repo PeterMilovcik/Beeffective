@@ -66,6 +66,7 @@ namespace Beeffective.Presentation.Main.Goals
 
         private void SaveGoal(object obj)
         {
+            Tasks.Goals.Add(NewGoal);
             dialogDisplay.CloseDialog();
         }
 
