@@ -97,5 +97,8 @@ namespace Beeffective.Services.Repository
             }
             await repository.SaveTaskAsync(taskModels.Select(tm => tm.ToEntity()));
         }
+
+        public Task SaveGoalsAsync(List<GoalModel> goalModels) => 
+            repository.SaveGoalsAsync(goalModels.Select(gm => gm.ToEntity()));
     }
 }

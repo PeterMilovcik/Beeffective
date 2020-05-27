@@ -39,6 +39,15 @@ namespace Beeffective.Data
                 return entry.Entity;
             });
 
+        public Task<GoalEntity> AddGoalAsync(GoalEntity goalEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                var entry = context.Goals.Add(goalEntity);
+                context.SaveChanges();
+                return entry.Entity;
+            });
+
         public Task<RecordEntity> AddRecordAsync(RecordEntity recordEntity) =>
             Task.Run(() =>
             {
@@ -53,6 +62,14 @@ namespace Beeffective.Data
             { 
                 using var context = new DataContext();
                 context.Update(taskEntity);
+                context.SaveChanges();
+            });
+
+        public Task UpdateGoalAsync(GoalEntity goalEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.Update(goalEntity);
                 context.SaveChanges();
             });
 
@@ -72,6 +89,14 @@ namespace Beeffective.Data
                 context.SaveChanges();
             });
 
+        public Task RemoveGoalAsync(GoalEntity goalEntity) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.Remove(goalEntity);
+                context.SaveChanges();
+            });
+
         public Task RemoveRecordAsync(RecordEntity recordEntity) =>
             Task.Run(() =>
             {
@@ -85,6 +110,14 @@ namespace Beeffective.Data
             {
                 using var context = new DataContext();
                 context.UpdateRange(taskEntities);
+                context.SaveChanges();
+            });
+
+        public Task SaveGoalsAsync(IEnumerable<GoalEntity> goalEntities) =>
+            Task.Run(() =>
+            {
+                using var context = new DataContext();
+                context.UpdateRange(goalEntities);
                 context.SaveChanges();
             });
     }

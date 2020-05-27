@@ -170,8 +170,11 @@ namespace Beeffective.Presentation.Main.Priority
             goals.ForEach(g => Goals.Add(g));
         }
 
-        public async Task SaveAsync() => 
+        public async Task SaveAsync()
+        {
             await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
+            await repository.SaveGoalsAsync(Goals.Select(goalViewModel => goalViewModel.Model).ToList());
+        }
 
         public IEnumerable<TaskViewModel> Unfinished => collection.Where(t => t.Model.IsFinished == false);
         
