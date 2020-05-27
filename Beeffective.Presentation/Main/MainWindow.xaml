@@ -136,7 +136,7 @@
                                     <StackPanel>
 
                                         <Button
-                                            Command="{Binding TopBar.ShowAddGoalDialogCommand}"
+                                            Command="{Binding TopBar.NewGoal.ShowNewGoalDialogCommand}"
                                             Content="Add Goal"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 

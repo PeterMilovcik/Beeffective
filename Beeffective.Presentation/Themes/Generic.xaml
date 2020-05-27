@@ -136,7 +136,7 @@
         TargetType="TextBox">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="materialDesign:HintAssist.Hint" Value="Title" />
-        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="AcceptsReturn" Value="False" />
         <Setter Property="FontSize" Value="{StaticResource FontSize}" />
         <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
         <Setter Property="TextWrapping" Value="NoWrap" />
