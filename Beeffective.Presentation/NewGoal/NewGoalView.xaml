@@ -28,7 +28,7 @@
                 FontSize="26"
                 FontWeight="Bold"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
-                Text="Add New Goal" />
+                Text="New Goal" />
 
             <TextBox
                 Margin="16"
@@ -47,7 +47,7 @@
                     Width="124"
                     Margin="0,8,16,16"
                     Command="{Binding SaveGoalCommand}"
-                    Content="ADD GOAL"
+                    Content="OK"
                     IsDefault="True"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}" />
 

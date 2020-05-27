@@ -136,13 +136,20 @@
                                     <StackPanel>
 
                                         <Button
+                                            Margin="8,4"
                                             Command="{Binding TopBar.NewGoal.ShowNewGoalDialogCommand}"
-                                            Content="Add Goal"
+                                            Content="NEW GOAL"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
-                                        <Button Content="Add Project" Style="{StaticResource MaterialDesignFlatButton}" />
+                                        <Button
+                                            Margin="8,4"
+                                            Content="NEW PROJECT"
+                                            Style="{StaticResource MaterialDesignFlatButton}" />
 
-                                        <Button Content="Add Task" Style="{StaticResource MaterialDesignFlatButton}" />
+                                        <Button
+                                            Margin="8,4"
+                                            Content="NEW TASK"
+                                            Style="{StaticResource MaterialDesignFlatButton}" />
 
                                     </StackPanel>
 
