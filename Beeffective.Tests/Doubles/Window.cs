@@ -3,9 +3,8 @@ using Beeffective.Presentation.Common;
 
 namespace Beeffective.Tests.Doubles
 {
-    public class Window : IWindow
+    public class Window : View, IWindow
     {
-        public object DataContext { get; set; }
         public bool IsShown { get; set; }
         public bool IsClosed { get; set; }
         public void Show() => IsShown = true;

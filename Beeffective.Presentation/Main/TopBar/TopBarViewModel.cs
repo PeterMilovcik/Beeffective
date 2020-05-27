@@ -2,6 +2,8 @@
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.NewGoal;
 using MaterialDesignThemes.Wpf;
@@ -11,17 +13,19 @@ namespace Beeffective.Presentation.Main.TopBar
     [Export]
     public class TopBarViewModel : TaskCollectionViewModel
     {
+        private readonly IDialogDisplay dialogDisplay;
         private string title;
         private bool isAddMenuOpen;
-        private bool isAddGoalDialogOpen;
+        private GoalViewModel newGoal;
         private const string DefaultTitle = "Beeffective";
 
         [ImportingConstructor]
-        public TopBarViewModel(PriorityObservableCollection tasks) : base(tasks)
+        public TopBarViewModel(PriorityObservableCollection tasks, IDialogDisplay dialogDisplay) : base(tasks)
         {
+            this.dialogDisplay = dialogDisplay;
             Tasks.PropertyChanged += OnTasksPropertyChanged;
             AddCommand = new DelegateCommand(Add);
-            ShowAddGoalDialogCommand = new DelegateCommand(async obj => await ShowAddGoalDialogAsync());
+            ShowAddGoalDialogCommand = new AsyncCommand(ShowAddGoalDialogAsync);
             Title = DefaultTitle;
         }
 
@@ -49,12 +53,22 @@ namespace Beeffective.Presentation.Main.TopBar
             set => SetProperty(ref isAddMenuOpen, value);
         }
 
-        public DelegateCommand ShowAddGoalDialogCommand { get; }
+        public IAsyncCommand ShowAddGoalDialogCommand { get; }
+
+        [Import]
+        public INewGoalView NewGoalView { get; set; }
 
         private async Task ShowAddGoalDialogAsync()
         {
-            var newGoalView = new NewGoalView();
-            await DialogHost.Show(newGoalView);
+            NewGoal = new GoalViewModel();
+            NewGoalView.DataContext = this;
+            await dialogDisplay.ShowAsync(NewGoalView);
+        }
+
+        public GoalViewModel NewGoal
+        {
+            get => newGoal;
+            set => SetProperty(ref newGoal, value);
         }
     }
 }

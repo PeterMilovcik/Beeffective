@@ -1,4 +1,7 @@
-﻿namespace Beeffective.Tests.MainViewModelTests.TopBarViewModelTests
+﻿using FluentAssertions;
+using NUnit.Framework;
+
+namespace Beeffective.Tests.MainViewModelTests.TopBarViewModelTests
 {
     public class ShowAddGoalDialogCommand : TestFixture
     {
@@ -6,7 +9,10 @@
         {
             base.OneTimeSetUp();
             MainViewModel.ShowAsync().GetAwaiter().GetResult();
-            SUT.ShowAddGoalDialogCommand.Execute(null);
+            SUT.ShowAddGoalDialogCommand.ExecuteAsync().GetAwaiter().GetResult();
         }
+
+        [Test]
+        public void NewGoal_NotNull() => SUT.NewGoal.Should().NotBeNull();
     }
 }
