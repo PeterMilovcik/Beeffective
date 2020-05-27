@@ -30,12 +30,16 @@
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Text="Add New Goal" />
 
-            <TextBox Margin="16" Style="{StaticResource BeeffectiveTitle2}" />
+            <TextBox
+                Margin="16"
+                Style="{StaticResource BeeffectiveTitle2}"
+                Text="{Binding NewGoal.Title}" />
 
             <TextBox
                 Height="130"
                 Margin="16"
-                Style="{StaticResource BeeffectiveDescription}" />
+                Style="{StaticResource BeeffectiveDescription}"
+                Text="{Binding NewGoal.Description}" />
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
