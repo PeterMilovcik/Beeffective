@@ -6,7 +6,6 @@ using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Priority;
-using Beeffective.Presentation.NewLabel;
 
 namespace Beeffective.Presentation.Main.Labels
 {

@@ -6,7 +6,6 @@ using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Priority;
-using Beeffective.Presentation.NewProject;
 
 namespace Beeffective.Presentation.Main.Projects
 {
