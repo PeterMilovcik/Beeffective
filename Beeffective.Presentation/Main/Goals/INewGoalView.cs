@@ -1,6 +1,6 @@
 ﻿using Beeffective.Presentation.Common;
 
-namespace Beeffective.Presentation.NewGoal
+namespace Beeffective.Presentation.Main.Goals
 {
     public interface INewGoalView : IView
     {

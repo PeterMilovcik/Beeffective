@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using Beeffective.Presentation.NewGoal;
+using Beeffective.Presentation.Main.Goals;
 
 namespace Beeffective.Tests.Doubles
 {

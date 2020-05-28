@@ -5,7 +5,6 @@ using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Labels;
 using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.Main.Projects;
-using Beeffective.Presentation.NewGoal;
 
 namespace Beeffective.Presentation.Main.TopBar
 {
