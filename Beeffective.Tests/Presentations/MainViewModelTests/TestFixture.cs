@@ -1,6 +1,6 @@
-﻿using Beeffective.Data;
+﻿using Beeffective.Data.Repositories;
 using Beeffective.Presentation.Main;
-using Repository = Beeffective.Tests.Doubles.Repository;
+using Repository = Beeffective.Tests.Doubles.Repositories.Repository;
 
 namespace Beeffective.Tests.Presentations.MainViewModelTests
 {

@@ -1,8 +1,8 @@
-﻿using Beeffective.Data;
+﻿using Beeffective.Data.Repositories;
 using Beeffective.Presentation.Main;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.TopBar;
-using Repository = Beeffective.Tests.Doubles.Repository;
+using Repository = Beeffective.Tests.Doubles.Repositories.Repository;
 using DialogDisplay = Beeffective.Tests.Doubles.DialogDisplay;
 
 namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTests

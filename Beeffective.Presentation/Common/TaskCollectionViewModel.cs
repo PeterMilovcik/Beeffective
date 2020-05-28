@@ -44,7 +44,7 @@ namespace Beeffective.Presentation.Common
                     try
                     {
                         IsBusy = true;
-                        await Repository.RemoveTaskAsync(taskViewModel.Model);
+                        await Repository.Tasks.RemoveAsync(taskViewModel.Model);
                         UnsubscribeFrom(taskViewModel);
                         Tasks.Remove(taskViewModel);
                     }

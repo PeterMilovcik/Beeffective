@@ -14,7 +14,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests
         {
             base.OneTimeSetUp();
             taskEntity = new TaskEntityBuilder().Create();
-            Repository.TaskEntities.Add(taskEntity);
+            Repository.Tasks.AddAsync(taskEntity).GetAwaiter().GetResult();
             SUT.ShowAsync().GetAwaiter().GetResult();
         }
 

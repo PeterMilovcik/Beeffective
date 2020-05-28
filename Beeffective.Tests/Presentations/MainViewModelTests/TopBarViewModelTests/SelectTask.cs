@@ -14,7 +14,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.TopBarViewModelTest
         {
             base.OneTimeSetUp();
             taskEntity = new TaskEntityBuilder().Create();
-            Repository.TaskEntities.Add(taskEntity);
+            Repository.Tasks.AddAsync(taskEntity).GetAwaiter().GetResult();
             MainViewModel.ShowAsync().GetAwaiter().GetResult();
             SUT.Tasks.Selected = SUT.Tasks.First();
         }

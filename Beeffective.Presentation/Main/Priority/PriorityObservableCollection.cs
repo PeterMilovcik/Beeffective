@@ -161,21 +161,43 @@ namespace Beeffective.Presentation.Main.Priority
 
         public async Task LoadAsync()
         {
-            var tasks = (await repository.LoadTaskAsync())
+            await LoadGoalsAsync();
+            await LoadProjectsAsync();
+            await LoadTasksAsync();
+        }
+
+        private async Task LoadProjectsAsync()
+        {
+            Projects.Clear();
+            var projects = (await repository.Projects.LoadAsync())
+                .OrderBy(gm => gm.Title).ToList();
+            projects.ForEach(projectModel => Projects.Add(projectModel));
+        }
+
+        private async Task LoadTasksAsync()
+        {
+            collection.Clear();
+            var tasks = (await repository.Tasks.LoadAsync())
                 .Select(taskModel => new TaskViewModel(taskModel)).ToList()
                 .OrderBy(vm => vm.Model.Priority).ToList();
             Clear();
             tasks.ForEach(Add);
+
+        }
+
+        private async Task LoadGoalsAsync()
+        {
             Goals.Clear();
-            var goals = (await repository.LoadGoalsAsync())
+            var goals = (await repository.Goals.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            goals.ForEach(g => Goals.Add(g));
+            goals.ForEach(goalModel => Goals.Add(goalModel));
         }
 
         public async Task SaveAsync()
         {
-            await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
-            await repository.SaveGoalsAsync(Goals.ToList());
+            await repository.Goals.SaveAsync(Goals.ToList());
+            await repository.Projects.SaveAsync(Projects.ToList());
+            await repository.Tasks.SaveAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
         }
 
         public IEnumerable<TaskViewModel> Unfinished => collection.Where(t => t.Model.IsFinished == false);
