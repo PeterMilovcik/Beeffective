@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Width="800"
-    Height="392">
+    Height="458">
 
     <UserControl.Resources>
 
@@ -33,13 +33,27 @@
             <TextBox
                 Margin="16"
                 Style="{StaticResource BeeffectiveTitle2}"
-                Text="{Binding NewProject.Model.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding NewProject.Title, UpdateSourceTrigger=PropertyChanged}" />
+
+            <ComboBox
+                Margin="16"
+                materialDesign:HintAssist.Hint="Goal"
+                materialDesign:HintAssist.HintOpacity=".5"
+                Background="{StaticResource MaterialDesignPaper}"
+                DisplayMemberPath="Title"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEditable="False"
+                IsReadOnly="True"
+                ItemsSource="{Binding Tasks.Goals}"
+                SelectedItem="{Binding NewProject.Goal}"
+                Style="{StaticResource MaterialDesignComboBox}" />
 
             <TextBox
                 Height="130"
                 Margin="16"
                 Style="{StaticResource BeeffectiveDescription}"
-                Text="{Binding NewProject.Model.Description}" />
+                Text="{Binding NewProject.Description}" />
 
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 

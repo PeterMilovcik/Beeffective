@@ -14,5 +14,9 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
         [Test]
         public void Dialog_IsShown() => 
             DialogDisplay.IsDialogShown.Should().BeTrue();
+
+        [Test]
+        public void NewProject_NotNull() => 
+            SUT.NewProject.Should().NotBeNull();
     }
 }

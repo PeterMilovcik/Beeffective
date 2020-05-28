@@ -14,7 +14,7 @@ namespace Beeffective.Presentation.Main.Goals
     public class NewGoalViewModel : TaskCollectionViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
-        private GoalViewModel newGoal;
+        private GoalModel newGoal;
 
         [ImportingConstructor]
         public NewGoalViewModel(PriorityObservableCollection tasks, IDialogDisplay dialogDisplay) : base(tasks)
@@ -31,20 +31,20 @@ namespace Beeffective.Presentation.Main.Goals
 
         private async Task ShowNewGoalDialogAsync()
         {
-            NewGoal = CreateGoalViewModel();
+            NewGoal = new GoalModel();
             NewGoalView.DataContext = this;
             await dialogDisplay.ShowAsync(NewGoalView);
         }
 
-        public GoalViewModel NewGoal
+        public GoalModel NewGoal
         {
             get => newGoal;
             set
             {
                 if (Equals(newGoal, value)) return;
-                if (newGoal != null) newGoal.Model.PropertyChanged -= OnGoalModelPropertyChanged;
+                if (newGoal != null) newGoal.PropertyChanged -= OnGoalModelPropertyChanged;
                 newGoal = value;
-                newGoal.Model.PropertyChanged += OnGoalModelPropertyChanged;
+                if (newGoal != null) newGoal.PropertyChanged += OnGoalModelPropertyChanged;
                 SaveGoalCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChange();
             }
@@ -52,7 +52,7 @@ namespace Beeffective.Presentation.Main.Goals
 
         private void OnGoalModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(NewGoal.Model.Title))
+            if (e.PropertyName == nameof(NewGoal.Title))
             {
                 SaveGoalCommand.RaiseCanExecuteChanged();
             }
@@ -61,15 +61,13 @@ namespace Beeffective.Presentation.Main.Goals
         public DelegateCommand SaveGoalCommand { get; }
 
         private bool CanSaveGoal(object arg) =>
-            !string.IsNullOrWhiteSpace(NewGoal?.Model.Title) &&
-            !Tasks.Goals.Select(g => g.Model.Title).Contains(NewGoal.Model.Title);
+            !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
+            !Tasks.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 
         private void SaveGoal(object obj)
         {
             Tasks.Goals.Add(NewGoal);
             dialogDisplay.CloseDialog();
         }
-
-        private static GoalViewModel CreateGoalViewModel() => new GoalViewModel(new GoalModel());
     }
 }

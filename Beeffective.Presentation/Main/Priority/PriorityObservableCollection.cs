@@ -7,8 +7,8 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
-using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Goals;
+using Beeffective.Presentation.Main.Projects;
 using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 
@@ -33,7 +33,8 @@ namespace Beeffective.Presentation.Main.Priority
             this.repository = repository;
             collection = new ObservableCollection<TaskViewModel>();
             collection.CollectionChanged += OnCollectionChanged;
-            Goals = new ObservableCollection<GoalViewModel>();
+            Goals = new ObservableCollection<GoalModel>();
+            Projects = new ObservableCollection<ProjectModel>();
             Tags = new ObservableCollection<TagModel>();
         }
 
@@ -142,7 +143,9 @@ namespace Beeffective.Presentation.Main.Priority
 
         public bool IsReadOnly => false;
 
-        public ObservableCollection<GoalViewModel> Goals { get; }
+        public ObservableCollection<GoalModel> Goals { get; }
+
+        public ObservableCollection<ProjectModel> Projects { get; }
 
         public ObservableCollection<TagModel> Tags
         {
@@ -165,19 +168,18 @@ namespace Beeffective.Presentation.Main.Priority
             tasks.ForEach(Add);
             Goals.Clear();
             var goals = (await repository.LoadGoalsAsync())
-                .Select(gm => new GoalViewModel(gm))
-                .OrderBy(gm => gm.Model.Title).ToList();
+                .OrderBy(gm => gm.Title).ToList();
             goals.ForEach(g => Goals.Add(g));
         }
 
         public async Task SaveAsync()
         {
             await repository.SaveTaskAsync(collection.Select(taskViewModel => taskViewModel.Model).ToList());
-            await repository.SaveGoalsAsync(Goals.Select(goalViewModel => goalViewModel.Model).ToList());
+            await repository.SaveGoalsAsync(Goals.ToList());
         }
 
         public IEnumerable<TaskViewModel> Unfinished => collection.Where(t => t.Model.IsFinished == false);
-        
+
         public IEnumerable<TaskViewModel> Finished => collection.Where(t => t.Model.IsFinished);
     }
 }

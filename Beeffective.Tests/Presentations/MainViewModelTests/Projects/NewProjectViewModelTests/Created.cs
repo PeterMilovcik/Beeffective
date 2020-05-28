@@ -12,5 +12,13 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
         [Test]
         public void ShowNewProjectDialogCommand_NotNull() => 
             SUT.ShowNewProjectDialogCommand.Should().NotBeNull();
+
+        [Test]
+        public void Goals_NotNull() => 
+            SUT.Tasks.Goals.Should().NotBeNull();
+
+        [Test]
+        public void SaveProjectCommand_NotNull() => 
+            SUT.SaveProjectCommand.Should().NotBeNull();
     }
 }
