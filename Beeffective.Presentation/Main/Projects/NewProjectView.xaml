@@ -45,7 +45,7 @@
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 IsEditable="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding Tasks.Goals}"
+                ItemsSource="{Binding Core.Goals}"
                 SelectedItem="{Binding NewProject.Goal}"
                 Style="{StaticResource MaterialDesignComboBox}" />
 

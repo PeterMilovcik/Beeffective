@@ -43,6 +43,6 @@ namespace Beeffective.Services.Repository
             repository.Projects.RemoveAsync(projectModel.ToEntity());
 
         public Task SaveAsync(List<ProjectModel> projectModels) =>
-            repository.Projects.SaveAsync(projectModels.Select(gm => ProjectModelExtensions.ToEntity(gm)));
+            repository.Projects.SaveAsync(projectModels.Select(projectModel => projectModel.ToEntity()));
     }
 }

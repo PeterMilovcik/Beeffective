@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Goals
 {
@@ -12,14 +13,16 @@ namespace Beeffective.Presentation.Main.Goals
     public class NewGoalViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
+        private readonly IRepositoryService repository;
         private GoalModel newGoal;
 
         [ImportingConstructor]
-        public NewGoalViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
+        public NewGoalViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
+            this.repository = repository;
             ShowNewGoalDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
-            SaveGoalCommand = new DelegateCommand(CanSaveGoal, SaveGoal);
+            SaveGoalCommand = new DelegateCommand(CanSaveGoal, async obj => await SaveGoalAsync());
         }
 
         [Import]
@@ -62,9 +65,10 @@ namespace Beeffective.Presentation.Main.Goals
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
             !Core.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 
-        private void SaveGoal(object obj)
+        private async Task SaveGoalAsync()
         {
-            Core.Goals.Add(NewGoal);
+            var savedGoal = await repository.Goals.AddAsync(NewGoal);
+            Core.Goals.Add(savedGoal);
             dialogDisplay.CloseDialog();
         }
     }

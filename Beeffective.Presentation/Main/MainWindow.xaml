@@ -28,16 +28,8 @@
             Command="{Binding DashboardCommand}"
             Modifiers="Control" />
         <KeyBinding
-            Key="P"
-            Command="{Binding PriorityCommand}"
-            Modifiers="Control" />
-        <KeyBinding
             Key="G"
             Command="{Binding GoalsCommand}"
-            Modifiers="Control" />
-        <KeyBinding
-            Key="T"
-            Command="{Binding TagsCommand}"
             Modifiers="Control" />
         <KeyBinding
             Key="L"
