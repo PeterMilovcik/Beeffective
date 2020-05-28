@@ -12,16 +12,16 @@ namespace Beeffective.Data
             Database.Migrate();
         }
 
-        public DbSet<TaskEntity> Tasks { get; set; }
-        public DbSet<RecordEntity> Records { get; set; }
         public DbSet<GoalEntity> Goals { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
         public DbSet<LabelEntity> Labels { get; set; }
+        public DbSet<TaskEntity> Tasks { get; set; }
+        public DbSet<RecordEntity> Records { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             base.OnConfiguring(options);
-            options.UseSqlite("Data Source=database.db");
+            options.UseSqlite("Data Source=beeffective.db");
             options.EnableSensitiveDataLogging();
         }
     }

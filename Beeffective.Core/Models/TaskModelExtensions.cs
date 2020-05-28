@@ -9,23 +9,19 @@ namespace Beeffective.Core.Models
             {
                 Id = model.Id,
                 Title = model.Title,
-                Urgency = model.Urgency,
-                Importance = model.Importance,
-                Goal = model.Goal,
-                Tags = model.Tags,
+                Description = model.Description,
+                ProjectId = model.Project?.Id ?? 0,
                 IsFinished = model.IsFinished,
                 DueTo = model.DueTo
             };
 
-        public static TaskModel ToModel(this TaskEntity entity) =>
+        public static TaskModel ToModel(this TaskEntity entity, ProjectModel projectModel) =>
             new TaskModel
             {
                 Id = entity.Id,
                 Title = entity.Title,
-                Urgency = entity.Urgency,
-                Importance = entity.Importance,
-                Goal = entity.Goal,
-                Tags = entity.Tags,
+                Description = entity.Description,
+                Project = projectModel,
                 IsFinished = entity.IsFinished,
                 DueTo = entity.DueTo
             };

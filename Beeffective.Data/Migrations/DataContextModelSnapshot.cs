@@ -96,26 +96,20 @@ namespace Beeffective.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("DueTo")
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("Goal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Importance")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Tags")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Urgency")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

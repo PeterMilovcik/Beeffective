@@ -24,15 +24,22 @@ namespace Beeffective.Services.Repository
             var entities = await repository.Tasks.LoadAsync();
             foreach (var taskEntity in entities)
             {
-                var taskModel = taskEntity.ToModel();
+                var projectEntity = await repository.Projects.GetById(taskEntity.ProjectId);
+                var goalEntity = projectEntity != null ? await repository.Goals.GetById(projectEntity.GoalId) : null;
+                var goalModel = goalEntity.ToModel();
+                var projectModel = projectEntity.ToModel(goalModel);
+                var taskModel = taskEntity.ToModel(projectModel);
                 result.Add(taskModel);
             }
 
             return result;
         }
 
-        public async Task<TaskModel> AddAsync(TaskModel newTaskModel) =>
-            (await repository.Tasks.AddAsync(newTaskModel.ToEntity())).ToModel();
+        public async Task<TaskModel> AddAsync(TaskModel newTaskModel)
+        {
+            var taskEntity = await repository.Tasks.AddAsync(newTaskModel.ToEntity());
+            return taskEntity.ToModel(newTaskModel.Project);
+        }
 
         public Task UpdateAsync(TaskModel taskModel) =>
             repository.Tasks.UpdateAsync(taskModel.ToEntity());
@@ -41,6 +48,6 @@ namespace Beeffective.Services.Repository
             repository.Tasks.RemoveAsync(taskModel.ToEntity());
 
         public Task SaveAsync(List<TaskModel> taskModels) =>
-            repository.Tasks.SaveAsync(taskModels.Select(taskModel => TaskModelExtensions.ToEntity(taskModel)));
+            repository.Tasks.SaveAsync(taskModels.Select(taskModel => taskModel.ToEntity()));
     }
 }

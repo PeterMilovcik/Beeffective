@@ -1,5 +1,4 @@
 ﻿using Beeffective.Data.Entities;
-using Beeffective.Tests.Builders;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -12,7 +11,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests
         public override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
-            taskEntity = new TaskEntityBuilder().Create();
+            taskEntity = new TaskEntity {Id = 1, Title = "TestTask"};
             Repository.Tasks.AddAsync(taskEntity).GetAwaiter().GetResult();
             SUT.ShowAsync().GetAwaiter().GetResult();
         }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Beeffective.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200528104418_Add_ProjectEntity")]
-    partial class Add_ProjectEntity
+    [Migration("20200528150904_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,23 @@ namespace Beeffective.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Goals");
+                });
+
+            modelBuilder.Entity("Beeffective.Data.Entities.LabelEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Labels");
                 });
 
             modelBuilder.Entity("Beeffective.Data.Entities.ProjectEntity", b =>
@@ -81,26 +98,20 @@ namespace Beeffective.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("DueTo")
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("Goal")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Importance")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Tags")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("Urgency")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

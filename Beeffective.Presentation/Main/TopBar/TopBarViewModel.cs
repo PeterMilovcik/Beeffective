@@ -3,6 +3,7 @@ using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Labels;
 using Beeffective.Presentation.Main.Projects;
+using Beeffective.Presentation.Main.Tasks;
 
 namespace Beeffective.Presentation.Main.TopBar
 {
@@ -42,5 +43,8 @@ namespace Beeffective.Presentation.Main.TopBar
 
         [Import]
         public NewLabelViewModel NewLabel { get; set; }
+
+        [Import]
+        public NewTaskViewModel NewTask { get; set; }
     }
 }
