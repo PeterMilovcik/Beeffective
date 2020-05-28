@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Calendar
 {
@@ -8,7 +7,7 @@ namespace Beeffective.Presentation.Main.Calendar
     public class CalendarViewModel : ContentViewModel
     {
         [ImportingConstructor]
-        public CalendarViewModel(PriorityObservableCollection tasks) : base(tasks)
+        public CalendarViewModel(Core core) : base(core)
         {
         }
     }

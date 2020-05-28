@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Projects
 {
     [Export]
-    public class NewProjectViewModel : TaskCollectionViewModel
+    public class NewProjectViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private ProjectModel newProject;
 
         [ImportingConstructor]
-        public NewProjectViewModel(PriorityObservableCollection tasks, IDialogDisplay dialogDisplay) : base(tasks)
+        public NewProjectViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
             ShowNewProjectDialogCommand = new AsyncCommand(ShowNewProjectDialog);
@@ -56,11 +55,11 @@ namespace Beeffective.Presentation.Main.Projects
         private bool CanSaveProject(object arg) =>
             !string.IsNullOrWhiteSpace(NewProject?.Title) &&
             NewProject.Goal != null &&
-            !Tasks.Projects.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
+            !Core.Projects.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
 
         private void SaveProject(object obj)
         {
-            Tasks.Projects.Add(NewProject);
+            Core.Projects.Add(NewProject);
             dialogDisplay.CloseDialog();
         }
     }

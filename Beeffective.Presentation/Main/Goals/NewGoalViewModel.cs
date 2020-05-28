@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Goals
 {
     [Export(typeof(NewGoalViewModel))]
-    public class NewGoalViewModel : TaskCollectionViewModel
+    public class NewGoalViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private GoalModel newGoal;
 
         [ImportingConstructor]
-        public NewGoalViewModel(PriorityObservableCollection tasks, IDialogDisplay dialogDisplay) : base(tasks)
+        public NewGoalViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
             ShowNewGoalDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
@@ -61,11 +60,11 @@ namespace Beeffective.Presentation.Main.Goals
 
         private bool CanSaveGoal(object arg) =>
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
-            !Tasks.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
+            !Core.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 
         private void SaveGoal(object obj)
         {
-            Tasks.Goals.Add(NewGoal);
+            Core.Goals.Add(NewGoal);
             dialogDisplay.CloseDialog();
         }
     }

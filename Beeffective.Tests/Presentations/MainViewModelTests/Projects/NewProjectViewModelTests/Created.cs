@@ -15,7 +15,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
 
         [Test]
         public void Goals_NotNull() => 
-            SUT.Tasks.Goals.Should().NotBeNull();
+            SUT.Core.Goals.Should().NotBeNull();
 
         [Test]
         public void SaveProjectCommand_NotNull() => 

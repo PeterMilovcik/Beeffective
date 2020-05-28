@@ -8,33 +8,27 @@ using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
 using Beeffective.Presentation.Main.Dashboard;
 using Beeffective.Presentation.Main.Goals;
-using Beeffective.Presentation.Main.New;
-using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.Main.Settings;
-using Beeffective.Presentation.Main.Tags;
 using Beeffective.Presentation.Main.TopBar;
 
 namespace Beeffective.Presentation.Main
 {
     [Export]
-    public class MainViewModel : ViewModel
+    public class MainViewModel : CoreViewModel
     {
         private readonly IMainView view;
         private ContentViewModel content;
         public List<ContentViewModel> ContentViewModels { get; private set; }
 
         [ImportingConstructor]
-        public MainViewModel(IMainView view)
+        public MainViewModel(Core core, IMainView view) : base(core)
         {
             this.view = view;
             this.view.Activated += OnViewActivated;
             this.view.Deactivated += OnViewDeactivated;
             view.DataContext = this;
-            NewCommand = new DelegateCommand(async o => await ChangeContentAsync(New));
             DashboardCommand = new DelegateCommand(async o => await ChangeContentAsync(Dashboard));
-            PriorityCommand = new DelegateCommand(async o => await ChangeContentAsync(Priority));
             GoalsCommand = new DelegateCommand(async o => await ChangeContentAsync(Goals));
-            TagsCommand = new DelegateCommand(async o => await ChangeContentAsync(Tags));
             CalendarCommand = new DelegateCommand(async o => await ChangeContentAsync(Calendar));
             SettingsCommand = new DelegateCommand(async o => await ChangeContentAsync(Settings));
             ContentViewModels = new List<ContentViewModel>();
@@ -61,29 +55,14 @@ namespace Beeffective.Presentation.Main
         public TopBarViewModel TopBar { get; set; }
 
         [Import]
-        public NewViewModel New { get; set; }
-
-        public ICommand NewCommand { get; }
-
-        [Import]
         public DashboardViewModel Dashboard { get; set; }
 
         public ICommand DashboardCommand { get; }
 
         [Import]
-        public PriorityViewModel Priority { get; set; }
-
-        public ICommand PriorityCommand { get; }
-
-        [Import]
         public GoalsViewModel Goals { get; set; }
 
         public ICommand GoalsCommand { get; }
-
-        [Import]
-        public TagsViewModel Tags { get; set; }
-
-        public ICommand TagsCommand { get; }
 
         [Import]
         public CalendarViewModel Calendar { get; set; }
@@ -108,14 +87,11 @@ namespace Beeffective.Presentation.Main
         {
             view.Show();
             ContentViewModels = new List<ContentViewModel>
-                {New, Dashboard, Priority, Goals, Tags, Calendar, Settings};
+                {Dashboard, Goals, Calendar, Settings};
             await LoadAsync();
         }
 
-        [Import]
-        public PriorityObservableCollection Tasks { get; set; }
-
-        private async Task LoadAsync() => await Tasks.LoadAsync();
+        private async Task LoadAsync() => await Core.LoadAsync();
 
         private void OnViewActivated(object sender, EventArgs e) => AlwaysOnTop.Hide();
 
@@ -123,7 +99,7 @@ namespace Beeffective.Presentation.Main
 
         public async Task CloseAsync()
         {
-            await Tasks.SaveAsync();
+            await Core.SaveAsync();
             AlwaysOnTop.Close();
         }
     }

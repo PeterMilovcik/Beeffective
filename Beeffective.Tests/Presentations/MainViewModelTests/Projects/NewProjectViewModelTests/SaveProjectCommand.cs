@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Beeffective.Core.Models;
+﻿using Beeffective.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -13,7 +12,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
         public void SetUp()
         {
             SUT.NewProject = null;
-            SUT.Tasks.Projects.Clear();
+            SUT.Core.Projects.Clear();
         }
 
         [Test]
@@ -54,7 +53,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
         [Test]
         public void CanExecute_SameProject_False()
         {
-            SUT.Tasks.Projects.Add(new ProjectModel {Title = ProjectTitle, Goal = new GoalModel()});
+            SUT.Core.Projects.Add(new ProjectModel {Title = ProjectTitle, Goal = new GoalModel()});
             SUT.NewProject = new ProjectModel {Title = ProjectTitle, Goal = new GoalModel()};
             SUT.SaveProjectCommand.CanExecute(null).Should().BeFalse();
         }
@@ -72,7 +71,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Projects.NewProject
             var newProject = new ProjectModel { Title = ProjectTitle, Goal = new GoalModel()};
             SUT.NewProject = newProject;
             SUT.SaveProjectCommand.Execute(null);
-            SUT.Tasks.Projects.Should().Contain(newProject);
+            SUT.Core.Projects.Should().Contain(newProject);
         }
 
         [Test]

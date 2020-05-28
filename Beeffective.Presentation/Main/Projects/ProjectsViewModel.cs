@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.Composition;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Projects
 {
     [Export]
-    public class ProjectsViewModel : TaskCollectionViewModel
+    public class ProjectsViewModel : CoreViewModel
     {
         [ImportingConstructor]
-        public ProjectsViewModel(PriorityObservableCollection tasks) : base(tasks)
+        public ProjectsViewModel(Core core) : base(core)
         {
         }
     }

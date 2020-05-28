@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Settings
 {
@@ -8,7 +7,7 @@ namespace Beeffective.Presentation.Main.Settings
     public class SettingsViewModel : ContentViewModel
     {
         [ImportingConstructor]
-        public SettingsViewModel(PriorityObservableCollection tasks) : base(tasks)
+        public SettingsViewModel(Core core) : base(core)
         {
         }
     }

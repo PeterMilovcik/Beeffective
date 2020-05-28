@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.Composition;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Common
 {
-    public class ContentViewModel : TaskCollectionViewModel
+    public class ContentViewModel : CoreViewModel
     {
         [ImportingConstructor]
-        public ContentViewModel(PriorityObservableCollection tasks) : base(tasks)
+        public ContentViewModel(Main.Core core) : base(core)
         {
         }
 

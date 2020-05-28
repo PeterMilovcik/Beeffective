@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.Main.Labels
 {
     [Export]
-    public class NewLabelViewModel : TaskCollectionViewModel
+    public class NewLabelViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private LabelModel newLabel;
 
         [ImportingConstructor]
-        public NewLabelViewModel(PriorityObservableCollection tasks, IDialogDisplay dialogDisplay) : base(tasks)
+        public NewLabelViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
             ShowNewLabelDialogCommand = new AsyncCommand(ShowNewLabelDialogAsync);
@@ -61,11 +60,11 @@ namespace Beeffective.Presentation.Main.Labels
 
         private bool CanSaveLabel(object arg) =>
             !string.IsNullOrWhiteSpace(NewLabel?.Title) &&
-            !Tasks.Labels.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
+            !Core.Labels.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
 
         private void SaveLabel(object obj)
         {
-            Tasks.Labels.Add(NewLabel);
+            Core.Labels.Add(NewLabel);
             dialogDisplay.CloseDialog();
         }
     }

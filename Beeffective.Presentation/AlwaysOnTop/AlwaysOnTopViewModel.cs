@@ -5,12 +5,11 @@ using System.ComponentModel.Composition;
 using System.Timers;
 using Beeffective.Core.Extensions;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Priority;
 
 namespace Beeffective.Presentation.AlwaysOnTop
 {
     [Export]
-    public class AlwaysOnTopViewModel : ViewModel
+    public class AlwaysOnTopViewModel : CoreViewModel
     {
         private readonly IAlwaysOnTopWindow view;
         private bool isTimePickerVisible;
@@ -28,12 +27,10 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
 
         [ImportingConstructor]
-        public AlwaysOnTopViewModel(IAlwaysOnTopWindow view, PriorityObservableCollection tasks)
+        public AlwaysOnTopViewModel(Main.Core core, IAlwaysOnTopWindow view) : base(core)
         {
             this.view = view;
             this.view.DataContext = this;
-            Tasks = tasks;
-            Tasks.PropertyChanged += OnTasksPropertyChanged;
             TimeTrackerCommand = new DelegateCommand(obj => TimeTrack());
             StartTimerCommand = new DelegateCommand(StartTimer);
             FinishCommand = new DelegateCommand(obj => Finish());
@@ -47,8 +44,6 @@ namespace Beeffective.Presentation.AlwaysOnTop
             RepeatInterval = "week";
             RepeatIntervals = new List<string> {"day", "week", "month", "year"};
         }
-
-        public PriorityObservableCollection Tasks { get; set; }
 
         public DelegateCommand TimeTrackerCommand { get; }
 
@@ -85,52 +80,52 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void TimeTrack()
         {
-            if (Tasks.Selected.Model.IsTimerEnabled)
-            {
-                StopTimer();
-            }
-            else
-            {
-                IsTimePickerVisible = true;
-            }
+            //if (Tasks.Selected.Model.IsTimerEnabled)
+            //{
+            //    StopTimer();
+            //}
+            //else
+            //{
+            //    IsTimePickerVisible = true;
+            //}
         }
 
         private void StopTimer()
         {
-            Tasks.Selected.Model.IsTimerEnabled = false;
-            timer.Stop();
-            RemainingTime = TimeSpan.Zero;
+            //Tasks.Selected.Model.IsTimerEnabled = false;
+            //timer.Stop();
+            //RemainingTime = TimeSpan.Zero;
         }
 
         private void StartTimer(object obj)
         {
-            if (obj is int minutes)
-            {
-                Tasks.Selected.Model.IsTimerEnabled = true;
-                IsTimePickerVisible = false;
-                RemainingTime = TimeSpan.FromMinutes(minutes);
-                timer.Start();
-            }
+            //if (obj is int minutes)
+            //{
+            //    Tasks.Selected.Model.IsTimerEnabled = true;
+            //    IsTimePickerVisible = false;
+            //    RemainingTime = TimeSpan.FromMinutes(minutes);
+            //    timer.Start();
+            //}
         }
 
         private void OnTasksPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Tasks.IsSelected))
-            {
-                UpdateViewVisibility();
-            }
+            //if (e.PropertyName == nameof(Tasks.IsSelected))
+            //{
+            //    UpdateViewVisibility();
+            //}
         }
 
         private void UpdateViewVisibility()
         {
-            if (Tasks.IsSelected)
-            {
-                view.Show();
-            }
-            else
-            {
-                view.Hide();
-            }
+            //if (Tasks.IsSelected)
+            //{
+            //    view.Show();
+            //}
+            //else
+            //{
+            //    view.Hide();
+            //}
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e) => 
@@ -138,16 +133,16 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void Finish()
         {
-            if (Tasks.Selected == null) return;
-            if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
-            Tasks.Selected.Model.IsFinished = true;
-            Tasks.Selected = null;
-            IsRepeatQuestionVisible = false;
-            IsRepeatPickerVisible = false;
-            Tasks.NotifyPropertyChange(nameof(Tasks.Unfinished));
-            Tasks.NotifyPropertyChange(nameof(Tasks.Finished));
-            Tasks.NotifyChange();
-            UpdateViewVisibility();
+            //if (Tasks.Selected == null) return;
+            //if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
+            //Tasks.Selected.Model.IsFinished = true;
+            //Tasks.Selected = null;
+            //IsRepeatQuestionVisible = false;
+            //IsRepeatPickerVisible = false;
+            //Tasks.NotifyPropertyChange(nameof(Tasks.Unfinished));
+            //Tasks.NotifyPropertyChange(nameof(Tasks.Finished));
+            //Tasks.NotifyChange();
+            //UpdateViewVisibility();
         }
 
         private void ShowRepeatQuestion()
@@ -163,23 +158,23 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void ShowRepeatPicker()
         {
-            IsRepeatQuestionVisible = false;
-            IsRepeatPickerVisible = true;
-            if (Tasks.Selected == null) return;
-            var dueTo = Tasks.Selected.Model.DueTo;
-            if (dueTo == null)
-            {
-                DueToDate = DateTime.Now.Date;
-                DueToTime = DateTime.Now.TimeOfDay;
-            }
-            else
-            {
-                DueToDate = dueTo.Value.Date;
-                DueToTime = dueTo.Value.TimeOfDay;
-            }
+            //IsRepeatQuestionVisible = false;
+            //IsRepeatPickerVisible = true;
+            //if (Tasks.Selected == null) return;
+            //var dueTo = Tasks.Selected.Model.DueTo;
+            //if (dueTo == null)
+            //{
+            //    DueToDate = DateTime.Now.Date;
+            //    DueToTime = DateTime.Now.TimeOfDay;
+            //}
+            //else
+            //{
+            //    DueToDate = dueTo.Value.Date;
+            //    DueToTime = dueTo.Value.TimeOfDay;
+            //}
 
-            originalDueDate = DueToDate.Add(DueToTime);
-            UpdateRepeatIntervalTimeSpan();
+            //originalDueDate = DueToDate.Add(DueToTime);
+            //UpdateRepeatIntervalTimeSpan();
         }
 
         public bool IsRepeatPickerVisible
@@ -190,14 +185,14 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void Repeat()
         {
-            if (Tasks.Selected == null) return;
-            if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
-            Tasks.Selected.Model.DueTo = DueToDate.Add(DueToTime);
-            Tasks.Selected = null;
-            IsRepeatQuestionVisible = false;
-            IsRepeatPickerVisible = false;
-            Tasks.NotifyChange();
-            UpdateViewVisibility();
+            //if (Tasks.Selected == null) return;
+            //if (Tasks.Selected.Model.IsTimerEnabled) StopTimer();
+            //Tasks.Selected.Model.DueTo = DueToDate.Add(DueToTime);
+            //Tasks.Selected = null;
+            //IsRepeatQuestionVisible = false;
+            //IsRepeatPickerVisible = false;
+            //Tasks.NotifyChange();
+            //UpdateViewVisibility();
         }
 
         public DateTime DueToDate
@@ -254,7 +249,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         public void Show()
         {
-            if (Tasks.Selected != null) view.Show();
+            //if (Tasks.Selected != null) view.Show();
         }
     }
 }

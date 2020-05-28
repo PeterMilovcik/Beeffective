@@ -13,7 +13,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         public void SetUp()
         {
             SUT.NewGoal = null;
-            SUT.Tasks.Goals.Clear();
+            SUT.Core.Goals.Clear();
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         [Test]
         public void CanExecute_NewGoalModelTitleAlreadyExist_False()
         {
-            SUT.Tasks.Goals.Add(new GoalModel {Title = NewGoalTitle});
+            SUT.Core.Goals.Add(new GoalModel {Title = NewGoalTitle});
             SUT.NewGoal = new GoalModel {Title = NewGoalTitle};
             SUT.SaveGoalCommand.CanExecute(null).Should().BeFalse();
         }
@@ -72,7 +72,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         {
             SUT.NewGoal = new GoalModel {Title = NewGoalTitle};
             SUT.SaveGoalCommand.Execute(null);
-            SUT.Tasks.Goals.SingleOrDefault(g => g.Title == NewGoalTitle).Should().NotBeNull();
+            SUT.Core.Goals.SingleOrDefault(g => g.Title == NewGoalTitle).Should().NotBeNull();
         }
     }
 }
