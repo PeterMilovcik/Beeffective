@@ -7,6 +7,7 @@ using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -14,6 +15,7 @@ namespace Beeffective.Presentation.Main.Tasks
     public class NewTaskViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
+        private readonly IRepositoryService repository;
         private TaskModel newTask;
         private ObservableCollection<GoalModel> goals;
         private GoalModel goal;
@@ -21,11 +23,12 @@ namespace Beeffective.Presentation.Main.Tasks
         private ProjectModel project;
 
         [ImportingConstructor]
-        public NewTaskViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
+        public NewTaskViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
+            this.repository = repository;
             ShowNewTaskDialogCommand = new AsyncCommand(ShowNewTaskDialogAsync);
-            SaveTaskCommand = new DelegateCommand(CanSaveTask, SaveTask);
+            SaveTaskCommand = new DelegateCommand(CanSaveTask, async obj => await SaveTaskAsync());
             Projects = new ObservableCollection<ProjectModel>();
         }
 
@@ -96,10 +99,11 @@ namespace Beeffective.Presentation.Main.Tasks
             !string.IsNullOrWhiteSpace(NewTask?.Title) &&
             !Core.Tasks.Select(taskModel => taskModel.Title).Contains(NewTask.Title);
 
-        private void SaveTask(object obj)
+        private async Task SaveTaskAsync()
         {
             NewTask.Project = Project;
-            Core.Tasks.Add(NewTask);
+            var savedTask = await repository.Tasks.AddAsync(NewTask);
+            Core.Tasks.Add(savedTask);
             dialogDisplay.CloseDialog();
         }
     }

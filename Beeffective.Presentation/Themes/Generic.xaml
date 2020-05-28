@@ -18,6 +18,18 @@
     <system:Double x:Key="FontSize">16</system:Double>
 
     <Style
+        x:Key="WidgetHeaderTextBlock"
+        BasedOn="{StaticResource MaterialDesignTextBlock}"
+        TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontFamily" Value="{StaticResource MaterialDesignFont}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Padding" Value="16,8" />
+    </Style>
+
+    <Style
         x:Key="MenuButton"
         BasedOn="{StaticResource MaterialDesignRaisedButton}"
         TargetType="Button">

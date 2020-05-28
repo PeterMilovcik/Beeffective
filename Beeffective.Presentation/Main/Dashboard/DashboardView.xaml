@@ -52,6 +52,12 @@
             Grid.Column="0"
             Margin="16,8,8,16" />
 
+        <dashboard:TasksListView
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Margin="8,16,8,16" />
+
     </Grid>
 
 </UserControl>

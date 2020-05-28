@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Labels
 {
@@ -12,14 +13,16 @@ namespace Beeffective.Presentation.Main.Labels
     public class NewLabelViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
+        private readonly IRepositoryService repository;
         private LabelModel newLabel;
 
         [ImportingConstructor]
-        public NewLabelViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
+        public NewLabelViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
+            this.repository = repository;
             ShowNewLabelDialogCommand = new AsyncCommand(ShowNewLabelDialogAsync);
-            SaveLabelCommand = new DelegateCommand(CanSaveLabel, SaveLabel);
+            SaveLabelCommand = new DelegateCommand(CanSaveLabel, async obj => await SaveLabelAsync());
         }
 
         [Import]
@@ -62,9 +65,10 @@ namespace Beeffective.Presentation.Main.Labels
             !string.IsNullOrWhiteSpace(NewLabel?.Title) &&
             !Core.Labels.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
 
-        private void SaveLabel(object obj)
+        private async Task SaveLabelAsync()
         {
-            Core.Labels.Add(NewLabel);
+            var savedLabel = await repository.Labels.AddAsync(NewLabel);
+            Core.Labels.Add(savedLabel);
             dialogDisplay.CloseDialog();
         }
     }

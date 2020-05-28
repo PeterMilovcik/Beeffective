@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Projects
 {
@@ -12,14 +13,16 @@ namespace Beeffective.Presentation.Main.Projects
     public class NewProjectViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
+        private readonly IRepositoryService repository;
         private ProjectModel newProject;
 
         [ImportingConstructor]
-        public NewProjectViewModel(Core core, IDialogDisplay dialogDisplay) : base(core)
+        public NewProjectViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
+            this.repository = repository;
             ShowNewProjectDialogCommand = new AsyncCommand(ShowNewProjectDialog);
-            SaveProjectCommand = new DelegateCommand(CanSaveProject, SaveProject);
+            SaveProjectCommand = new DelegateCommand(CanSaveProject, async obj => await SaveProjectAsync());
         }
 
         public IAsyncCommand ShowNewProjectDialogCommand { get; }
@@ -57,9 +60,10 @@ namespace Beeffective.Presentation.Main.Projects
             NewProject.Goal != null &&
             !Core.Projects.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
 
-        private void SaveProject(object obj)
+        private async Task SaveProjectAsync()
         {
-            Core.Projects.Add(NewProject);
+            var savedProject = await repository.Projects.AddAsync(NewProject);
+            Core.Projects.Add(savedProject);
             dialogDisplay.CloseDialog();
         }
     }

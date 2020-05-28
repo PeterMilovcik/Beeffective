@@ -18,13 +18,28 @@
     </UserControl.Resources>
 
     <Grid Background="{StaticResource MaterialDesignPaper}">
-        <ListView ItemsSource="{Binding Core.Projects}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Style="{StaticResource WidgetHeaderTextBlock}"
+            Text="Projects" />
+
+        <ListView
+            Grid.Row="1"
+            ItemsSource="{Binding Core.SelectedProjects}"
+            SelectedItem="{Binding Core.SelectedProject}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
     </Grid>
 
 </UserControl>
