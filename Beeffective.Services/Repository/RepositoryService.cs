@@ -14,5 +14,8 @@ namespace Beeffective.Services.Repository
 
         [Import]
         public IRepositoryService<TaskModel> Tasks { get; set; }
+
+        [Import]
+        public IRepositoryService<LabelModel> Labels { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Beeffective.Data
         public DbSet<RecordEntity> Records { get; set; }
         public DbSet<GoalEntity> Goals { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
+        public DbSet<LabelEntity> Labels { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

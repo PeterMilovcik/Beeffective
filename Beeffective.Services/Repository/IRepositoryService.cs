@@ -18,5 +18,6 @@ namespace Beeffective.Services.Repository
         IRepositoryService<GoalModel> Goals { get; }
         IRepositoryService<ProjectModel> Projects { get; }
         IRepositoryService<TaskModel> Tasks { get; }
+        IRepositoryService<LabelModel> Labels { get; }
     }
 }

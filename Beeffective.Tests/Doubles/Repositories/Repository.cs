@@ -18,5 +18,8 @@ namespace Beeffective.Tests.Doubles.Repositories
 
         [Import]
         public IRepository<RecordEntity> Records { get; set; }
+
+        [Import]
+        public IRepository<LabelEntity> Labels { get; set; }
     }
 }

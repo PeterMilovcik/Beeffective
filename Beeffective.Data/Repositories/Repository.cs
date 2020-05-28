@@ -17,5 +17,8 @@ namespace Beeffective.Data.Repositories
 
         [Import]
         public IRepository<RecordEntity> Records { get; set; }
+
+        [Import]
+        public IRepository<LabelEntity> Labels { get; set; }
     }
 }

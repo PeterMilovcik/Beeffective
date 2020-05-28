@@ -33,8 +33,11 @@ namespace Beeffective.Presentation.Main.Priority
             this.repository = repository;
             collection = new ObservableCollection<TaskViewModel>();
             collection.CollectionChanged += OnCollectionChanged;
+            
             Goals = new ObservableCollection<GoalModel>();
             Projects = new ObservableCollection<ProjectModel>();
+            Labels = new ObservableCollection<LabelModel>();
+
             Tags = new ObservableCollection<TagModel>();
         }
 
@@ -147,6 +150,8 @@ namespace Beeffective.Presentation.Main.Priority
 
         public ObservableCollection<ProjectModel> Projects { get; }
 
+        public ObservableCollection<LabelModel> Labels { get; }
+
         public ObservableCollection<TagModel> Tags
         {
             get => tags;
@@ -163,7 +168,16 @@ namespace Beeffective.Presentation.Main.Priority
         {
             await LoadGoalsAsync();
             await LoadProjectsAsync();
+            await LoadLabelsAsync();
             await LoadTasksAsync();
+        }
+
+        private async Task LoadGoalsAsync()
+        {
+            Goals.Clear();
+            var goals = (await repository.Goals.LoadAsync())
+                .OrderBy(gm => gm.Title).ToList();
+            goals.ForEach(goalModel => Goals.Add(goalModel));
         }
 
         private async Task LoadProjectsAsync()
@@ -172,6 +186,14 @@ namespace Beeffective.Presentation.Main.Priority
             var projects = (await repository.Projects.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
             projects.ForEach(projectModel => Projects.Add(projectModel));
+        }
+
+        private async Task LoadLabelsAsync()
+        {
+            Labels.Clear();
+            var labels = (await repository.Labels.LoadAsync())
+                .OrderBy(gm => gm.Title).ToList();
+            labels.ForEach(labelModel => Labels.Add(labelModel));
         }
 
         private async Task LoadTasksAsync()
@@ -183,14 +205,6 @@ namespace Beeffective.Presentation.Main.Priority
             Clear();
             tasks.ForEach(Add);
 
-        }
-
-        private async Task LoadGoalsAsync()
-        {
-            Goals.Clear();
-            var goals = (await repository.Goals.LoadAsync())
-                .OrderBy(gm => gm.Title).ToList();
-            goals.ForEach(goalModel => Goals.Add(goalModel));
         }
 
         public async Task SaveAsync()
