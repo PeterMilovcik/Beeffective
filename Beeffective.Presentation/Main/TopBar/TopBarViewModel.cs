@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Goals;
+using Beeffective.Presentation.Main.Labels;
 using Beeffective.Presentation.Main.Priority;
 using Beeffective.Presentation.Main.Projects;
 using Beeffective.Presentation.NewGoal;
@@ -45,5 +46,8 @@ namespace Beeffective.Presentation.Main.TopBar
 
         [Import]
         public NewProjectViewModel NewProject { get; set; }
+
+        [Import]
+        public NewLabelViewModel NewLabel { get; set; }
     }
 }

@@ -149,6 +149,12 @@
 
                                         <Button
                                             Margin="8,4"
+                                            Command="{Binding TopBar.NewLabel.ShowNewLabelDialogCommand}"
+                                            Content="NEW LABEL"
+                                            Style="{StaticResource MaterialDesignFlatButton}" />
+
+                                        <Button
+                                            Margin="8,4"
                                             Content="NEW TASK"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
