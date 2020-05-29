@@ -7,7 +7,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
 {
     public class Created : TestFixture
     {
-        private IMonitor<DelegateCommand> saveGoalCommandMonitor;
+        private IMonitor<AsyncCommand> saveGoalCommandMonitor;
 
         public override void OneTimeSetUp()
         {
@@ -19,10 +19,6 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         [Test]
         public void SaveGoalCommand_RaiseCanExecuteChanged() =>
             saveGoalCommandMonitor.Should().Raise("CanExecuteChanged");
-
-        [Test]
-        public void NewGoalView_NotNull() => 
-            SUT.NewGoalView.Should().NotBeNull();
 
         [Test]
         public void ShowNewGoalDialogCommand_NotNull() => 

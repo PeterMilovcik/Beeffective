@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Dialogs;
+using Beeffective.Presentation.Main.Goals;
+using Beeffective.Presentation.Main.Labels;
+using Beeffective.Presentation.Main.Projects;
+using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main
@@ -24,7 +29,7 @@ namespace Beeffective.Presentation.Main
         private ObservableCollection<GoalModel> selectedGoals;
 
         [ImportingConstructor]
-        public Core(IRepositoryService repository)
+        public Core(IRepositoryService repository, IDialogDisplay dialogDisplay)
         {
             this.repository = repository;
             Goals = new ObservableCollection<GoalModel>();
@@ -35,7 +40,19 @@ namespace Beeffective.Presentation.Main
             Labels.CollectionChanged += OnLabelsCollectionChanged;
             Tasks = new ObservableCollection<TaskModel>();
             Tasks.CollectionChanged += OnTasksCollectionChanged;
+            NewGoal = new NewGoalViewModel(this, dialogDisplay, repository);
+            NewProject = new NewProjectViewModel(this, dialogDisplay, repository);
+            NewLabel = new NewLabelViewModel(this, dialogDisplay, repository);
+            NewTask = new NewTaskViewModel(this, dialogDisplay, repository);
         }
+
+        public NewGoalViewModel NewGoal { get; }
+
+        public NewProjectViewModel NewProject { get; }
+
+        public NewLabelViewModel NewLabel { get; }
+
+        public NewTaskViewModel NewTask { get; }
 
         public ObservableCollection<GoalModel> Goals { get; }
 

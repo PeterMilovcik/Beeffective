@@ -117,25 +117,25 @@
 
                                         <Button
                                             Margin="8,4"
-                                            Command="{Binding TopBar.NewGoal.ShowNewGoalDialogCommand}"
+                                            Command="{Binding Core.NewGoal.ShowNewGoalDialogCommand}"
                                             Content="NEW GOAL"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
                                         <Button
                                             Margin="8,4"
-                                            Command="{Binding TopBar.NewProject.ShowNewProjectDialogCommand}"
+                                            Command="{Binding Core.NewProject.ShowNewProjectDialogCommand}"
                                             Content="NEW PROJECT"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
                                         <Button
                                             Margin="8,4"
-                                            Command="{Binding TopBar.NewLabel.ShowNewLabelDialogCommand}"
+                                            Command="{Binding Core.NewLabel.ShowNewLabelDialogCommand}"
                                             Content="NEW LABEL"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
                                         <Button
                                             Margin="8,4"
-                                            Command="{Binding TopBar.NewTask.ShowNewTaskDialogCommand}"
+                                            Command="{Binding Core.NewTask.ShowNewTaskDialogCommand}"
                                             Content="NEW TASK"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 

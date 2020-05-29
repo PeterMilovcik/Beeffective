@@ -34,17 +34,5 @@ namespace Beeffective.Presentation.Main.TopBar
             get => isAddMenuOpen;
             set => SetProperty(ref isAddMenuOpen, value);
         }
-
-        [Import]
-        public NewGoalViewModel NewGoal { get; set; }
-
-        [Import]
-        public NewProjectViewModel NewProject { get; set; }
-
-        [Import]
-        public NewLabelViewModel NewLabel { get; set; }
-
-        [Import]
-        public NewTaskViewModel NewTask { get; set; }
     }
 }

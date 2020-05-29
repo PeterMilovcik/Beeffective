@@ -3,21 +3,30 @@ using NUnit.Framework;
 
 namespace Beeffective.Tests
 {
-    public class TestFixture<T> where T : class
+    public class TestFixture
     {
         [OneTimeSetUp]
         public virtual void OneTimeSetUp()
         {
             Container = CompositionContainerFactory.Create();
-            CreateSUT();
         }
 
         public CompositionContainer Container { get; private set; }
 
+        public TValue Get<TValue>() => Container.GetExportedValue<TValue>();
+    }
+
+    public class TestFixture<T> : TestFixture where T : class
+    {
+        [OneTimeSetUp]
+        public override void OneTimeSetUp()
+        {
+            base.OneTimeSetUp();
+            CreateSUT();
+        }
+
         protected virtual void CreateSUT() => SUT = Get<T>();
 
-        public TValue Get<TValue>() => Container.GetExportedValue<TValue>();
-
-        public T SUT { get; private set; }
+        protected T SUT { get; private set; }
     }
 }

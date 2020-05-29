@@ -37,7 +37,7 @@
             <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
             </Button>
-            <Button Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.NewProject.ShowNewProjectDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
             </Button>
             <Button Style="{StaticResource WidgetHeaderButton}">

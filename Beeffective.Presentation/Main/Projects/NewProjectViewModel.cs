@@ -9,14 +9,12 @@ using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Projects
 {
-    [Export]
     public class NewProjectViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private readonly IRepositoryService repository;
         private ProjectModel newProject;
 
-        [ImportingConstructor]
         public NewProjectViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
@@ -30,12 +28,8 @@ namespace Beeffective.Presentation.Main.Projects
         private async Task ShowNewProjectDialog()
         {
             NewProject = new ProjectModel();
-            NewProjectView.DataContext = this;
-            await dialogDisplay.ShowAsync(NewProjectView);
+            await dialogDisplay.ShowNewProjectDialogAsync(this);
         }
-
-        [Import]
-        public INewProjectView NewProjectView { get; set; }
 
         public DelegateCommand SaveProjectCommand { get; }
 

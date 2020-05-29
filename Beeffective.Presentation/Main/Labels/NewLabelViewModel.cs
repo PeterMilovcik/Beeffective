@@ -9,14 +9,12 @@ using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Labels
 {
-    [Export]
     public class NewLabelViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private readonly IRepositoryService repository;
         private LabelModel newLabel;
 
-        [ImportingConstructor]
         public NewLabelViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
@@ -25,16 +23,12 @@ namespace Beeffective.Presentation.Main.Labels
             SaveLabelCommand = new DelegateCommand(CanSaveLabel, async obj => await SaveLabelAsync());
         }
 
-        [Import]
-        public INewLabelView NewLabelView { get; set; }
-
         public IAsyncCommand ShowNewLabelDialogCommand { get; }
 
         private async Task ShowNewLabelDialogAsync()
         {
             NewLabel = new LabelModel();
-            NewLabelView.DataContext = this;
-            await dialogDisplay.ShowAsync(NewLabelView);
+            await dialogDisplay.ShowNewLabelDialogAsync(this);
         }
 
         public LabelModel NewLabel

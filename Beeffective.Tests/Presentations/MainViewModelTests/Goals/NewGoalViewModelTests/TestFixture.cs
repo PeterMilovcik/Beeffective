@@ -4,13 +4,19 @@ using DialogDisplay = Beeffective.Tests.Doubles.DialogDisplay;
 
 namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewModelTests
 {
-    public class TestFixture : TestFixture<NewGoalViewModel>
+    public class TestFixture : Tests.TestFixture
     {
         public override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
+            Core = Container.GetExportedValue<Presentation.Main.Core>();
             DialogDisplay = Container.GetExportedValue<IDialogDisplay>() as DialogDisplay;
+            SUT = Core.NewGoal;
         }
+
+        protected NewGoalViewModel SUT { get; set; }
+
+        protected Presentation.Main.Core Core { get; set; }
 
         protected DialogDisplay DialogDisplay { get; set; }
     }

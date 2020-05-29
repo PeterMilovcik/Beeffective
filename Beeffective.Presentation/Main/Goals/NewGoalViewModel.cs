@@ -9,32 +9,26 @@ using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Goals
 {
-    [Export(typeof(NewGoalViewModel))]
     public class NewGoalViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
         private readonly IRepositoryService repository;
         private GoalModel newGoal;
 
-        [ImportingConstructor]
         public NewGoalViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
             ShowNewGoalDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
-            SaveGoalCommand = new DelegateCommand(CanSaveGoal, async obj => await SaveGoalAsync());
+            SaveGoalCommand = new AsyncCommand(SaveGoalAsync, CanSaveGoal);
         }
-
-        [Import]
-        public INewGoalView NewGoalView { get; set; }
 
         public IAsyncCommand ShowNewGoalDialogCommand { get; }
 
         private async Task ShowNewGoalDialogAsync()
         {
             NewGoal = new GoalModel();
-            NewGoalView.DataContext = this;
-            await dialogDisplay.ShowAsync(NewGoalView);
+            await dialogDisplay.ShowNewGoalDialogAsync(this);
         }
 
         public GoalModel NewGoal
@@ -59,9 +53,9 @@ namespace Beeffective.Presentation.Main.Goals
             }
         }
 
-        public DelegateCommand SaveGoalCommand { get; }
+        public AsyncCommand SaveGoalCommand { get; }
 
-        private bool CanSaveGoal(object arg) =>
+        private bool CanSaveGoal() =>
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
             !Core.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 

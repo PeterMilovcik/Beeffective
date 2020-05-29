@@ -11,7 +11,6 @@ using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
-    [Export]
     public class NewTaskViewModel : CoreViewModel
     {
         private readonly IDialogDisplay dialogDisplay;
@@ -22,7 +21,6 @@ namespace Beeffective.Presentation.Main.Tasks
         private ObservableCollection<ProjectModel> projects;
         private ProjectModel project;
 
-        [ImportingConstructor]
         public NewTaskViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.dialogDisplay = dialogDisplay;
@@ -67,8 +65,7 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             Goals = Core.Goals;
             NewTask = new TaskModel();
-            NewTaskView.DataContext = this;
-            await dialogDisplay.ShowAsync(NewTaskView);
+            await dialogDisplay.ShowNewTaskDialogAsync(this);
         }
 
         public TaskModel NewTask
