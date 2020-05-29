@@ -115,7 +115,7 @@
                                     <Border x:Name="Border" Padding="8">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition SharedSizeGroup="Checkerz" />
+                                                <ColumnDefinition SharedSizeGroup="Checkers" />
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSelected}" />
