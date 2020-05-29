@@ -44,6 +44,10 @@ namespace Beeffective.Presentation.Main
             NewProject = new NewProjectViewModel(this, dialogDisplay, repository);
             NewLabel = new NewLabelViewModel(this, dialogDisplay, repository);
             NewTask = new NewTaskViewModel(this, dialogDisplay, repository);
+            SelectAllGoalsCommand = new DelegateCommand((obj) => SelectedGoal = null);
+            SelectAllProjectsCommand = new DelegateCommand((obj) => SelectedGoal = null);
+            SelectAllLabelsCommand = new DelegateCommand((obj) => SelectedGoal = null);
+            SelectAllTasksCommand = new DelegateCommand((obj) => SelectedGoal = null);
         }
 
         public NewGoalViewModel NewGoal { get; }
@@ -65,7 +69,9 @@ namespace Beeffective.Presentation.Main
         public ObservableCollection<GoalModel> SelectedGoals
         {
             get => selectedGoals;
-            set => SetProperty(ref selectedGoals, value);
+            set => SetProperty(ref selectedGoals, value).IfTrue(() =>
+                SelectedProjects = new ObservableCollection<ProjectModel>(
+                    Projects.Where(p => SelectedGoals.Contains(p.Goal))));
         }
 
         public GoalModel SelectedGoal
@@ -80,6 +86,8 @@ namespace Beeffective.Presentation.Main
             });
         }
 
+        public DelegateCommand SelectAllGoalsCommand { get; }
+
         public ObservableCollection<ProjectModel> Projects { get; }
 
         private void OnProjectsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -91,7 +99,9 @@ namespace Beeffective.Presentation.Main
         public ObservableCollection<ProjectModel> SelectedProjects
         {
             get => selectedProjects;
-            set => SetProperty(ref selectedProjects, value);
+            set => SetProperty(ref selectedProjects, value).IfTrue(() =>
+                SelectedTasks = new ObservableCollection<TaskModel>(
+                    Tasks.Where(t => SelectedProjects.Contains(t.Project))));
         }
 
         public ProjectModel SelectedProject
@@ -105,6 +115,8 @@ namespace Beeffective.Presentation.Main
                     : Tasks;
             });
         }
+
+        public DelegateCommand SelectAllProjectsCommand { get; }
 
         public ObservableCollection<LabelModel> Labels { get; }
 
@@ -126,6 +138,8 @@ namespace Beeffective.Presentation.Main
             set => SetProperty(ref selectedLabel, value);
         }
 
+        public DelegateCommand SelectAllLabelsCommand { get; }
+
         public ObservableCollection<TaskModel> Tasks { get; }
 
         private void OnTasksCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -145,6 +159,8 @@ namespace Beeffective.Presentation.Main
             get => selectedTask;
             set => SetProperty(ref selectedTask, value);
         }
+
+        public DelegateCommand SelectAllTasksCommand { get; }
 
         public async Task LoadAsync()
         {

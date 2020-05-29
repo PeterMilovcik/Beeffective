@@ -76,7 +76,7 @@
 
                 <materialDesign:ColorZone
                     Grid.Row="0"
-                    Padding="16"
+                    Padding="8"
                     Mode="PrimaryMid">
                     <DockPanel>
 
@@ -105,7 +105,7 @@
                                 FontWeight="Bold"
                                 Text="{Binding TopBar.Title}" />
 
-                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <!--<StackPanel Grid.Column="2" Orientation="Horizontal">
 
                                 <materialDesign:PopupBox>
 
@@ -143,7 +143,7 @@
 
                                 </materialDesign:PopupBox>
 
-                                <Button VerticalAlignment="Center" Command="{Binding Tasks.Selected.EditTaskCommand}">
+                                <Button VerticalAlignment="Center" Command="{Binding Core.SelectedTask.EditTaskCommand}">
                                     <Button.Style>
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed" />
@@ -198,7 +198,7 @@
                                     <materialDesign:PackIcon Kind="TrashCan" />
                                 </Button>
 
-                            </StackPanel>
+                            </StackPanel>-->
 
                         </Grid>
 

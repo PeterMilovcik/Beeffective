@@ -20,6 +20,8 @@ namespace Beeffective.Presentation.Main.Tasks
         private GoalModel goal;
         private ObservableCollection<ProjectModel> projects;
         private ProjectModel project;
+        private LabelModel labelToAdd;
+        private ObservableCollection<LabelViewModel> labels;
 
         public NewTaskViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
@@ -29,9 +31,6 @@ namespace Beeffective.Presentation.Main.Tasks
             SaveTaskCommand = new DelegateCommand(CanSaveTask, async obj => await SaveTaskAsync());
             Projects = new ObservableCollection<ProjectModel>();
         }
-
-        [Import]
-        public INewTaskView NewTaskView { get; set; }
 
         public IAsyncCommand ShowNewTaskDialogCommand { get; }
 
@@ -61,9 +60,33 @@ namespace Beeffective.Presentation.Main.Tasks
             set => SetProperty(ref project, value);
         }
 
+        public ObservableCollection<LabelViewModel> Labels
+        {
+            get => labels;
+            set
+            {
+                if (Equals(labels, value)) return;
+                labels?.ToList().ForEach(label => label.PropertyChanged -= OnLabelPropertyChanged);
+                labels = value;
+                labels?.ToList().ForEach(label => label.PropertyChanged += OnLabelPropertyChanged);
+                NotifyPropertyChange();
+            }
+        }
+
+        private void OnLabelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (NewTask == null) return;
+            if (e.PropertyName == nameof(LabelViewModel.IsSelected))
+            {
+                NewTask.Labels.Clear();
+                Labels.Where(label => label.IsSelected).ToList().ForEach(label => NewTask.Labels.Add(label.Model));
+            }
+        }
+
         private async Task ShowNewTaskDialogAsync()
         {
             Goals = Core.Goals;
+            Labels = new ObservableCollection<LabelViewModel>(Core.Labels.Select(l => new LabelViewModel(l)));
             NewTask = new TaskModel();
             await dialogDisplay.ShowNewTaskDialogAsync(this);
         }
@@ -80,6 +103,17 @@ namespace Beeffective.Presentation.Main.Tasks
                 SaveTaskCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChange();
             }
+        }
+
+        public LabelModel LabelToAdd
+        {
+            get => labelToAdd;
+            set => SetProperty(ref labelToAdd, value).IfTrue(() =>
+            {
+                if (NewTask == null) return;
+                if (NewTask.Labels.Contains(LabelToAdd)) return;
+                NewTask.Labels.Add(LabelToAdd);
+            });
         }
 
         private void OnGoalModelPropertyChanged(object sender, PropertyChangedEventArgs e)

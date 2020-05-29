@@ -3,8 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    Width="800"
-    Height="392">
+    Width="800">
 
     <UserControl.Resources>
 
@@ -30,18 +29,31 @@
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Text="New Label" />
 
+            <TextBlock
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Title" />
+
             <TextBox
-                Margin="16"
-                Style="{StaticResource BeeffectiveTitle2}"
+                Margin="16,0"
+                Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding NewLabel.Title, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Description" />
 
             <TextBox
                 Height="130"
-                Margin="16"
-                Style="{StaticResource BeeffectiveDescription}"
+                Margin="16,0"
+                Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding NewLabel.Description}" />
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel
+                Margin="0,8,0,0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
 
                 <Button
                     Width="124"

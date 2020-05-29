@@ -33,7 +33,7 @@
             Grid.Row="0"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <Button Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.SelectAllLabelsCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
             </Button>
             <Button Command="{Binding Core.NewLabel.ShowNewLabelDialogCommand}" Style="{StaticResource WidgetHeaderButton}">

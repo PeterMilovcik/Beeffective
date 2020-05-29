@@ -14,6 +14,7 @@ namespace Beeffective.Core.Models
         public TaskModel()
         {
             Records = new ObservableCollection<RecordModel>();
+            Labels = new ObservableCollection<LabelModel>();
         }
 
         public int Id { get; set; }
@@ -29,6 +30,8 @@ namespace Beeffective.Core.Models
             get => description;
             set => SetProperty(ref description, value);
         }
+
+        public ObservableCollection<LabelModel> Labels { get; }
 
         public ObservableCollection<RecordModel> Records { get; }
 
