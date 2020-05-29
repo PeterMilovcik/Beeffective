@@ -21,5 +21,6 @@ namespace Beeffective.Data.Repositories
         IRepository<TaskEntity> Tasks { get; }
         IRepository<RecordEntity> Records { get; }
         IRepository<LabelEntity> Labels { get; set; }
+        IRepository<TaskLabelEntity> TaskLabels { get; }
     }
 }

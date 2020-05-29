@@ -17,6 +17,7 @@ namespace Beeffective.Data
         public DbSet<LabelEntity> Labels { get; set; }
         public DbSet<TaskEntity> Tasks { get; set; }
         public DbSet<RecordEntity> Records { get; set; }
+        public DbSet<TaskLabelEntity> TaskLabels { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

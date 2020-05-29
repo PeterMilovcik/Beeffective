@@ -21,5 +21,8 @@ namespace Beeffective.Tests.Doubles.Repositories
 
         [Import]
         public IRepository<LabelEntity> Labels { get; set; }
+
+        [Import]
+        public IRepository<TaskLabelEntity> TaskLabels { get; set; }
     }
 }

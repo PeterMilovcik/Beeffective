@@ -1,0 +1,90 @@
+﻿<UserControl
+    x:Class="Beeffective.Presentation.Main.Dashboard.LabelView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource MaterialDesignPaper}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Style="{StaticResource WidgetHeaderTextBlock}"
+            Text="Label" />
+
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button Command="{Binding Core.SelectAllLabelsCommand}" Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
+            </Button>
+            <Button Command="{Binding Core.NewLabel.ShowNewLabelDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
+            </Button>
+            <Button Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
+            </Button>
+            <Button Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Title" />
+
+            <TextBox
+                Grid.Row="1"
+                Margin="16,0"
+                IsReadOnly="True"
+                IsReadOnlyCaretVisible="False"
+                Style="{StaticResource BeeffectiveTextBox}"
+                Text="{Binding Core.SelectedLabel.Title, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock
+                Grid.Row="2"
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Description" />
+
+            <TextBox
+                Grid.Row="3"
+                Margin="16,0,16,16"
+                IsReadOnly="True"
+                IsReadOnlyCaretVisible="False"
+                Style="{StaticResource BeeffectiveTextBox}"
+                Text="{Binding Core.SelectedLabel.Description}" />
+
+        </Grid>
+
+    </Grid>
+
+</UserControl>

@@ -20,5 +20,8 @@ namespace Beeffective.Data.Repositories
 
         [Import]
         public IRepository<LabelEntity> Labels { get; set; }
+
+        [Import]
+        public IRepository<TaskLabelEntity> TaskLabels { get; set; }
     }
 }

@@ -45,9 +45,9 @@ namespace Beeffective.Presentation.Main
             NewLabel = new NewLabelViewModel(this, dialogDisplay, repository);
             NewTask = new NewTaskViewModel(this, dialogDisplay, repository);
             SelectAllGoalsCommand = new DelegateCommand((obj) => SelectedGoal = null);
-            SelectAllProjectsCommand = new DelegateCommand((obj) => SelectedGoal = null);
-            SelectAllLabelsCommand = new DelegateCommand((obj) => SelectedGoal = null);
-            SelectAllTasksCommand = new DelegateCommand((obj) => SelectedGoal = null);
+            SelectAllProjectsCommand = new DelegateCommand((obj) => SelectedProject = null);
+            SelectAllLabelsCommand = new DelegateCommand((obj) => SelectedLabel = null);
+            SelectAllTasksCommand = new DelegateCommand((obj) => SelectedTask = null);
         }
 
         public NewGoalViewModel NewGoal { get; }
@@ -135,7 +135,13 @@ namespace Beeffective.Presentation.Main
         public LabelModel SelectedLabel
         {
             get => selectedLabel;
-            set => SetProperty(ref selectedLabel, value);
+            set => SetProperty(ref selectedLabel, value).IfTrue(() =>
+            {
+                SelectedTasks = SelectedLabel != null
+                    ? new ObservableCollection<TaskModel>(
+                        Tasks.Where(p => p.Labels.Contains(SelectedLabel)))
+                    : Tasks;
+            });
         }
 
         public DelegateCommand SelectAllLabelsCommand { get; }
