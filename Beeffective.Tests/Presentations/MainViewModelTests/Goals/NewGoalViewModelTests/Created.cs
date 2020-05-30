@@ -12,8 +12,8 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         public override void OneTimeSetUp()
         {
             base.OneTimeSetUp();
-            saveGoalCommandMonitor = SUT.SaveGoalCommand.Monitor();
-            SUT.ShowNewGoalDialogCommand.ExecuteAsync().GetAwaiter().GetResult();
+            saveGoalCommandMonitor = SUT.SaveCommand.Monitor();
+            SUT.ShowDialogCommand.ExecuteAsync().GetAwaiter().GetResult();
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
 
         [Test]
         public void ShowNewGoalDialogCommand_NotNull() => 
-            SUT.ShowNewGoalDialogCommand.Should().NotBeNull();
+            SUT.ShowDialogCommand.Should().NotBeNull();
 
         [Test]
         public void NewGoal_NotNull() => 

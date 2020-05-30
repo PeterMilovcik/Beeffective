@@ -40,7 +40,6 @@ namespace Beeffective.Presentation.Main
             LabelsCollection.CollectionChanged += OnLabelsCollectionChanged;
             TasksCollection = new ObservableCollection<TaskModel>();
             TasksCollection.CollectionChanged += OnTasksCollectionChanged;
-            NewGoal = new NewGoalViewModel(this, dialogDisplay, repository);
             NewProject = new NewProjectViewModel(this, dialogDisplay, repository);
             NewLabel = new NewLabelViewModel(this, dialogDisplay, repository);
             NewTask = new NewTaskViewModel(this, dialogDisplay, repository);
@@ -48,9 +47,10 @@ namespace Beeffective.Presentation.Main
             SelectAllProjectsCommand = new DelegateCommand((obj) => SelectedProject = null);
             SelectAllLabelsCommand = new DelegateCommand((obj) => SelectedLabel = null);
             SelectAllTasksCommand = new DelegateCommand((obj) => SelectedTask = null);
+            Goals = new GoalsViewModel(this, dialogDisplay, repository);
         }
 
-        public NewGoalViewModel NewGoal { get; }
+        public GoalsViewModel Goals { get; }
 
         public NewProjectViewModel NewProject { get; }
 

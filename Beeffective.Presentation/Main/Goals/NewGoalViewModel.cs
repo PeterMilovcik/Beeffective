@@ -19,11 +19,11 @@ namespace Beeffective.Presentation.Main.Goals
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
-            ShowNewGoalDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
-            SaveGoalCommand = new AsyncCommand(SaveGoalAsync, CanSaveGoal);
+            ShowDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
+            SaveCommand = new AsyncCommand(SaveGoalAsync, CanSaveGoal);
         }
 
-        public IAsyncCommand ShowNewGoalDialogCommand { get; }
+        public IAsyncCommand ShowDialogCommand { get; }
 
         private async Task ShowNewGoalDialogAsync()
         {
@@ -40,7 +40,7 @@ namespace Beeffective.Presentation.Main.Goals
                 if (newGoal != null) newGoal.PropertyChanged -= OnGoalModelPropertyChanged;
                 newGoal = value;
                 if (newGoal != null) newGoal.PropertyChanged += OnGoalModelPropertyChanged;
-                SaveGoalCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChange();
             }
         }
@@ -49,11 +49,11 @@ namespace Beeffective.Presentation.Main.Goals
         {
             if (e.PropertyName == nameof(NewGoal.Title))
             {
-                SaveGoalCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public AsyncCommand SaveGoalCommand { get; }
+        public AsyncCommand SaveCommand { get; }
 
         private bool CanSaveGoal() =>
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&

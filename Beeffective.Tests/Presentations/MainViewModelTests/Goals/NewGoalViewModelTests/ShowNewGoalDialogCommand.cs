@@ -8,12 +8,12 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
     {
         [Test]
         public void CanExecute_True() => 
-            SUT.ShowNewGoalDialogCommand.CanExecute(null).Should().BeTrue();
+            SUT.ShowDialogCommand.CanExecute(null).Should().BeTrue();
 
         [Test]
         public async Task Execute_DialogIsShown()
         {
-            await SUT.ShowNewGoalDialogCommand.ExecuteAsync();
+            await SUT.ShowDialogCommand.ExecuteAsync();
             DialogDisplay.IsDialogShown.Should().BeTrue();
         }
     }

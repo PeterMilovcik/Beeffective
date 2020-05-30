@@ -117,7 +117,7 @@
 
                                         <Button
                                             Margin="8,4"
-                                            Command="{Binding Core.NewGoal.ShowNewGoalDialogCommand}"
+                                            Command="{Binding Core.Goals.New.ShowDialogCommand}"
                                             Content="NEW GOAL"
                                             Style="{StaticResource MaterialDesignFlatButton}" />
 
