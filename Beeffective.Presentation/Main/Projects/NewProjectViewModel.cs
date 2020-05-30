@@ -52,12 +52,12 @@ namespace Beeffective.Presentation.Main.Projects
         private bool CanSaveProject(object arg) =>
             !string.IsNullOrWhiteSpace(NewProject?.Title) &&
             NewProject.Goal != null &&
-            !Core.Projects.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
+            !Core.ProjectsCollection.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
 
         private async Task SaveProjectAsync()
         {
             var savedProject = await repository.Projects.AddAsync(NewProject);
-            Core.Projects.Add(savedProject);
+            Core.ProjectsCollection.Add(savedProject);
             dialogDisplay.CloseDialog();
         }
     }

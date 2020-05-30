@@ -57,12 +57,12 @@ namespace Beeffective.Presentation.Main.Labels
 
         private bool CanSaveLabel(object arg) =>
             !string.IsNullOrWhiteSpace(NewLabel?.Title) &&
-            !Core.Labels.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
+            !Core.LabelsCollection.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
 
         private async Task SaveLabelAsync()
         {
             var savedLabel = await repository.Labels.AddAsync(NewLabel);
-            Core.Labels.Add(savedLabel);
+            Core.LabelsCollection.Add(savedLabel);
             dialogDisplay.CloseDialog();
         }
     }

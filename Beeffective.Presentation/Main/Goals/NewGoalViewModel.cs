@@ -57,12 +57,12 @@ namespace Beeffective.Presentation.Main.Goals
 
         private bool CanSaveGoal() =>
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
-            !Core.Goals.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
+            !Core.GoalsCollection.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 
         private async Task SaveGoalAsync()
         {
             var savedGoal = await repository.Goals.AddAsync(NewGoal);
-            Core.Goals.Add(savedGoal);
+            Core.GoalsCollection.Add(savedGoal);
             dialogDisplay.CloseDialog();
         }
     }

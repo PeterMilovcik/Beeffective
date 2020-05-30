@@ -45,7 +45,7 @@ namespace Beeffective.Presentation.Main.Tasks
             get => goal;
             set => SetProperty(ref goal, value).IfTrue(() => 
                     Projects = new ObservableCollection<ProjectModel>(
-                        Core.Projects.Where(p => p.Goal == Goal)));
+                        Core.ProjectsCollection.Where(p => p.Goal == Goal)));
         }
 
         public ObservableCollection<ProjectModel> Projects
@@ -85,8 +85,8 @@ namespace Beeffective.Presentation.Main.Tasks
 
         private async Task ShowNewTaskDialogAsync()
         {
-            Goals = Core.Goals;
-            Labels = new ObservableCollection<LabelViewModel>(Core.Labels.Select(l => new LabelViewModel(l)));
+            Goals = Core.GoalsCollection;
+            Labels = new ObservableCollection<LabelViewModel>(Core.LabelsCollection.Select(l => new LabelViewModel(l)));
             NewTask = new TaskModel();
             await dialogDisplay.ShowNewTaskDialogAsync(this);
         }
@@ -128,13 +128,13 @@ namespace Beeffective.Presentation.Main.Tasks
 
         private bool CanSaveTask(object arg) =>
             !string.IsNullOrWhiteSpace(NewTask?.Title) &&
-            !Core.Tasks.Select(taskModel => taskModel.Title).Contains(NewTask.Title);
+            !Core.TasksCollection.Select(taskModel => taskModel.Title).Contains(NewTask.Title);
 
         private async Task SaveTaskAsync()
         {
             NewTask.Project = Project;
             var savedTask = await repository.Tasks.AddAsync(NewTask);
-            Core.Tasks.Add(savedTask);
+            Core.TasksCollection.Add(savedTask);
             dialogDisplay.CloseDialog();
         }
     }

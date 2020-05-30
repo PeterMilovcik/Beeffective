@@ -27,20 +27,19 @@ namespace Beeffective.Presentation.Main
         private ObservableCollection<LabelModel> selectedLabels;
         private ObservableCollection<TaskModel> selectedTasks;
         private ObservableCollection<GoalModel> selectedGoals;
-        private bool isTaskSelected;
 
         [ImportingConstructor]
         public Core(IRepositoryService repository, IDialogDisplay dialogDisplay)
         {
             this.repository = repository;
-            Goals = new ObservableCollection<GoalModel>();
-            Goals.CollectionChanged += OnGoalsCollectionChanged;
-            Projects = new ObservableCollection<ProjectModel>();
-            Projects.CollectionChanged += OnProjectsCollectionChanged;
-            Labels = new ObservableCollection<LabelModel>();
-            Labels.CollectionChanged += OnLabelsCollectionChanged;
-            Tasks = new ObservableCollection<TaskModel>();
-            Tasks.CollectionChanged += OnTasksCollectionChanged;
+            GoalsCollection = new ObservableCollection<GoalModel>();
+            GoalsCollection.CollectionChanged += OnGoalsCollectionChanged;
+            ProjectsCollection = new ObservableCollection<ProjectModel>();
+            ProjectsCollection.CollectionChanged += OnProjectsCollectionChanged;
+            LabelsCollection = new ObservableCollection<LabelModel>();
+            LabelsCollection.CollectionChanged += OnLabelsCollectionChanged;
+            TasksCollection = new ObservableCollection<TaskModel>();
+            TasksCollection.CollectionChanged += OnTasksCollectionChanged;
             NewGoal = new NewGoalViewModel(this, dialogDisplay, repository);
             NewProject = new NewProjectViewModel(this, dialogDisplay, repository);
             NewLabel = new NewLabelViewModel(this, dialogDisplay, repository);
@@ -59,12 +58,12 @@ namespace Beeffective.Presentation.Main
 
         public NewTaskViewModel NewTask { get; }
 
-        public ObservableCollection<GoalModel> Goals { get; }
+        public ObservableCollection<GoalModel> GoalsCollection { get; }
 
         private void OnGoalsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SelectedGoal = null;
-            SelectedGoals = Goals;
+            SelectedGoals = GoalsCollection;
         }
 
         public ObservableCollection<GoalModel> SelectedGoals
@@ -72,7 +71,7 @@ namespace Beeffective.Presentation.Main
             get => selectedGoals;
             set => SetProperty(ref selectedGoals, value).IfTrue(() =>
                 SelectedProjects = new ObservableCollection<ProjectModel>(
-                    Projects.Where(p => SelectedGoals.Contains(p.Goal))));
+                    ProjectsCollection.Where(p => SelectedGoals.Contains(p.Goal))));
         }
 
         public GoalModel SelectedGoal
@@ -82,19 +81,19 @@ namespace Beeffective.Presentation.Main
             {
                 SelectedProjects = SelectedGoal != null
                     ? new ObservableCollection<ProjectModel>(
-                        Projects.Where(p => p.Goal == SelectedGoal))
-                    : Projects;
+                        ProjectsCollection.Where(p => p.Goal == SelectedGoal))
+                    : ProjectsCollection;
             });
         }
 
         public DelegateCommand SelectAllGoalsCommand { get; }
 
-        public ObservableCollection<ProjectModel> Projects { get; }
+        public ObservableCollection<ProjectModel> ProjectsCollection { get; }
 
         private void OnProjectsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SelectedProject = null;
-            SelectedProjects = Projects;
+            SelectedProjects = ProjectsCollection;
         }
 
         public ObservableCollection<ProjectModel> SelectedProjects
@@ -102,7 +101,7 @@ namespace Beeffective.Presentation.Main
             get => selectedProjects;
             set => SetProperty(ref selectedProjects, value).IfTrue(() =>
                 SelectedTasks = new ObservableCollection<TaskModel>(
-                    Tasks.Where(t => SelectedProjects.Contains(t.Project))));
+                    TasksCollection.Where(t => SelectedProjects.Contains(t.Project))));
         }
 
         public ProjectModel SelectedProject
@@ -112,19 +111,19 @@ namespace Beeffective.Presentation.Main
             {
                 SelectedTasks = SelectedProject != null
                     ? new ObservableCollection<TaskModel>(
-                        Tasks.Where(p => p.Project == SelectedProject))
-                    : Tasks;
+                        TasksCollection.Where(p => p.Project == SelectedProject))
+                    : TasksCollection;
             });
         }
 
         public DelegateCommand SelectAllProjectsCommand { get; }
 
-        public ObservableCollection<LabelModel> Labels { get; }
+        public ObservableCollection<LabelModel> LabelsCollection { get; }
 
         private void OnLabelsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SelectedLabel = null;
-            SelectedLabels = Labels;
+            SelectedLabels = LabelsCollection;
         }
 
         public ObservableCollection<LabelModel> SelectedLabels
@@ -140,19 +139,19 @@ namespace Beeffective.Presentation.Main
             {
                 SelectedTasks = SelectedLabel != null
                     ? new ObservableCollection<TaskModel>(
-                        Tasks.Where(p => p.Labels.Contains(SelectedLabel)))
-                    : Tasks;
+                        TasksCollection.Where(p => p.Labels.Contains(SelectedLabel)))
+                    : TasksCollection;
             });
         }
 
         public DelegateCommand SelectAllLabelsCommand { get; }
 
-        public ObservableCollection<TaskModel> Tasks { get; }
+        public ObservableCollection<TaskModel> TasksCollection { get; }
 
         private void OnTasksCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             SelectedTask = null;
-            SelectedTasks = Tasks;
+            SelectedTasks = TasksCollection;
         }
 
         public ObservableCollection<TaskModel> SelectedTasks
@@ -181,46 +180,46 @@ namespace Beeffective.Presentation.Main
 
         private async Task LoadGoalsAsync()
         {
-            Goals.Clear();
+            GoalsCollection.Clear();
             var goals = (await repository.Goals.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            goals.ForEach(goalModel => Goals.Add(goalModel));
-            SelectedGoals = Goals;
+            goals.ForEach(goalModel => GoalsCollection.Add(goalModel));
+            SelectedGoals = GoalsCollection;
         }
 
         private async Task LoadProjectsAsync()
         {
-            Projects.Clear();
+            ProjectsCollection.Clear();
             var projects = (await repository.Projects.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            projects.ForEach(projectModel => Projects.Add(projectModel));
-            SelectedProjects = Projects;
+            projects.ForEach(projectModel => ProjectsCollection.Add(projectModel));
+            SelectedProjects = ProjectsCollection;
         }
 
         private async Task LoadLabelsAsync()
         {
-            Labels.Clear();
+            LabelsCollection.Clear();
             var labels = (await repository.Labels.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            labels.ForEach(labelModel => Labels.Add(labelModel));
-            SelectedLabels = Labels;
+            labels.ForEach(labelModel => LabelsCollection.Add(labelModel));
+            SelectedLabels = LabelsCollection;
         }
 
         private async Task LoadTasksAsync()
         {
-            Tasks.Clear();
+            TasksCollection.Clear();
             var tasks = (await repository.Tasks.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            tasks.ForEach(labelModel => Tasks.Add(labelModel));
-            SelectedTasks = Tasks;
+            tasks.ForEach(labelModel => TasksCollection.Add(labelModel));
+            SelectedTasks = TasksCollection;
         }
 
         public async Task SaveAsync()
         {
-            await repository.Goals.SaveAsync(Goals.ToList());
-            await repository.Projects.SaveAsync(Projects.ToList());
-            await repository.Labels.SaveAsync(Labels.ToList());
-            await repository.Tasks.SaveAsync(Tasks.ToList());
+            await repository.Goals.SaveAsync(GoalsCollection.ToList());
+            await repository.Projects.SaveAsync(ProjectsCollection.ToList());
+            await repository.Labels.SaveAsync(LabelsCollection.ToList());
+            await repository.Tasks.SaveAsync(TasksCollection.ToList());
         }
     }
 }
