@@ -105,9 +105,9 @@
                                 FontWeight="Bold"
                                 Text="{Binding TopBar.Title}" />
 
-                            <!--<StackPanel Grid.Column="2" Orientation="Horizontal">
+                            <StackPanel Grid.Column="2" Orientation="Horizontal">
 
-                                <materialDesign:PopupBox>
+                                <materialDesign:PopupBox Margin="8">
 
                                     <materialDesign:PopupBox.ToggleContent>
                                         <materialDesign:PackIcon Kind="AddThick" />
@@ -148,7 +148,7 @@
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                <DataTrigger Binding="{Binding Core.IsTaskSelected}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -162,7 +162,7 @@
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                <DataTrigger Binding="{Binding Core.IsTaskSelected}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -176,7 +176,7 @@
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                <DataTrigger Binding="{Binding Core.IsTaskSelected}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -189,7 +189,7 @@
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Tasks.IsSelected}" Value="True">
+                                                <DataTrigger Binding="{Binding Core.IsTaskSelected}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -198,7 +198,7 @@
                                     <materialDesign:PackIcon Kind="TrashCan" />
                                 </Button>
 
-                            </StackPanel>-->
+                            </StackPanel>
 
                         </Grid>
 

@@ -27,6 +27,7 @@ namespace Beeffective.Presentation.Main
         private ObservableCollection<LabelModel> selectedLabels;
         private ObservableCollection<TaskModel> selectedTasks;
         private ObservableCollection<GoalModel> selectedGoals;
+        private bool isTaskSelected;
 
         [ImportingConstructor]
         public Core(IRepositoryService repository, IDialogDisplay dialogDisplay)
@@ -163,8 +164,10 @@ namespace Beeffective.Presentation.Main
         public TaskModel SelectedTask
         {
             get => selectedTask;
-            set => SetProperty(ref selectedTask, value);
+            set => SetProperty(ref selectedTask, value).IfTrue(() => NotifyPropertyChange(nameof(IsTaskSelected)));
         }
+
+        public bool IsTaskSelected => SelectedTask != null;
 
         public DelegateCommand SelectAllTasksCommand { get; }
 
