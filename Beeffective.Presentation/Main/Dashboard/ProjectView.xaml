@@ -33,18 +33,15 @@
             Grid.Row="0"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <Button Command="{Binding Core.SelectAllProjectsCommand}" Style="{StaticResource WidgetHeaderButton}">
-                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
-            </Button>
-            <Button Command="{Binding Core.NewGoal.ShowNewProjectDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
-                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
-            </Button>
+
             <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
             </Button>
+
             <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
             </Button>
+
         </StackPanel>
 
         <Grid Grid.Row="1">
