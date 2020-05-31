@@ -133,7 +133,7 @@
                 Margin="16,0"
                 Background="{StaticResource MaterialDesignCardBackground}"
                 BorderBrush="{StaticResource MaterialDesignCardBackground}"
-                DateTime="{Binding DueTo}"
+                DateTime="{Binding Core.SelectedTask.DueTo}"
                 FocusedBorderBrush="Transparent"
                 FontSize="16"
                 Foreground="{StaticResource MaterialDesignBody}"

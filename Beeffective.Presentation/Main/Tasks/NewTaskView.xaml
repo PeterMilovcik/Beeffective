@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:models="clr-namespace:Beeffective.Core.Models;assembly=Beeffective.Core"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     Width="800">
 
     <UserControl.Resources>
@@ -174,6 +175,21 @@
                 </Grid>
 
             </Border>
+
+            <TextBlock
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Due To" />
+
+            <syncfusion:DateTimeEdit
+                Margin="16,0"
+                Background="{StaticResource MaterialDesignCardBackground}"
+                BorderBrush="{StaticResource MaterialDesignCardBackground}"
+                DateTime="{Binding NewTask.DueTo}"
+                FocusedBorderBrush="Transparent"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignBody}"
+                Pattern="FullDateTime" />
 
             <TextBlock
                 Margin="16,8,16,0"
