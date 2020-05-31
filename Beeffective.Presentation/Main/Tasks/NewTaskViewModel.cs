@@ -26,12 +26,12 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
-            ShowNewTaskDialogCommand = new AsyncCommand(ShowNewTaskDialogAsync);
-            SaveTaskCommand = new DelegateCommand(CanSaveTask, async obj => await SaveTaskAsync());
+            ShowDialogCommand = new AsyncCommand(ShowDialogAsync);
+            SaveCommand = new AsyncCommand(SaveAsync, CanSave);
             Projects = new ObservableCollection<ProjectModel>();
         }
 
-        public IAsyncCommand ShowNewTaskDialogCommand { get; }
+        public IAsyncCommand ShowDialogCommand { get; }
 
         public ObservableCollection<GoalModel> Goals
         {
@@ -82,7 +82,7 @@ namespace Beeffective.Presentation.Main.Tasks
             }
         }
 
-        private async Task ShowNewTaskDialogAsync()
+        private async Task ShowDialogAsync()
         {
             Goals = Core.Goals.Collection;
             Labels = new ObservableCollection<LabelViewModel>(
@@ -100,7 +100,7 @@ namespace Beeffective.Presentation.Main.Tasks
                 if (newTask != null) newTask.PropertyChanged -= OnGoalModelPropertyChanged;
                 newTask = value;
                 if (newTask != null) newTask.PropertyChanged += OnGoalModelPropertyChanged;
-                SaveTaskCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChange();
             }
         }
@@ -120,17 +120,17 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             if (e.PropertyName == nameof(NewTask.Title))
             {
-                SaveTaskCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public DelegateCommand SaveTaskCommand { get; }
+        public AsyncCommand SaveCommand { get; }
 
-        private bool CanSaveTask(object arg) =>
+        private bool CanSave() =>
             !string.IsNullOrWhiteSpace(NewTask?.Title) &&
             !Core.Tasks.Collection.Select(taskModel => taskModel.Title).Contains(NewTask.Title);
 
-        private async Task SaveTaskAsync()
+        private async Task SaveAsync()
         {
             NewTask.Project = Project;
             var savedTask = await repository.Tasks.AddAsync(NewTask);
