@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -46,6 +47,8 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -119,15 +122,39 @@
 
             </ListBox>
 
-
             <TextBlock
                 Grid.Row="6"
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Due To" />
+
+            <syncfusion:DateTimeEdit
+                Grid.Row="7"
+                Margin="16,0"
+                Background="{StaticResource MaterialDesignCardBackground}"
+                BorderBrush="{StaticResource MaterialDesignCardBackground}"
+                DateTime="{Binding DueTo}"
+                FocusedBorderBrush="Transparent"
+                FontSize="16"
+                Foreground="{StaticResource MaterialDesignBody}"
+                IsReadOnly="True"
+                Pattern="FullDateTime" />
+
+            <Border
+                Grid.Row="7"
+                Margin="16,0"
+                VerticalAlignment="Bottom"
+                BorderBrush="{StaticResource MaterialDesignBodyLight}"
+                BorderThickness="0,1,0,0" />
+
+            <TextBlock
+                Grid.Row="8"
                 Margin="16,8,16,0"
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Description" />
 
             <TextBox
-                Grid.Row="7"
+                Grid.Row="9"
                 Margin="16,0,16,16"
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
