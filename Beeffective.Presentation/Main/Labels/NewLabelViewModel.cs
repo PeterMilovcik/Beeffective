@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -19,13 +18,13 @@ namespace Beeffective.Presentation.Main.Labels
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
-            ShowNewLabelDialogCommand = new AsyncCommand(ShowNewLabelDialogAsync);
-            SaveLabelCommand = new DelegateCommand(CanSaveLabel, async obj => await SaveLabelAsync());
+            ShowDialogCommand = new AsyncCommand(ShowDialogAsync);
+            SaveCommand = new AsyncCommand(SaveAsync, CanSave);
         }
 
-        public IAsyncCommand ShowNewLabelDialogCommand { get; }
+        public IAsyncCommand ShowDialogCommand { get; }
 
-        private async Task ShowNewLabelDialogAsync()
+        private async Task ShowDialogAsync()
         {
             NewLabel = new LabelModel();
             await dialogDisplay.ShowNewLabelDialogAsync(this);
@@ -40,7 +39,7 @@ namespace Beeffective.Presentation.Main.Labels
                 if (newLabel != null) newLabel.PropertyChanged -= OnGoalModelPropertyChanged;
                 newLabel = value;
                 if (newLabel != null) newLabel.PropertyChanged += OnGoalModelPropertyChanged;
-                SaveLabelCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
                 NotifyPropertyChange();
             }
         }
@@ -49,20 +48,20 @@ namespace Beeffective.Presentation.Main.Labels
         {
             if (e.PropertyName == nameof(NewLabel.Title))
             {
-                SaveLabelCommand.RaiseCanExecuteChanged();
+                SaveCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public DelegateCommand SaveLabelCommand { get; }
+        public AsyncCommand SaveCommand { get; }
 
-        private bool CanSaveLabel(object arg) =>
+        private bool CanSave() =>
             !string.IsNullOrWhiteSpace(NewLabel?.Title) &&
-            !Core.LabelsCollection.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
+            !Core.Labels.Collection.Select(labelModel => labelModel.Title).Contains(NewLabel.Title);
 
-        private async Task SaveLabelAsync()
+        private async Task SaveAsync()
         {
             var savedLabel = await repository.Labels.AddAsync(NewLabel);
-            Core.LabelsCollection.Add(savedLabel);
+            Core.Labels.Collection.Add(savedLabel);
             dialogDisplay.CloseDialog();
         }
     }

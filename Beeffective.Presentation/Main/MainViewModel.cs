@@ -7,7 +7,6 @@ using Beeffective.Presentation.AlwaysOnTop;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Calendar;
 using Beeffective.Presentation.Main.Dashboard;
-using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Settings;
 using Beeffective.Presentation.Main.TopBar;
 
@@ -28,7 +27,6 @@ namespace Beeffective.Presentation.Main
             this.view.Deactivated += OnViewDeactivated;
             view.DataContext = this;
             DashboardCommand = new DelegateCommand(async o => await ChangeContentAsync(Dashboard));
-            GoalsCommand = new DelegateCommand(async o => await ChangeContentAsync(Goals));
             CalendarCommand = new DelegateCommand(async o => await ChangeContentAsync(Calendar));
             SettingsCommand = new DelegateCommand(async o => await ChangeContentAsync(Settings));
             ContentViewModels = new List<ContentViewModel>();
@@ -60,11 +58,6 @@ namespace Beeffective.Presentation.Main
         public ICommand DashboardCommand { get; }
 
         [Import]
-        public GoalsViewModel Goals { get; set; }
-
-        public ICommand GoalsCommand { get; }
-
-        [Import]
         public CalendarViewModel Calendar { get; set; }
 
         public ICommand CalendarCommand { get; }
@@ -86,8 +79,7 @@ namespace Beeffective.Presentation.Main
         public async Task ShowAsync()
         {
             view.Show();
-            ContentViewModels = new List<ContentViewModel>
-                {Dashboard, Goals, Calendar, Settings};
+            ContentViewModels = new List<ContentViewModel> {Dashboard, Calendar, Settings};
             await LoadAsync();
         }
 

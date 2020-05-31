@@ -23,6 +23,6 @@
         AnimationType="DualRing"
         Foreground="{StaticResource PrimaryHueMidBrush}"
         Header="Loading..."
-        IsBusy="{Binding IsBusy}" />
+        IsBusy="{Binding Core.IsBusy}" />
 
 </UserControl>

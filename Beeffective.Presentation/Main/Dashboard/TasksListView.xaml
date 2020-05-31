@@ -34,11 +34,11 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
 
-            <Button Command="{Binding Core.SelectAllTasksCommand}" Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.Tasks.SelectAllCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
             </Button>
 
-            <Button Command="{Binding Core.NewTask.ShowNewTaskDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.Tasks.New.ShowDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
             </Button>
 
@@ -46,8 +46,8 @@
 
         <ListView
             Grid.Row="1"
-            ItemsSource="{Binding Core.SelectedTasks}"
-            SelectedItem="{Binding Core.SelectedTask}">
+            ItemsSource="{Binding Core.Tasks.SelectedCollection}"
+            SelectedItem="{Binding Core.Tasks.Selected}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" />

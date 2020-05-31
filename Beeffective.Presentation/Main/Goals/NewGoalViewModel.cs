@@ -19,13 +19,13 @@ namespace Beeffective.Presentation.Main.Goals
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
-            ShowDialogCommand = new AsyncCommand(ShowNewGoalDialogAsync);
-            SaveCommand = new AsyncCommand(SaveGoalAsync, CanSaveGoal);
+            ShowDialogCommand = new AsyncCommand(ShowDialogAsync);
+            SaveCommand = new AsyncCommand(SaveAsync, CanSave);
         }
 
         public IAsyncCommand ShowDialogCommand { get; }
 
-        private async Task ShowNewGoalDialogAsync()
+        private async Task ShowDialogAsync()
         {
             NewGoal = new GoalModel();
             await dialogDisplay.ShowNewGoalDialogAsync(this);
@@ -55,14 +55,14 @@ namespace Beeffective.Presentation.Main.Goals
 
         public AsyncCommand SaveCommand { get; }
 
-        private bool CanSaveGoal() =>
+        private bool CanSave() =>
             !string.IsNullOrWhiteSpace(NewGoal?.Title) &&
-            !Core.GoalsCollection.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
+            !Core.Goals.Collection.Select(goalModel => goalModel.Title).Contains(NewGoal.Title);
 
-        private async Task SaveGoalAsync()
+        private async Task SaveAsync()
         {
             var savedGoal = await repository.Goals.AddAsync(NewGoal);
-            Core.GoalsCollection.Add(savedGoal);
+            Core.Goals.Collection.Add(savedGoal);
             dialogDisplay.CloseDialog();
         }
     }

@@ -23,9 +23,6 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests
         public void ContentViewModels_Contains_Dashboard() => SUT.ContentViewModels.Should().Contain(SUT.Dashboard);
 
         [Test]
-        public void ContentViewModels_Contains_Goals() => SUT.ContentViewModels.Should().Contain(SUT.Goals);
-
-        [Test]
         public void ContentViewModels_Contains_Calendar() => SUT.ContentViewModels.Should().Contain(SUT.Calendar);
 
         [Test]

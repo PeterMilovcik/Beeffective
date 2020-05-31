@@ -166,6 +166,7 @@
         <Setter Property="FontSize" Value="{StaticResource FontSize}" />
         <Setter Property="Foreground" Value="{StaticResource MaterialDesignDarkForeground}" />
         <Setter Property="Background" Value="{StaticResource MaterialDesignCardBackground}" />
+        <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
     </Style>

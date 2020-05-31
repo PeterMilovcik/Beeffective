@@ -12,12 +12,6 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests
         public void TopBar_NotNull() => SUT.TopBar.Should().NotBeNull();
 
         [Test]
-        public void Goals_NotNull() => SUT.Goals.Should().NotBeNull();
-
-        [Test]
-        public void GoalsCommand_NotNull() => SUT.GoalsCommand.Should().NotBeNull();
-
-        [Test]
         public void AlwaysOnTop_NotNull() => SUT.AlwaysOnTop.Should().NotBeNull();
 
         [Test]

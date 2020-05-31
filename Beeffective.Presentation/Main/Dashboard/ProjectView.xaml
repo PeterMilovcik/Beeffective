@@ -66,7 +66,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedProject.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Projects.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -80,7 +80,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedProject.Goal.Title}" />
+                Text="{Binding Core.Projects.Selected.Goal.Title}" />
 
             <TextBlock
                 Grid.Row="4"
@@ -94,7 +94,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedProject.Description}" />
+                Text="{Binding Core.Projects.Selected.Description}" />
 
         </Grid>
 

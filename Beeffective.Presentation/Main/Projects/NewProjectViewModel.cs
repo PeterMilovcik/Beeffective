@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -19,19 +18,19 @@ namespace Beeffective.Presentation.Main.Projects
         {
             this.dialogDisplay = dialogDisplay;
             this.repository = repository;
-            ShowNewProjectDialogCommand = new AsyncCommand(ShowNewProjectDialog);
-            SaveProjectCommand = new DelegateCommand(CanSaveProject, async obj => await SaveProjectAsync());
+            ShowDialogCommand = new AsyncCommand(ShowDialogAsync);
+            SaveCommand = new AsyncCommand(SaveAsync, CanSave);
         }
 
-        public IAsyncCommand ShowNewProjectDialogCommand { get; }
+        public IAsyncCommand ShowDialogCommand { get; }
 
-        private async Task ShowNewProjectDialog()
+        private async Task ShowDialogAsync()
         {
             NewProject = new ProjectModel();
             await dialogDisplay.ShowNewProjectDialogAsync(this);
         }
 
-        public DelegateCommand SaveProjectCommand { get; }
+        public AsyncCommand SaveCommand { get; }
 
         public ProjectModel NewProject
         {
@@ -47,17 +46,17 @@ namespace Beeffective.Presentation.Main.Projects
         }
 
         private void OnNewProjectPropertyChanged(object sender, PropertyChangedEventArgs e) => 
-            SaveProjectCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
 
-        private bool CanSaveProject(object arg) =>
+        private bool CanSave() =>
             !string.IsNullOrWhiteSpace(NewProject?.Title) &&
             NewProject.Goal != null &&
-            !Core.ProjectsCollection.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
+            !Core.Projects.Collection.Select(projectModel => projectModel.Title).Contains(NewProject.Title);
 
-        private async Task SaveProjectAsync()
+        private async Task SaveAsync()
         {
             var savedProject = await repository.Projects.AddAsync(NewProject);
-            Core.ProjectsCollection.Add(savedProject);
+            Core.Projects.Collection.Add(savedProject);
             dialogDisplay.CloseDialog();
         }
     }

@@ -8,26 +8,25 @@ using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Services.Repository;
 
-namespace Beeffective.Presentation.Main.Projects
+namespace Beeffective.Presentation.Main.Labels
 {
-    public class ProjectsViewModel : CoreViewModel
+    public class LabelsViewModel : CoreViewModel
     {
         private readonly IRepositoryService repository;
-        private ProjectModel selected;
-        private ObservableCollection<ProjectModel> selectedCollection;
+        private LabelModel selected;
+        private ObservableCollection<LabelModel> selectedCollection;
 
-        public ProjectsViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
+
+        public LabelsViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
         {
             this.repository = repository;
-            New = new NewProjectViewModel(core, dialogDisplay, repository);
-            Collection = new ObservableCollection<ProjectModel>();
+            Collection = new ObservableCollection<LabelModel>();
             Collection.CollectionChanged += OnCollectionChanged;
-            SelectAllCommand = new DelegateCommand((obj) => Selected = null);
+            New = new NewLabelViewModel(core, dialogDisplay, repository);
+            SelectAllCommand = new DelegateCommand(obj => Selected = null);
         }
 
-        public NewProjectViewModel New { get; }
-
-        public ObservableCollection<ProjectModel> Collection { get; }
+        public ObservableCollection<LabelModel> Collection { get; }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -35,38 +34,38 @@ namespace Beeffective.Presentation.Main.Projects
             SelectedCollection = Collection;
         }
 
-        public ObservableCollection<ProjectModel> SelectedCollection
+        public ObservableCollection<LabelModel> SelectedCollection
         {
             get => selectedCollection;
-            set => SetProperty(ref selectedCollection, value).IfTrue(() =>
-                Core.Tasks.SelectedCollection = new ObservableCollection<TaskModel>(
-                    Core.Tasks.Collection.Where(t => SelectedCollection.Contains(t.Project))));
+            set => SetProperty(ref selectedCollection, value);
         }
 
-        public ProjectModel Selected
+        public LabelModel Selected
         {
             get => selected;
             set => SetProperty(ref selected, value).IfTrue(() =>
             {
                 Core.Tasks.SelectedCollection = Selected != null
                     ? new ObservableCollection<TaskModel>(
-                        Core.Tasks.Collection.Where(p => p.Project == Selected))
+                        Core.Tasks.Collection.Where(p => p.Labels.Contains(Selected)))
                     : Core.Tasks.Collection;
             });
         }
 
         public DelegateCommand SelectAllCommand { get; }
 
+        public NewLabelViewModel New { get; }
+
         public async Task LoadAsync()
         {
             Collection.Clear();
-            var projects = (await repository.Projects.LoadAsync())
+            var labels = (await repository.Labels.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            projects.ForEach(projectModel => Collection.Add(projectModel));
+            labels.ForEach(labelModel => Collection.Add(labelModel));
             SelectedCollection = Collection;
         }
 
         public async Task SaveAsync() => 
-            await repository.Projects.SaveAsync(Collection.ToList());
+            await repository.Labels.SaveAsync(Collection.ToList());
     }
 }

@@ -11,7 +11,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
             base.OneTimeSetUp();
             Core = Container.GetExportedValue<Presentation.Main.Core>();
             DialogDisplay = Container.GetExportedValue<IDialogDisplay>() as DialogDisplay;
-            SUT = Core.NewGoal;
+            SUT = Core.Goals.New;
         }
 
         protected NewGoalViewModel SUT { get; set; }

@@ -64,7 +64,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedGoal.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Goals.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -78,7 +78,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedGoal.Description}" />
+                Text="{Binding Core.Goals.Selected.Description}" />
 
         </Grid>
 

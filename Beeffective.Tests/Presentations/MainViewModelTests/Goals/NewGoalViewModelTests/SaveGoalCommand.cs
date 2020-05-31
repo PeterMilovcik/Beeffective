@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Beeffective.Core.Models;
+﻿using Beeffective.Core.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -14,7 +12,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         public void SetUp()
         {
             SUT.NewGoal = null;
-            SUT.Core.GoalsCollection.Clear();
+            SUT.Core.Goals.Collection.Clear();
         }
 
         [Test]
@@ -55,7 +53,7 @@ namespace Beeffective.Tests.Presentations.MainViewModelTests.Goals.NewGoalViewMo
         [Test]
         public void CanExecute_NewGoalModelTitleAlreadyExist_False()
         {
-            SUT.Core.GoalsCollection.Add(new GoalModel {Title = NewGoalTitle});
+            SUT.Core.Goals.Collection.Add(new GoalModel {Title = NewGoalTitle});
             SUT.NewGoal = new GoalModel {Title = NewGoalTitle};
             SUT.SaveCommand.CanExecute().Should().BeFalse();
         }

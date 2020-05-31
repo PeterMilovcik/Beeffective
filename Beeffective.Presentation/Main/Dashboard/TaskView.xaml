@@ -71,7 +71,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedTask.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Tasks.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -85,7 +85,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedTask.Project.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Tasks.Selected.Project.Title, UpdateSourceTrigger=PropertyChanged}" />
 
             <TextBlock
                 Grid.Row="4"
@@ -93,7 +93,7 @@
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Labels" />
 
-            <ListBox Grid.Row="5" ItemsSource="{Binding Core.SelectedTask.Labels}">
+            <ListBox Grid.Row="5" ItemsSource="{Binding Core.Tasks.Selected.Labels}">
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -133,7 +133,7 @@
                 Margin="16,0"
                 Background="{StaticResource MaterialDesignCardBackground}"
                 BorderBrush="{StaticResource MaterialDesignCardBackground}"
-                DateTime="{Binding Core.SelectedTask.DueTo}"
+                DateTime="{Binding Core.Tasks.Selected.DueTo}"
                 FocusedBorderBrush="Transparent"
                 FontSize="16"
                 Foreground="{StaticResource MaterialDesignBody}"
@@ -159,7 +159,7 @@
                 IsReadOnly="True"
                 IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.SelectedTask.Description}" />
+                Text="{Binding Core.Tasks.Selected.Description}" />
 
         </Grid>
 

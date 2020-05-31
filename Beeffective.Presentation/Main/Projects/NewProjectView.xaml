@@ -52,7 +52,7 @@
                 Foreground="{StaticResource MaterialDesignDarkForeground}"
                 IsEditable="False"
                 IsReadOnly="True"
-                ItemsSource="{Binding Core.Goals}"
+                ItemsSource="{Binding Core.Goals.Collection}"
                 SelectedItem="{Binding NewProject.Goal}"
                 Style="{StaticResource MaterialDesignComboBox}" />
 
@@ -75,7 +75,7 @@
                 <Button
                     Width="124"
                     Margin="0,8,16,16"
-                    Command="{Binding SaveProjectCommand}"
+                    Command="{Binding SaveCommand}"
                     Content="OK"
                     IsDefault="True"
                     Style="{StaticResource MaterialDesignFlatMidBgButton}" />

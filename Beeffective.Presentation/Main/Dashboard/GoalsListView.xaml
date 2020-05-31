@@ -34,7 +34,7 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
 
-            <Button Command="{Binding Core.SelectAllGoalsCommand}" Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.Goals.SelectAllCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
             </Button>
 
@@ -46,8 +46,8 @@
 
         <ListView
             Grid.Row="1"
-            ItemsSource="{Binding Core.SelectedGoals}"
-            SelectedItem="{Binding Core.SelectedGoal}">
+            ItemsSource="{Binding Core.Goals.SelectedCollection}"
+            SelectedItem="{Binding Core.Goals.Selected}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Title}" />
