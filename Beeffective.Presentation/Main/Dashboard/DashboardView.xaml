@@ -30,7 +30,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -79,15 +78,15 @@
 
         <dashboard:TasksListView
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="6"
             Grid.Column="2"
-            Margin="8,16,8,8" />
+            Margin="8,16,8,16" />
 
         <dashboard:TaskView
-            Grid.Row="2"
-            Grid.RowSpan="4"
-            Grid.Column="2"
-            Margin="8,8,8,16" />
+            Grid.Row="0"
+            Grid.RowSpan="6"
+            Grid.Column="3"
+            Margin="8,16,16,16" />
 
     </Grid>
 
