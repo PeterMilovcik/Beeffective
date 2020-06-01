@@ -191,6 +191,7 @@
                 FocusedBorderBrush="Transparent"
                 FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignBody}"
+                IsEmptyDateEnabled="True"
                 NoneDateText="No due date"
                 NullValue="{x:Null}"
                 Pattern="FullDateTime">
