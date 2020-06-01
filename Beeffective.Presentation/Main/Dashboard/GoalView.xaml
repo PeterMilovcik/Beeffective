@@ -35,10 +35,6 @@
             Orientation="Horizontal">
 
             <Button Style="{StaticResource WidgetHeaderButton}">
-                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
-            </Button>
-
-            <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
             </Button>
 
@@ -61,10 +57,8 @@
             <TextBox
                 Grid.Row="1"
                 Margin="16,0"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.Goals.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Goals.Selected.Title}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -75,8 +69,6 @@
             <TextBox
                 Grid.Row="3"
                 Margin="16,0,16,16"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding Core.Goals.Selected.Description}" />
 
