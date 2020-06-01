@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
 {
-    public class TaskModel : Observable, IEquatable<TaskModel>
+    public class TaskModel : Changeable, IEquatable<TaskModel>
     {
         private string title;
         private string description;
@@ -22,13 +23,13 @@ namespace Beeffective.Core.Models
         public string Title
         {
             get => title;
-            set => SetProperty(ref title, value);
+            set => SetProperty(ref title, value).IfTrue(NotifyChange);
         }
 
         public string Description
         {
             get => description;
-            set => SetProperty(ref description, value);
+            set => SetProperty(ref description, value).IfTrue(NotifyChange);
         }
 
         public ObservableCollection<LabelModel> Labels { get; }
@@ -38,19 +39,19 @@ namespace Beeffective.Core.Models
         public DateTime? DueTo
         {
             get => dueTo;
-            set => SetProperty(ref dueTo, value);
+            set => SetProperty(ref dueTo, value).IfTrue(NotifyChange);
         }
 
         public ProjectModel Project
         {
             get => project;
-            set => SetProperty(ref project, value);
+            set => SetProperty(ref project, value).IfTrue(NotifyChange);
         }
 
         public bool IsFinished
         {
             get => isFinished;
-            set => SetProperty(ref isFinished, value);
+            set => SetProperty(ref isFinished, value).IfTrue(NotifyChange);
         }
 
         public bool Equals(TaskModel other)

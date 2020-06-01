@@ -60,7 +60,7 @@
                 Grid.Row="1"
                 Margin="16,0"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.Projects.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Projects.Selected.Title}" />
 
             <TextBlock
                 Grid.Row="2"

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
 using Beeffective.Data.Entities;
@@ -13,16 +13,18 @@ namespace Beeffective.Services.Repository
     public class TaskRepositoryService : IRepositoryService<TaskModel>
     {
         private readonly IRepository repository;
+        private readonly List<TaskModel> list;
 
         [ImportingConstructor]
         public TaskRepositoryService(IRepository repository)
         {
             this.repository = repository;
+            list = new List<TaskModel>();
         }
 
         public async Task<List<TaskModel>> LoadAsync()
         {
-            var result = new List<TaskModel>();
+            var taskModels = new List<TaskModel>();
             var taskEntities = await repository.Tasks.LoadAsync();
             var labelEntities = await repository.Labels.LoadAsync();
             var labelModels = labelEntities.Select(e => e.ToModel());
@@ -44,10 +46,15 @@ namespace Beeffective.Services.Repository
                     .ToList()
                     .ForEach(label => taskModel.Labels.Add(label));
 
-                result.Add(taskModel);
+                taskModels.Add(taskModel);
             }
 
-            return result;
+            list.ForEach(Unsubscribe);
+            list.Clear();
+            taskModels.ForEach(Subscribe);
+            list.AddRange(taskModels);
+
+            return taskModels;
         }
 
         public async Task<TaskModel> AddAsync(TaskModel newTaskModel)
@@ -66,16 +73,36 @@ namespace Beeffective.Services.Repository
             var savedTaskModel = taskEntity.ToModel(newTaskModel.Project);
             newTaskModel.Labels.ToList().ForEach(label => savedTaskModel.Labels.Add(label));
             newTaskModel.Records.ToList().ForEach(record => savedTaskModel.Records.Add(record));
+
+            Subscribe(savedTaskModel);
+            list.Add(savedTaskModel);
+
             return savedTaskModel;
         }
 
         public Task UpdateAsync(TaskModel taskModel) =>
             repository.Tasks.UpdateAsync(taskModel.ToEntity());
 
-        public Task RemoveAsync(TaskModel taskModel) =>
-            repository.Tasks.RemoveAsync(taskModel.ToEntity());
+        public async Task RemoveAsync(TaskModel taskModel)
+        {
+            Unsubscribe(taskModel);
+            list.Remove(taskModel);
+            await repository.Tasks.RemoveAsync(taskModel.ToEntity());
+        }
 
         public Task SaveAsync(List<TaskModel> taskModels) =>
             repository.Tasks.SaveAsync(taskModels.Select(taskModel => taskModel.ToEntity()));
+
+        private void Subscribe(TaskModel taskModel) => taskModel.Changed += OnChanged;
+
+        private void Unsubscribe(TaskModel taskModel) => taskModel.Changed -= OnChanged;
+
+        private async void OnChanged(object sender, EventArgs e)
+        {
+            if (sender is TaskModel taskModel)
+            {
+                await UpdateAsync(taskModel);
+            }
+        }
     }
 }

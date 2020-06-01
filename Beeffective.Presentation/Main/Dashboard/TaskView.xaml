@@ -5,7 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -36,10 +37,6 @@
             Orientation="Horizontal">
 
             <Button Style="{StaticResource WidgetHeaderButton}">
-                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
-            </Button>
-
-            <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
             </Button>
 
@@ -68,10 +65,8 @@
             <TextBox
                 Grid.Row="1"
                 Margin="16,0"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.Tasks.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Core.Tasks.Selected.Title}" />
 
             <TextBlock
                 Grid.Row="2"
@@ -79,13 +74,18 @@
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Project" />
 
-            <TextBox
+            <ComboBox
                 Grid.Row="3"
                 Margin="16,0"
+                Background="{StaticResource MaterialDesignCardBackground}"
+                DisplayMemberPath="Title"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEditable="False"
                 IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
-                Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.Tasks.Selected.Project.Title, UpdateSourceTrigger=PropertyChanged}" />
+                ItemsSource="{Binding Core.Projects.Collection}"
+                SelectedItem="{Binding Core.Tasks.Selected.Project}"
+                Style="{StaticResource MaterialDesignComboBox}" />
 
             <TextBlock
                 Grid.Row="4"
@@ -128,20 +128,35 @@
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Due To" />
 
-            <syncfusion:DateTimeEdit
+            <sf:DateTimeEdit
                 Grid.Row="7"
                 Margin="16,0"
+                sfSkinManager:SfSkinManager.VisualStyle="Blend"
                 Background="{StaticResource MaterialDesignCardBackground}"
                 BorderBrush="{StaticResource MaterialDesignCardBackground}"
                 DateTime="{Binding Core.Tasks.Selected.DueTo}"
                 FocusedBorderBrush="Transparent"
-                FontSize="16"
+                FontSize="{StaticResource FontSize}"
                 Foreground="{StaticResource MaterialDesignBody}"
                 IsEmptyDateEnabled="True"
-                IsReadOnly="True"
                 NoneDateText="No due date"
                 NullValue="{x:Null}"
-                Pattern="FullDateTime" />
+                Pattern="FullDateTime">
+                <sf:DateTimeEdit.DropDownButtonTemplate>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Grid Background="{StaticResource MaterialDesignCardBackground}" Cursor="Hand">
+                            <materialDesign:PackIcon
+                                Width="22"
+                                Height="22"
+                                Margin="1"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource PrimaryHueMidBrush}"
+                                Kind="Calendar" />
+                        </Grid>
+                    </ControlTemplate>
+                </sf:DateTimeEdit.DropDownButtonTemplate>
+            </sf:DateTimeEdit>
 
             <Border
                 Grid.Row="7"
@@ -159,8 +174,6 @@
             <TextBox
                 Grid.Row="9"
                 Margin="16,0,16,16"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding Core.Tasks.Selected.Description}" />
 
