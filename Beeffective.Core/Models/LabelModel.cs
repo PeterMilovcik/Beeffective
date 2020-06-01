@@ -6,6 +6,7 @@ namespace Beeffective.Core.Models
     {
         private string title;
         private string description;
+
         public int Id { get; set; }
 
         public string Title
@@ -24,7 +25,7 @@ namespace Beeffective.Core.Models
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return title == other.title && description == other.description && Id == other.Id;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -35,19 +36,10 @@ namespace Beeffective.Core.Models
             return Equals((LabelModel) obj);
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(title, description, Id);
-        }
+        public override int GetHashCode() => Id;
 
-        public static bool operator ==(LabelModel left, LabelModel right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==(LabelModel left, LabelModel right) => Equals(left, right);
 
-        public static bool operator !=(LabelModel left, LabelModel right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=(LabelModel left, LabelModel right) => !Equals(left, right);
     }
 }

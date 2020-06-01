@@ -33,10 +33,7 @@ namespace Beeffective.Core.Models
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Equals(goal, other.goal) &&
-                   title == other.title &&
-                   description == other.description &&
-                   Id == other.Id;
+            return Id == other.Id;
         }
 
         public override bool Equals(object obj)
@@ -47,13 +44,10 @@ namespace Beeffective.Core.Models
             return Equals((ProjectModel) obj);
         }
 
-        public override int GetHashCode() => 
-            HashCode.Combine(goal, title, description, Id);
+        public override int GetHashCode() => Id;
 
-        public static bool operator ==(ProjectModel left, ProjectModel right) => 
-            Equals(left, right);
+        public static bool operator ==(ProjectModel left, ProjectModel right) => Equals(left, right);
 
-        public static bool operator !=(ProjectModel left, ProjectModel right) => 
-            !Equals(left, right);
+        public static bool operator !=(ProjectModel left, ProjectModel right) => !Equals(left, right);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Beeffective.Core.Models
 {
-    public class TaskModel : Observable
+    public class TaskModel : Observable, IEquatable<TaskModel>
     {
         private string title;
         private string description;
@@ -52,5 +52,26 @@ namespace Beeffective.Core.Models
             get => isFinished;
             set => SetProperty(ref isFinished, value);
         }
+
+        public bool Equals(TaskModel other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TaskModel) obj);
+        }
+
+        public override int GetHashCode() => Id;
+
+        public static bool operator ==(TaskModel left, TaskModel right) => Equals(left, right);
+
+        public static bool operator !=(TaskModel left, TaskModel right) => !Equals(left, right);
     }
 }
