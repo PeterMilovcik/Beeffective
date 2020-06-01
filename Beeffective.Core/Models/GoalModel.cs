@@ -1,8 +1,9 @@
 ﻿using System;
+using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
 {
-    public class GoalModel : Observable, IEquatable<GoalModel>
+    public class GoalModel : Changeable, IEquatable<GoalModel>
     {
         private string title;
         private string description;
@@ -12,13 +13,13 @@ namespace Beeffective.Core.Models
         public string Title
         {
             get => title;
-            set => SetProperty(ref title, value);
+            set => SetProperty(ref title, value).IfTrue(NotifyChange);
         }
 
         public string Description
         {
             get => description;
-            set => SetProperty(ref description, value);
+            set => SetProperty(ref description, value).IfTrue(NotifyChange);
         }
 
         public bool Equals(GoalModel other)
