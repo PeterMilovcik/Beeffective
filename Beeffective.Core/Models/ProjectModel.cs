@@ -1,8 +1,9 @@
 ﻿using System;
+using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
 {
-    public class ProjectModel : Observable, IEquatable<ProjectModel>
+    public class ProjectModel : Changeable, IEquatable<ProjectModel>
     {
         private GoalModel goal;
         private string title;
@@ -13,19 +14,19 @@ namespace Beeffective.Core.Models
         public GoalModel Goal
         {
             get => goal;
-            set => SetProperty(ref goal, value);
+            set => SetProperty(ref goal, value).IfTrue(NotifyChange);
         }
 
         public string Title
         {
             get => title;
-            set => SetProperty(ref title, value);
+            set => SetProperty(ref title, value).IfTrue(NotifyChange);
         }
 
         public string Description
         {
             get => description;
-            set => SetProperty(ref description, value);
+            set => SetProperty(ref description, value).IfTrue(NotifyChange);
         }
 
         public bool Equals(ProjectModel other)

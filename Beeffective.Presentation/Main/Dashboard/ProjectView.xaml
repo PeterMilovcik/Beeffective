@@ -35,10 +35,6 @@
             Orientation="Horizontal">
 
             <Button Style="{StaticResource WidgetHeaderButton}">
-                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
-            </Button>
-
-            <Button Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
             </Button>
 
@@ -63,8 +59,6 @@
             <TextBox
                 Grid.Row="1"
                 Margin="16,0"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding Core.Projects.Selected.Title, UpdateSourceTrigger=PropertyChanged}" />
 
@@ -74,13 +68,18 @@
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Goal" />
 
-            <TextBox
+            <ComboBox
                 Grid.Row="3"
                 Margin="16,0"
+                Background="{StaticResource MaterialDesignCardBackground}"
+                DisplayMemberPath="Title"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignDarkForeground}"
+                IsEditable="False"
                 IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
-                Style="{StaticResource BeeffectiveTextBox}"
-                Text="{Binding Core.Projects.Selected.Goal.Title}" />
+                ItemsSource="{Binding Core.Goals.Collection}"
+                SelectedItem="{Binding Core.Projects.Selected.Goal}"
+                Style="{StaticResource MaterialDesignComboBox}" />
 
             <TextBlock
                 Grid.Row="4"
@@ -91,8 +90,6 @@
             <TextBox
                 Grid.Row="5"
                 Margin="16,0,16,16"
-                IsReadOnly="True"
-                IsReadOnlyCaretVisible="False"
                 Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding Core.Projects.Selected.Description}" />
 

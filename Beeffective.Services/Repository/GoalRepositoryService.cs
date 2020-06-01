@@ -43,11 +43,11 @@ namespace Beeffective.Services.Repository
         public Task UpdateAsync(GoalModel goalModel) =>
             repository.Goals.UpdateAsync(goalModel.ToEntity());
 
-        public Task RemoveAsync(GoalModel goalModel)
+        public async Task RemoveAsync(GoalModel goalModel)
         {
             Unsubscribe(goalModel);
             list.Remove(goalModel);
-            return repository.Goals.RemoveAsync(goalModel.ToEntity());
+            await repository.Goals.RemoveAsync(goalModel.ToEntity());
         }
 
         public Task SaveAsync(List<GoalModel> goalModels) =>
