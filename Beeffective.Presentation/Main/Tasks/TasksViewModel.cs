@@ -56,7 +56,7 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             Collection.Clear();
             var tasks = (await repository.Tasks.LoadAsync())
-                .OrderBy(gm => gm.Title).ToList();
+                .OrderBy(gm => gm.DueTo).ToList();
             tasks.ForEach(labelModel => Collection.Add(labelModel));
             SelectedCollection = Collection;
         }
