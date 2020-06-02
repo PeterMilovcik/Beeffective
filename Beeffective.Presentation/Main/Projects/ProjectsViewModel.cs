@@ -60,15 +60,7 @@ namespace Beeffective.Presentation.Main.Projects
 
         private async Task AddNew()
         {
-            ProjectModel added = null;
-            try
-            {
-                added = await repository.Projects.AddAsync(new ProjectModel());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            var added = await repository.Projects.AddAsync(new ProjectModel());
             Collection.Add(added);
             SelectedCollection = Collection;
             Selected = added;
