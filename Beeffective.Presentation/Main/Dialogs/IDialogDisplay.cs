@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Beeffective.Presentation.Main.Dialogs
+﻿namespace Beeffective.Presentation.Main.Dialogs
 {
     public interface IDialogDisplay
     {
-        Task ShowNewTaskDialogAsync(object dataContext);
         void CloseDialog();
     }
 }
