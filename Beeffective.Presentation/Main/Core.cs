@@ -18,7 +18,7 @@ namespace Beeffective.Presentation.Main
         {
             Goals = new GoalsViewModel(this, repository);
             Projects = new ProjectsViewModel(this, repository);
-            Labels = new LabelsViewModel(this, dialogDisplay, repository);
+            Labels = new LabelsViewModel(this, repository);
             Tasks = new TasksViewModel(this, dialogDisplay, repository);
         }
 

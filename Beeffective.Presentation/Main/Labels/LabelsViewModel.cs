@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Labels
@@ -17,13 +16,13 @@ namespace Beeffective.Presentation.Main.Labels
         private ObservableCollection<LabelModel> selectedCollection;
 
 
-        public LabelsViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
+        public LabelsViewModel(Core core, IRepositoryService repository) : base(core)
         {
             this.repository = repository;
             Collection = new ObservableCollection<LabelModel>();
             Collection.CollectionChanged += OnCollectionChanged;
-            New = new NewLabelViewModel(core, dialogDisplay, repository);
             SelectAllCommand = new DelegateCommand(obj => Selected = null);
+            AddNewCommand = new AsyncCommand(AddNewAsync);
         }
 
         public ObservableCollection<LabelModel> Collection { get; }
@@ -54,7 +53,15 @@ namespace Beeffective.Presentation.Main.Labels
 
         public DelegateCommand SelectAllCommand { get; }
 
-        public NewLabelViewModel New { get; }
+        public AsyncCommand AddNewCommand { get; }
+
+        private async Task AddNewAsync()
+        {
+            var added = await repository.Labels.AddAsync(new LabelModel());
+            Collection.Add(added);
+            SelectedCollection = Collection;
+            Selected = added;
+        }
 
         public async Task LoadAsync()
         {

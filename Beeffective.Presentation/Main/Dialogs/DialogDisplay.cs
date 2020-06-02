@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using Beeffective.Presentation.Main.Labels;
 using Beeffective.Presentation.Main.Tasks;
 using MaterialDesignThemes.Wpf;
 
@@ -10,16 +9,7 @@ namespace Beeffective.Presentation.Main.Dialogs
     public class DialogDisplay : IDialogDisplay
     {
         [Import]
-        public INewLabelView NewLabelView { get; set; }
-
-        [Import]
         public INewTaskView NewTaskView { get; set; }
-
-        public async Task ShowNewLabelDialogAsync(object dataContext)
-        {
-            NewLabelView.DataContext = dataContext;
-            await DialogHost.Show(NewLabelView);
-        }
 
         public async Task ShowNewTaskDialogAsync(object dataContext)
         {

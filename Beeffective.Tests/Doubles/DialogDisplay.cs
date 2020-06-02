@@ -14,9 +14,6 @@ namespace Beeffective.Tests.Doubles
 
         public void CloseDialog() => 
             IsDialogShown = false;
-        
-        public async Task ShowNewLabelDialogAsync(object dataContext) => 
-            await ShowAsync(new NewLabelView { DataContext = dataContext });
 
         public async Task ShowNewTaskDialogAsync(object dataContext) => 
             await ShowAsync(new NewTaskView { DataContext = dataContext });
