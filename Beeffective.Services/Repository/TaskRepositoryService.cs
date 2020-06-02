@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
@@ -93,15 +94,46 @@ namespace Beeffective.Services.Repository
         public Task SaveAsync(List<TaskModel> taskModels) =>
             repository.Tasks.SaveAsync(taskModels.Select(taskModel => taskModel.ToEntity()));
 
-        private void Subscribe(TaskModel taskModel) => taskModel.Changed += OnChanged;
+        private void Subscribe(TaskModel taskModel)
+        {
+            taskModel.Changed += OnChanged;
+            taskModel.LabelAdded += OnLabelAdded;
+            taskModel.LabelRemoved += OnLabelRemoved;
+        }
 
-        private void Unsubscribe(TaskModel taskModel) => taskModel.Changed -= OnChanged;
+        private void Unsubscribe(TaskModel taskModel)
+        {
+            taskModel.Changed -= OnChanged;
+            taskModel.LabelAdded -= OnLabelAdded;
+            taskModel.LabelRemoved -= OnLabelRemoved;
+        }
 
         private async void OnChanged(object sender, EventArgs e)
         {
             if (sender is TaskModel taskModel)
             {
                 await UpdateAsync(taskModel);
+            }
+        }
+
+        private async void OnLabelAdded(object sender, LabelEventArgs e)
+        {
+            if (sender is TaskModel taskModel)
+            {
+                await repository.TaskLabels.AddAsync(
+                    new TaskLabelEntity {LabelId = e.LabelModel.Id, TaskId = taskModel.Id});
+            }
+        }
+
+        private async void OnLabelRemoved(object sender, LabelEventArgs e)
+        {
+            if (sender is TaskModel taskModel)
+            {
+                var taskLabelEntities = await repository.TaskLabels.LoadAsync();
+                var taskLabelEntity = taskLabelEntities.Single(tle =>
+                    tle.LabelId == e.LabelModel.Id &&
+                    tle.TaskId == taskModel.Id);
+                await repository.TaskLabels.RemoveAsync(taskLabelEntity);
             }
         }
     }

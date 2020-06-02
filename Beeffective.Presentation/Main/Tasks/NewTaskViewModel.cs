@@ -74,11 +74,11 @@ namespace Beeffective.Presentation.Main.Tasks
 
         private void OnLabelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (NewTask == null) return;
+            if (Core.Tasks.Selected == null) return;
             if (e.PropertyName == nameof(LabelViewModel.IsSelected))
             {
-                NewTask.Labels.Clear();
-                Labels.Where(label => label.IsSelected).ToList().ForEach(label => NewTask.Labels.Add(label.Model));
+                Core.Tasks.Selected.Labels.Clear();
+                Labels.Where(label => label.IsSelected).ToList().ForEach(label => Core.Tasks.Selected.Labels.Add(label.Model));
             }
         }
 

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:Beeffective.Core.Models;assembly=Beeffective.Core"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
     d:DesignHeight="450"
@@ -93,34 +94,103 @@
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Labels" />
 
-            <ListBox Grid.Row="5" ItemsSource="{Binding Core.Tasks.Selected.Labels}">
+            <Border
+                Grid.Row="5"
+                Margin="16,0"
+                Background="{StaticResource MaterialDesignCardBackground}">
 
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+                <Grid>
 
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Chip
-                            Background="{StaticResource MaterialDesignCardBackground}"
-                            Content="{Binding Title}"
-                            FontFamily="{StaticResource MaterialDesignFont}"
-                            FontSize="14"
-                            IconBackground="{DynamicResource PrimaryHueMidBrush}"
-                            IconForeground="{DynamicResource PrimaryHueMidForegroundBrush}">
-                            <materialDesign:Chip.Icon>
-                                <materialDesign:PackIcon
-                                    Width="20"
-                                    Height="20"
-                                    Kind="TagOutline" />
-                            </materialDesign:Chip.Icon>
-                        </materialDesign:Chip>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-            </ListBox>
+                    <materialDesign:PopupBox
+                        Grid.Column="1"
+                        Margin="2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        StaysOpen="True">
+
+                        <materialDesign:PopupBox.ToggleContent>
+
+                            <materialDesign:PackIcon
+                                Width="24"
+                                Height="24"
+                                Foreground="{StaticResource PrimaryHueMidBrush}"
+                                Kind="Edit" />
+
+                        </materialDesign:PopupBox.ToggleContent>
+
+                        <ItemsControl
+                            Margin="8,0,8,0"
+                            Grid.IsSharedSizeScope="True"
+                            ItemsSource="{Binding Core.Tasks.LabelSelection}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type models:LabelModel}">
+                                    <Border x:Name="Border" Padding="8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition SharedSizeGroup="Checkers" />
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding IsSelected}" />
+                                            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                                <TextBlock FontWeight="Bold" Text="{Binding Model.Title}" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                    </materialDesign:PopupBox>
+
+                    <ListBox Grid.Column="0" ItemsSource="{Binding Core.Tasks.Selected.Labels}">
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <materialDesign:Chip
+                                    Background="{StaticResource MaterialDesignPaper}"
+                                    Content="{Binding Title}"
+                                    FontFamily="{StaticResource MaterialDesignFont}"
+                                    FontSize="14"
+                                    IconBackground="{DynamicResource PrimaryHueMidBrush}"
+                                    IconForeground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                                    <materialDesign:Chip.Icon>
+                                        <materialDesign:PackIcon
+                                            Width="20"
+                                            Height="20"
+                                            Kind="TagOutline" />
+                                    </materialDesign:Chip.Icon>
+                                </materialDesign:Chip>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                    </ListBox>
+
+                    <Border
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        VerticalAlignment="Bottom"
+                        BorderBrush="{StaticResource MaterialDesignBodyLight}"
+                        BorderThickness="0,1,0,0" />
+
+                </Grid>
+
+            </Border>
 
             <TextBlock
                 Grid.Row="6"
