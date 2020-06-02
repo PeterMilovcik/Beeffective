@@ -44,16 +44,25 @@
 
         </StackPanel>
 
-        <ListView
+        <DataGrid
             Grid.Row="1"
+            materialDesign:DataGridAssist.CellPadding="13,4,4,4"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8,4"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserSortColumns="True"
+            IsReadOnly="True"
             ItemsSource="{Binding Core.Projects.SelectedCollection}"
-            SelectedItem="{Binding Core.Projects.Selected}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            SelectedItem="{Binding Core.Projects.Selected}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Title}"
+                    Header="Title" />
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 
