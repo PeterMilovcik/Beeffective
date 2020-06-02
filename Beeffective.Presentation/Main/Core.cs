@@ -17,7 +17,7 @@ namespace Beeffective.Presentation.Main
         public Core(IRepositoryService repository, IDialogDisplay dialogDisplay)
         {
             Goals = new GoalsViewModel(this, repository);
-            Projects = new ProjectsViewModel(this, dialogDisplay, repository);
+            Projects = new ProjectsViewModel(this, repository);
             Labels = new LabelsViewModel(this, dialogDisplay, repository);
             Tasks = new TasksViewModel(this, dialogDisplay, repository);
         }

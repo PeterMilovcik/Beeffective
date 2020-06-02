@@ -1,11 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Projects
@@ -16,16 +16,14 @@ namespace Beeffective.Presentation.Main.Projects
         private ProjectModel selected;
         private ObservableCollection<ProjectModel> selectedCollection;
 
-        public ProjectsViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
+        public ProjectsViewModel(Core core, IRepositoryService repository) : base(core)
         {
             this.repository = repository;
-            New = new NewProjectViewModel(core, dialogDisplay, repository);
             Collection = new ObservableCollection<ProjectModel>();
             Collection.CollectionChanged += OnCollectionChanged;
             SelectAllCommand = new DelegateCommand((obj) => Selected = null);
+            AddNewCommand = new AsyncCommand(AddNew);
         }
-
-        public NewProjectViewModel New { get; }
 
         public ObservableCollection<ProjectModel> Collection { get; }
 
@@ -55,7 +53,26 @@ namespace Beeffective.Presentation.Main.Projects
             });
         }
 
+
         public DelegateCommand SelectAllCommand { get; }
+
+        public AsyncCommand AddNewCommand { get; }
+
+        private async Task AddNew()
+        {
+            ProjectModel added = null;
+            try
+            {
+                added = await repository.Projects.AddAsync(new ProjectModel());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            Collection.Add(added);
+            SelectedCollection = Collection;
+            Selected = added;
+        }
 
         public async Task LoadAsync()
         {

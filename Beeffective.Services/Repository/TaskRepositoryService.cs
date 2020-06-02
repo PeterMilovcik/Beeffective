@@ -35,7 +35,9 @@ namespace Beeffective.Services.Repository
             foreach (var taskEntity in taskEntities)
             {
                 var projectEntity = projectEntities.Find(e => e.Id == taskEntity.ProjectId);
-                var goalEntity = projectEntity != null ? goalEntities.Find(e => e.Id == projectEntity.GoalId): null;
+                var goalEntity = projectEntity != null 
+                    ? goalEntities.Find(e => e.Id == projectEntity.GoalId)
+                    : null;
                 var goalModel = goalEntity.ToModel();
                 var projectModel = projectEntity.ToModel(goalModel);
                 var taskModel = taskEntity.ToModel(projectModel);

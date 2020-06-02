@@ -61,6 +61,7 @@ namespace Beeffective.Presentation.Main.Goals
         {
             var added = await repository.Goals.AddAsync(new GoalModel());
             Collection.Add(added);
+            SelectedCollection = Collection;
             Selected = added;
         }
 

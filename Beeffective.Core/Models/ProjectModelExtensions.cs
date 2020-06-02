@@ -5,28 +5,22 @@ namespace Beeffective.Core.Models
 {
     public static class ProjectModelExtensions
     {
-        public static ProjectModel ToModel(this ProjectEntity entity, GoalModel goal)
-        {
-            if (entity == null) return null;
-            return new ProjectModel
+        public static ProjectModel ToModel(this ProjectEntity entity, GoalModel goal) =>
+            new ProjectModel
             {
                 Id = entity.Id,
                 Goal = goal,
                 Title = entity.Title,
                 Description = entity.Description,
             };
-        }
 
-        public static ProjectEntity ToEntity(this ProjectModel model)
-        {
-            if (model == null) throw new ArgumentNullException(nameof(model));
-            return new ProjectEntity
+        public static ProjectEntity ToEntity(this ProjectModel model) =>
+            new ProjectEntity
             {
                 Id = model.Id,
-                GoalId = model.Goal.Id,
+                GoalId = model.Goal != null ? model.Goal.Id : 0,
                 Title = model.Title,
                 Description = model.Description
             };
-        }
     }
 }

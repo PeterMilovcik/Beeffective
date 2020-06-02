@@ -89,10 +89,6 @@ namespace Beeffective.Presentation.Main
 
         private void OnViewDeactivated(object sender, EventArgs e) => AlwaysOnTop.Show();
 
-        public async Task CloseAsync()
-        {
-            await Core.SaveAsync();
-            AlwaysOnTop.Close();
-        }
+        public void Close() => AlwaysOnTop.Close();
     }
 }
