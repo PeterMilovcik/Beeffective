@@ -64,7 +64,7 @@
                     Header="Title" />
 
                 <DataGridTextColumn
-                    Width="150"
+                    Width="160"
                     Binding="{Binding DueTo}"
                     Header="DueTo"
                     SortDirection="Ascending" />
