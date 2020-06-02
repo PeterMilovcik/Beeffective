@@ -16,7 +16,7 @@ namespace Beeffective.Presentation.Main
         [ImportingConstructor]
         public Core(IRepositoryService repository, IDialogDisplay dialogDisplay)
         {
-            Goals = new GoalsViewModel(this, dialogDisplay, repository);
+            Goals = new GoalsViewModel(this, repository);
             Projects = new ProjectsViewModel(this, dialogDisplay, repository);
             Labels = new LabelsViewModel(this, dialogDisplay, repository);
             Tasks = new TasksViewModel(this, dialogDisplay, repository);

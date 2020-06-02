@@ -16,13 +16,13 @@ namespace Beeffective.Presentation.Main.Goals
         private GoalModel selected;
         private ObservableCollection<GoalModel> selectedCollection;
 
-        public GoalsViewModel(Core core, IDialogDisplay dialogDisplay, IRepositoryService repository) : base(core)
+        public GoalsViewModel(Core core, IRepositoryService repository) : base(core)
         {
             this.repository = repository;
             Collection = new ObservableCollection<GoalModel>();
             Collection.CollectionChanged += OnGoalsCollectionChanged;
             SelectAllCommand = new DelegateCommand((obj) => Selected = null);
-            New = new NewGoalViewModel(core, dialogDisplay, repository);
+            AddNewCommand = new AsyncCommand(AddNew);
         }
 
         public ObservableCollection<GoalModel> Collection { get; }
@@ -55,7 +55,14 @@ namespace Beeffective.Presentation.Main.Goals
 
         public DelegateCommand SelectAllCommand { get; }
 
-        public NewGoalViewModel New { get; }
+        public AsyncCommand AddNewCommand { get; }
+
+        private async Task AddNew()
+        {
+            var added = await repository.Goals.AddAsync(new GoalModel());
+            Collection.Add(added);
+            Selected = added;
+        }
 
         public async Task LoadAsync()
         {

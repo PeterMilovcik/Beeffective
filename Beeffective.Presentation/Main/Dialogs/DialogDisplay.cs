@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using Beeffective.Presentation.Main.Goals;
 using Beeffective.Presentation.Main.Labels;
 using Beeffective.Presentation.Main.Projects;
 using Beeffective.Presentation.Main.Tasks;
@@ -12,9 +11,6 @@ namespace Beeffective.Presentation.Main.Dialogs
     public class DialogDisplay : IDialogDisplay
     {
         [Import]
-        public INewGoalView NewGoalView { get; set; }
-
-        [Import]
         public INewProjectView NewProjectView { get; set; }
 
         [Import]
@@ -22,12 +18,6 @@ namespace Beeffective.Presentation.Main.Dialogs
 
         [Import]
         public INewTaskView NewTaskView { get; set; }
-
-        public async Task ShowNewGoalDialogAsync(object dataContext)
-        {
-            NewGoalView.DataContext  = dataContext;
-            await DialogHost.Show(NewGoalView);
-        }
 
         public async Task ShowNewProjectDialogAsync(object dataContext)
         {

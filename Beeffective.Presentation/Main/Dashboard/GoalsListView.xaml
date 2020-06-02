@@ -38,7 +38,7 @@
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TickAll" />
             </Button>
 
-            <Button Command="{Binding Core.Goals.New.ShowDialogCommand}" Style="{StaticResource WidgetHeaderButton}">
+            <Button Command="{Binding Core.Goals.AddNewCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
             </Button>
 

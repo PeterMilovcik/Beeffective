@@ -107,42 +107,6 @@
 
                             <StackPanel Grid.Column="2" Orientation="Horizontal">
 
-                                <materialDesign:PopupBox Margin="8">
-
-                                    <materialDesign:PopupBox.ToggleContent>
-                                        <materialDesign:PackIcon Kind="AddThick" />
-                                    </materialDesign:PopupBox.ToggleContent>
-
-                                    <StackPanel>
-
-                                        <Button
-                                            Margin="8,4"
-                                            Command="{Binding Core.Goals.New.ShowDialogCommand}"
-                                            Content="NEW GOAL"
-                                            Style="{StaticResource MaterialDesignFlatButton}" />
-
-                                        <Button
-                                            Margin="8,4"
-                                            Command="{Binding Core.Projects.New.ShowDialogCommand}"
-                                            Content="NEW PROJECT"
-                                            Style="{StaticResource MaterialDesignFlatButton}" />
-
-                                        <Button
-                                            Margin="8,4"
-                                            Command="{Binding Core.NewLabel.ShowNewLabelDialogCommand}"
-                                            Content="NEW LABEL"
-                                            Style="{StaticResource MaterialDesignFlatButton}" />
-
-                                        <Button
-                                            Margin="8,4"
-                                            Command="{Binding Core.NewTask.ShowNewTaskDialogCommand}"
-                                            Content="NEW TASK"
-                                            Style="{StaticResource MaterialDesignFlatButton}" />
-
-                                    </StackPanel>
-
-                                </materialDesign:PopupBox>
-
                                 <Button VerticalAlignment="Center" Command="{Binding Core.SelectedTask.EditTaskCommand}">
                                     <Button.Style>
                                         <Style BasedOn="{StaticResource MaterialDesignIconForegroundButton}" TargetType="Button">
