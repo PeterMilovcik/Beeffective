@@ -99,13 +99,13 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void StartTimer(object obj)
         {
-            //if (obj is int minutes)
-            //{
-            //    Tasks.Selected.Model.IsTimerEnabled = true;
-            //    IsTimePickerVisible = false;
-            //    RemainingTime = TimeSpan.FromMinutes(minutes);
-            //    timer.Start();
-            //}
+            if (int.TryParse(obj.ToString(), out var minutes))
+            {
+                //Tasks.Selected.Model.IsTimerEnabled = true;
+                //IsTimePickerVisible = false;
+                RemainingTime = TimeSpan.FromMinutes(minutes);
+                timer.Start();
+            }
         }
 
         private void OnTasksPropertyChanged(object sender, PropertyChangedEventArgs e)

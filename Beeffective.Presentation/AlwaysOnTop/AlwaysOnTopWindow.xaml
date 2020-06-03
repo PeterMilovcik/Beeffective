@@ -59,27 +59,44 @@
 
             </Border>
 
-            <Button
-                Grid.Column="0"
-                Width="23"
-                Height="23"
-                Padding="0"
-                Command="{Binding TimeTrackerCommand}">
+            <md:PopupBox Grid.Column="0" Padding="0">
+                <md:PopupBox.ToggleContent>
+                    <Border Background="{StaticResource PrimaryHueMidBrush}" CornerRadius="2">
+                        <md:PackIcon>
+                            <md:PackIcon.Style>
+                                <Style TargetType="md:PackIcon">
+                                    <Setter Property="Kind" Value="Play" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Tasks.Selected.Model.IsTimerEnabled}" Value="True">
+                                            <Setter Property="Kind" Value="Stop" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </md:PackIcon.Style>
+                        </md:PackIcon>
+                    </Border>
+                </md:PopupBox.ToggleContent>
 
-                <md:PackIcon Width="16" Height="16">
-                    <md:PackIcon.Style>
-                        <Style TargetType="md:PackIcon">
-                            <Setter Property="Kind" Value="Play" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Tasks.Selected.Model.IsTimerEnabled}" Value="True">
-                                    <Setter Property="Kind" Value="Stop" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </md:PackIcon.Style>
-                </md:PackIcon>
+                <StackPanel>
+                    <Button
+                        Command="{Binding StartTimerCommand}"
+                        CommandParameter="15"
+                        Content="15 min" />
+                    <Button
+                        Command="{Binding StartTimerCommand}"
+                        CommandParameter="30"
+                        Content="30 min" />
+                    <Button
+                        Command="{Binding StartTimerCommand}"
+                        CommandParameter="60"
+                        Content="60 min" />
+                    <Button
+                        Command="{Binding StartTimerCommand}"
+                        CommandParameter="120"
+                        Content="120 min" />
+                </StackPanel>
 
-            </Button>
+            </md:PopupBox>
 
             <Grid
                 Grid.Column="1"
@@ -129,7 +146,7 @@
 
         </Grid>
 
-        <Grid Visibility="{Binding IsTimePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <!--<Grid Visibility="{Binding IsTimePickerVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -194,7 +211,7 @@
                 </Button.CommandParameter>
             </Button>
 
-        </Grid>
+        </Grid>-->
 
         <Grid
             TextElement.FontFamily="{StaticResource MaterialDesignFont}"
