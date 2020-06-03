@@ -24,8 +24,8 @@ namespace Beeffective.Presentation.Main.Tasks
             Collection.CollectionChanged += OnCollectionChanged;
             SelectAllCommand = new DelegateCommand(obj => Selected = null);
             AddNewCommand = new AsyncCommand(AddNewAsync);
+            FinishCommand = new AsyncCommand(FinishTaskAsync);
         }
-
 
         public ObservableCollection<TaskModel> Collection { get; }
 
@@ -93,7 +93,6 @@ namespace Beeffective.Presentation.Main.Tasks
             }
         }
 
-
         public bool IsTaskSelected => Selected != null;
 
         public DelegateCommand SelectAllCommand { get; }
@@ -119,5 +118,15 @@ namespace Beeffective.Presentation.Main.Tasks
 
         public async Task SaveAsync() => 
             await repository.Tasks.SaveAsync(Collection.ToList());
+
+        public AsyncCommand FinishCommand { get; }
+
+        private async Task FinishTaskAsync()
+        {
+            if (Selected == null) return;
+            Selected.IsFinished = true;
+            await repository.Tasks.UpdateAsync(Selected);
+            Selected = null;
+        }
     }
 }

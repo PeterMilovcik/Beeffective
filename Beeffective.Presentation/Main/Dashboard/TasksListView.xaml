@@ -58,6 +58,12 @@
             SelectionMode="Single">
             <DataGrid.Columns>
 
+                <DataGridCheckBoxColumn
+                    Width="80"
+                    Binding="{Binding IsFinished}"
+                    Header="Done"
+                    IsReadOnly="True" />
+
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Title}"
