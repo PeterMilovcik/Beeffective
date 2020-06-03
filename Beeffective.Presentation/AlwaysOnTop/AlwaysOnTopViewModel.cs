@@ -118,14 +118,14 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void UpdateViewVisibility()
         {
-            //if (Tasks.IsSelected)
-            //{
-            //    view.Show();
-            //}
-            //else
-            //{
-            //    view.Hide();
-            //}
+            if (Core.Tasks.IsTaskSelected)
+            {
+                view.Show();
+            }
+            else
+            {
+                view.Hide();
+            }
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e) => 
@@ -249,7 +249,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         public void Show()
         {
-            //if (Tasks.Selected != null) view.Show();
+            if (Core.Tasks.Selected != null) view.Show();
         }
     }
 }

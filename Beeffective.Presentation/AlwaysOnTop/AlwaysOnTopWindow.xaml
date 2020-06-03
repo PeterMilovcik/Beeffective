@@ -103,7 +103,7 @@
                     Grid.Column="0"
                     Margin="4,0"
                     VerticalAlignment="Center"
-                    Text="{Binding Tasks.Selected.Model.Title}" />
+                    Text="{Binding Core.Tasks.Selected.Title}" />
 
                 <TextBlock
                     Grid.Column="1"
