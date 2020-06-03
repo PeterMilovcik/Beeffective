@@ -21,6 +21,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="3*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -53,7 +54,7 @@
             CanUserDeleteRows="False"
             CanUserSortColumns="True"
             IsReadOnly="True"
-            ItemsSource="{Binding Core.Tasks.SelectedCollection}"
+            ItemsSource="{Binding Core.Tasks.UnfinishedCollection}"
             SelectedItem="{Binding Core.Tasks.Selected}"
             SelectionMode="Single">
             <DataGrid.Columns>
@@ -77,6 +78,47 @@
 
             </DataGrid.Columns>
         </DataGrid>
+
+        <DataGrid
+            Grid.Row="2"
+            materialDesign:DataGridAssist.CellPadding="13,4,4,4"
+            materialDesign:DataGridAssist.ColumnHeaderPadding="8,4"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserSortColumns="True"
+            IsReadOnly="True"
+            ItemsSource="{Binding Core.Tasks.FinishedCollection}"
+            SelectedItem="{Binding Core.Tasks.Selected}"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+
+                <DataGridCheckBoxColumn
+                    Width="80"
+                    Binding="{Binding IsFinished}"
+                    Header="Done"
+                    IsReadOnly="True" />
+
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Title}"
+                    Header="Title" />
+
+                <DataGridTextColumn
+                    Width="160"
+                    Binding="{Binding DueTo}"
+                    Header="DueTo"
+                    SortDirection="Ascending" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            BorderBrush="{StaticResource PrimaryHueMidBrush}"
+            BorderThickness="1" />
 
     </Grid>
 

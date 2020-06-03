@@ -16,6 +16,8 @@ namespace Beeffective.Presentation.Main.Tasks
         private TaskModel selected;
         private ObservableCollection<TaskModel> selectedCollection;
         private ObservableCollection<LabelViewModel> labelSelection;
+        private ObservableCollection<TaskModel> unfinishedCollection;
+        private ObservableCollection<TaskModel> finishedCollection;
 
         public TasksViewModel(Core core, IRepositoryService repository) : base(core)
         {
@@ -32,13 +34,33 @@ namespace Beeffective.Presentation.Main.Tasks
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Selected = null;
-            SelectedCollection = Collection;
+            SelectedCollection = new ObservableCollection<TaskModel>(Collection);
         }
 
         public ObservableCollection<TaskModel> SelectedCollection
         {
             get => selectedCollection;
-            set => SetProperty(ref selectedCollection, value);
+            set => SetProperty(ref selectedCollection, value).IfTrue(UpdateFinishedUnfinishedCollection);
+        }
+
+        private void UpdateFinishedUnfinishedCollection()
+        {
+            UnfinishedCollection = new ObservableCollection<TaskModel>(
+                SelectedCollection.Where(t => t.IsFinished == false));
+            FinishedCollection = new ObservableCollection<TaskModel>(
+                SelectedCollection.Where(t => t.IsFinished));
+        }
+
+        public ObservableCollection<TaskModel> UnfinishedCollection
+        {
+            get => unfinishedCollection;
+            set => SetProperty(ref unfinishedCollection, value);
+        }
+
+        public ObservableCollection<TaskModel> FinishedCollection
+        {
+            get => finishedCollection;
+            set => SetProperty(ref finishedCollection, value);
         }
 
         public TaskModel Selected
@@ -101,19 +123,20 @@ namespace Beeffective.Presentation.Main.Tasks
 
         private async Task AddNewAsync()
         {
-            var added = await repository.Tasks.AddAsync(new TaskModel());
-            Collection.Add(added);
-            SelectedCollection = Collection;
-            Selected = added;
+            var model = await repository.Tasks.AddAsync(new TaskModel());
+            Add(model);
+            SelectedCollection = new ObservableCollection<TaskModel>(Collection);
+            Selected = model;
         }
 
         public async Task LoadAsync()
         {
+            Collection.ToList().ForEach(Unsubscribe);
             Collection.Clear();
             var tasks = (await repository.Tasks.LoadAsync())
                 .OrderBy(gm => gm.DueTo).ToList();
-            tasks.ForEach(labelModel => Collection.Add(labelModel));
-            SelectedCollection = Collection;
+            tasks.ForEach(Add);
+            SelectedCollection = new ObservableCollection<TaskModel>(Collection);
         }
 
         public async Task SaveAsync() => 
@@ -127,6 +150,31 @@ namespace Beeffective.Presentation.Main.Tasks
             Selected.IsFinished = true;
             await repository.Tasks.UpdateAsync(Selected);
             Selected = null;
+        }
+
+        private void Add(TaskModel model)
+        {
+            Subscribe(model);
+            Collection.Add(model);
+        }
+
+        private void Subscribe(TaskModel model) => model.PropertyChanged += OnTaskPropertyChanged;
+        
+        private void Unsubscribe(TaskModel model) => model.PropertyChanged -= OnTaskPropertyChanged;
+
+        private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TaskModel.DueTo))
+            {
+                NotifyPropertyChange(nameof(SelectedCollection));
+                NotifyPropertyChange(nameof(UnfinishedCollection));
+                NotifyPropertyChange(nameof(FinishedCollection));
+            }
+
+            if (e.PropertyName == nameof(TaskModel.IsFinished))
+            {
+                UpdateFinishedUnfinishedCollection();
+            }
         }
     }
 }
