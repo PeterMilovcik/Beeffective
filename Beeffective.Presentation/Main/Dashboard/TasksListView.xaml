@@ -71,8 +71,8 @@
                     Header="Title" />
 
                 <DataGridTextColumn
-                    Width="160"
-                    Binding="{Binding DueTo}"
+                    Width="130"
+                    Binding="{Binding DueTo, StringFormat=yyyy-MM-dd HH:mm}"
                     Header="DueTo"
                     SortDirection="Ascending" />
 
@@ -106,7 +106,7 @@
 
                 <DataGridTextColumn
                     Width="160"
-                    Binding="{Binding DueTo}"
+                    Binding="{Binding DueTo, StringFormat=yyyy-MM-dd HH:mm}"
                     Header="DueTo"
                     SortDirection="Ascending" />
 
