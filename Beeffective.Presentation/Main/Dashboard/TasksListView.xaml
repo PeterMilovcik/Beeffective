@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
+    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -17,6 +19,12 @@
             </ResourceDictionary.MergedDictionaries>
 
             <CollectionViewSource x:Key="UnfinishedTasks" Source="{Binding Core.Tasks.UnfinishedCollection}">
+                <CollectionViewSource.SortDescriptions>
+                    <cm:SortDescription Direction="Ascending" PropertyName="DueTo" />
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+
+            <CollectionViewSource x:Key="FinishedTasks" Source="{Binding Core.Tasks.FinishedCollection}">
                 <CollectionViewSource.SortDescriptions>
                     <cm:SortDescription Direction="Ascending" PropertyName="DueTo" />
                 </CollectionViewSource.SortDescriptions>
@@ -53,73 +61,65 @@
 
         </StackPanel>
 
-        <DataGrid
+        <sf:SfDataGrid
+            x:Name="UnfinishedDataGrid"
             Grid.Row="1"
-            materialDesign:DataGridAssist.CellPadding="13,4,4,4"
-            materialDesign:DataGridAssist.ColumnHeaderPadding="8,4"
             AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            CanUserDeleteRows="False"
-            CanUserSortColumns="True"
+            Foreground="{StaticResource MaterialDesignBody}"
             IsReadOnly="True"
             ItemsSource="{Binding Source={StaticResource UnfinishedTasks}}"
-            SelectedItem="{Binding Core.Tasks.Selected}"
-            SelectionMode="Single">
-            <DataGrid.Columns>
+            Loaded="UnfinishedDataGrid_OnLoaded"
+            SelectedItem="{Binding Core.Tasks.Selected}">
+            <sf:SfDataGrid.SortColumnDescriptions>
+                <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Ascending" />
+            </sf:SfDataGrid.SortColumnDescriptions>
+            <sf:SfDataGrid.Columns>
 
-                <DataGridCheckBoxColumn
-                    Width="80"
-                    Binding="{Binding IsFinished}"
-                    Header="Done"
-                    IsReadOnly="True" />
+                <sf:GridCheckBoxColumn
+                    ColumnSizer="Auto"
+                    HeaderText="Done"
+                    MappingName="IsFinished" />
+                <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+                <sf:GridDateTimeColumn
+                    AllowSorting="True"
+                    ColumnSizer="Auto"
+                    CustomPattern="yyyy-MM-dd HH:mm"
+                    HeaderText="Due To"
+                    MappingName="DueTo"
+                    Pattern="CustomPattern" />
 
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Title}"
-                    Header="Title" />
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
 
-                <DataGridTextColumn
-                    Width="130"
-                    Binding="{Binding DueTo, StringFormat=yyyy-MM-dd HH:mm}"
-                    Header="DueTo"
-                    SortDirection="Ascending" />
-
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <DataGrid
+        <sf:SfDataGrid
+            x:Name="FinishedDataGrid"
             Grid.Row="2"
-            materialDesign:DataGridAssist.CellPadding="13,4,4,4"
-            materialDesign:DataGridAssist.ColumnHeaderPadding="8,4"
             AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            CanUserDeleteRows="False"
-            CanUserSortColumns="True"
+            Foreground="{StaticResource MaterialDesignBody}"
             IsReadOnly="True"
-            ItemsSource="{Binding Core.Tasks.FinishedCollection}"
-            SelectedItem="{Binding Core.Tasks.Selected}"
-            SelectionMode="Single">
-            <DataGrid.Columns>
+            ItemsSource="{Binding Source={StaticResource FinishedTasks}}"
+            Loaded="FinishedDataGrid_OnLoaded"
+            SelectedItem="{Binding Core.Tasks.Selected}">
+            <sf:SfDataGrid.SortColumnDescriptions>
+                <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Ascending" />
+            </sf:SfDataGrid.SortColumnDescriptions>
+            <sf:SfDataGrid.Columns>
 
-                <DataGridCheckBoxColumn
-                    Width="80"
-                    Binding="{Binding IsFinished}"
-                    Header="Done"
-                    IsReadOnly="True" />
+                <sf:GridCheckBoxColumn
+                    ColumnSizer="Auto"
+                    HeaderText="Done"
+                    MappingName="IsFinished" />
+                <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+                <sf:GridDateTimeColumn
+                    AllowSorting="True"
+                    ColumnSizer="Auto"
+                    CustomPattern="yyyy-MM-dd HH:mm"
+                    HeaderText="Due To"
+                    MappingName="DueTo"
+                    Pattern="CustomPattern" />
 
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Title}"
-                    Header="Title" />
-
-                <DataGridTextColumn
-                    Width="130"
-                    Binding="{Binding DueTo, StringFormat=yyyy-MM-dd HH:mm}"
-                    Header="DueTo"
-                    SortDirection="Ascending" />
-
-            </DataGrid.Columns>
-        </DataGrid>
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
 
         <Border
             Grid.Row="2"

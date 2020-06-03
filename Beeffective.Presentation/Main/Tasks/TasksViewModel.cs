@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -143,6 +144,8 @@ namespace Beeffective.Presentation.Main.Tasks
             await repository.Tasks.SaveAsync(Collection.ToList());
 
         public AsyncCommand FinishCommand { get; }
+        public Action UnfinishedTasksRefresh { get; set; }
+        public Action FinishedTasksRefresh { get; set; }
 
         private async Task FinishTaskAsync()
         {
@@ -166,9 +169,7 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             if (e.PropertyName == nameof(TaskModel.DueTo))
             {
-                NotifyPropertyChange(nameof(SelectedCollection));
-                NotifyPropertyChange(nameof(UnfinishedCollection));
-                NotifyPropertyChange(nameof(FinishedCollection));
+                UnfinishedTasksRefresh();
             }
 
             if (e.PropertyName == nameof(TaskModel.IsFinished))
