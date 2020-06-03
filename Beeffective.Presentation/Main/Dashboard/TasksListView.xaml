@@ -106,10 +106,13 @@
             <sf:SfDataGrid.Columns>
 
                 <sf:GridCheckBoxColumn
+                    AllowEditing="True"
                     ColumnSizer="Auto"
                     HeaderText="Done"
                     MappingName="IsFinished" />
+
                 <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+
                 <sf:GridDateTimeColumn
                     AllowSorting="True"
                     ColumnSizer="Auto"

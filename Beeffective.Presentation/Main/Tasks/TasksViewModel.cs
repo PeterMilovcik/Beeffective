@@ -28,6 +28,7 @@ namespace Beeffective.Presentation.Main.Tasks
             SelectAllCommand = new DelegateCommand(obj => Selected = null);
             AddNewCommand = new AsyncCommand(AddNewAsync);
             FinishCommand = new AsyncCommand(FinishTaskAsync);
+            AddDueToCommand = new DelegateCommand(AddDueTo);
         }
 
         public ObservableCollection<TaskModel> Collection { get; }
@@ -144,7 +145,9 @@ namespace Beeffective.Presentation.Main.Tasks
             await repository.Tasks.SaveAsync(Collection.ToList());
 
         public AsyncCommand FinishCommand { get; }
+
         public Action UnfinishedTasksRefresh { get; set; }
+
         public Action FinishedTasksRefresh { get; set; }
 
         private async Task FinishTaskAsync()
@@ -162,7 +165,7 @@ namespace Beeffective.Presentation.Main.Tasks
         }
 
         private void Subscribe(TaskModel model) => model.PropertyChanged += OnTaskPropertyChanged;
-        
+
         private void Unsubscribe(TaskModel model) => model.PropertyChanged -= OnTaskPropertyChanged;
 
         private void OnTaskPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -175,6 +178,17 @@ namespace Beeffective.Presentation.Main.Tasks
             if (e.PropertyName == nameof(TaskModel.IsFinished))
             {
                 UpdateFinishedUnfinishedCollection();
+            }
+        }
+
+        public DelegateCommand AddDueToCommand { get; }
+
+        private void AddDueTo(object obj)
+        {
+            if (Selected == null) return;
+            if (int.TryParse(obj.ToString(), out var days))
+            {
+                Selected.DueTo = Selected.DueTo + TimeSpan.FromDays(days);
             }
         }
     }
