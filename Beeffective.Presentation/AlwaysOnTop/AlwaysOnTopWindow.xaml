@@ -6,11 +6,11 @@
     xmlns:sf="http://schemas.syncfusion.com/wpf"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     Title="AlwaysOnTopWindow"
-    Width="500"
+    Width="400"
     Height="46"
     AllowsTransparency="True"
     Background="Transparent"
-    Left="1200"
+    Left="1300"
     MouseMove="AlwaysOnTopWindow_OnMouseMove"
     ResizeMode="NoResize"
     Top="0"
@@ -59,44 +59,45 @@
 
             </Border>
 
-            <md:PopupBox Grid.Column="0" Padding="0">
-                <md:PopupBox.ToggleContent>
-                    <Border Background="{StaticResource PrimaryHueMidBrush}" CornerRadius="2">
-                        <md:PackIcon>
-                            <md:PackIcon.Style>
-                                <Style TargetType="md:PackIcon">
-                                    <Setter Property="Kind" Value="Play" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Tasks.Selected.Model.IsTimerEnabled}" Value="True">
-                                            <Setter Property="Kind" Value="Stop" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </md:PackIcon.Style>
-                        </md:PackIcon>
-                    </Border>
-                </md:PopupBox.ToggleContent>
-
-                <StackPanel>
-                    <Button
-                        Command="{Binding StartTimerCommand}"
-                        CommandParameter="15"
-                        Content="15 min" />
-                    <Button
-                        Command="{Binding StartTimerCommand}"
-                        CommandParameter="30"
-                        Content="30 min" />
-                    <Button
-                        Command="{Binding StartTimerCommand}"
-                        CommandParameter="60"
-                        Content="60 min" />
-                    <Button
-                        Command="{Binding StartTimerCommand}"
-                        CommandParameter="120"
-                        Content="120 min" />
-                </StackPanel>
-
-            </md:PopupBox>
+            <Button
+                Grid.Column="0"
+                Width="22"
+                Height="22"
+                Padding="0"
+                Command="{Binding TimerCommand}">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem
+                            Command="{Binding SetTimerCommand}"
+                            CommandParameter="15"
+                            Header="15 min" />
+                        <MenuItem
+                            Command="{Binding SetTimerCommand}"
+                            CommandParameter="30"
+                            Header="30 min" />
+                        <MenuItem
+                            Command="{Binding SetTimerCommand}"
+                            CommandParameter="60"
+                            Header="60 min" />
+                        <MenuItem
+                            Command="{Binding SetTimerCommand}"
+                            CommandParameter="120"
+                            Header="120 min" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <md:PackIcon>
+                    <md:PackIcon.Style>
+                        <Style TargetType="md:PackIcon">
+                            <Setter Property="Kind" Value="Play" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsTimerEnabled}" Value="True">
+                                    <Setter Property="Kind" Value="Stop" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </md:PackIcon.Style>
+                </md:PackIcon>
+            </Button>
 
             <Grid
                 Grid.Column="1"
@@ -108,7 +109,7 @@
                 md:ButtonProgressAssist.Opacity="0.25"
                 md:ButtonProgressAssist.Value="-1"
                 TextElement.FontFamily="{StaticResource MaterialDesignFont}"
-                TextElement.FontSize="16"
+                TextElement.FontSize="14"
                 TextElement.Foreground="{StaticResource MaterialDesignBody}">
 
                 <Grid.ColumnDefinitions>
@@ -131,7 +132,7 @@
 
             </Grid>
 
-            <Button
+            <!--<Button
                 Grid.Column="3"
                 Width="23"
                 Height="23"
@@ -141,7 +142,7 @@
                     Width="16"
                     Height="16"
                     Kind="Check" />
-            </Button>
+            </Button>-->
 
         </Grid>
 

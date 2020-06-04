@@ -24,6 +24,8 @@ namespace Beeffective.Presentation.AlwaysOnTop
         private TimeSpan dueToTime;
         private DateTime originalDueDate;
         private TimeSpan repeatIntervalTimeSpan;
+        private TimeSpan defaultTimerInterval;
+        private bool isTimerEnabled;
 
 
         [ImportingConstructor]
@@ -31,8 +33,8 @@ namespace Beeffective.Presentation.AlwaysOnTop
         {
             this.view = view;
             this.view.DataContext = this;
-            TimeTrackerCommand = new DelegateCommand(obj => TimeTrack());
-            StartTimerCommand = new DelegateCommand(StartTimer);
+            TimerCommand = new DelegateCommand(obj => TimeTrack());
+            SetTimerCommand = new DelegateCommand(SetTimer);
             FinishCommand = new DelegateCommand(obj => Finish());
             ShowRepeatQuestionCommand = new DelegateCommand(obj => ShowRepeatQuestion());
             ShowRepeatPickerCommand = new DelegateCommand(obj => ShowRepeatPicker());
@@ -45,9 +47,9 @@ namespace Beeffective.Presentation.AlwaysOnTop
             RepeatIntervals = new List<string> {"day", "week", "month", "year"};
         }
 
-        public DelegateCommand TimeTrackerCommand { get; }
+        public DelegateCommand TimerCommand { get; }
 
-        public DelegateCommand StartTimerCommand { get; }
+        public DelegateCommand SetTimerCommand { get; }
 
         public DelegateCommand ShowRepeatQuestionCommand { get; }
 
@@ -65,6 +67,12 @@ namespace Beeffective.Presentation.AlwaysOnTop
             set => SetProperty(ref isTimePickerVisible, value);
         }
 
+        public TimeSpan DefaultTimerInterval
+        {
+            get => defaultTimerInterval;
+            set => SetProperty(ref defaultTimerInterval, value);
+        }
+
         public TimeSpan RemainingTime
         {
             get => remainingTime;
@@ -80,14 +88,13 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void TimeTrack()
         {
-            //if (Tasks.Selected.Model.IsTimerEnabled)
-            //{
-            //    StopTimer();
-            //}
-            //else
-            //{
-            //    IsTimePickerVisible = true;
-            //}
+            IsTimerEnabled = !IsTimerEnabled;
+        }
+
+        public bool IsTimerEnabled
+        {
+            get => isTimerEnabled;
+            set => SetProperty(ref isTimerEnabled, value).IfTrue(() => timer.Enabled = IsTimerEnabled);
         }
 
         private void StopTimer()
@@ -97,14 +104,12 @@ namespace Beeffective.Presentation.AlwaysOnTop
             //RemainingTime = TimeSpan.Zero;
         }
 
-        private void StartTimer(object obj)
+        private void SetTimer(object obj)
         {
             if (int.TryParse(obj.ToString(), out var minutes))
             {
-                //Tasks.Selected.Model.IsTimerEnabled = true;
-                //IsTimePickerVisible = false;
-                RemainingTime = TimeSpan.FromMinutes(minutes);
-                timer.Start();
+                DefaultTimerInterval = TimeSpan.FromMinutes(minutes);
+                RemainingTime = DefaultTimerInterval;
             }
         }
 
@@ -243,7 +248,11 @@ namespace Beeffective.Presentation.AlwaysOnTop
             DueToTime = originalDueDate.Add(repeatIntervalTimeSpan).TimeOfDay;
         }
 
-        public void Close() => view.Close();
+        public void Close()
+        {
+            Core.Tasks.Selected = null;
+            view.Close();
+        }
 
         public void Hide() => view.Hide();
 
