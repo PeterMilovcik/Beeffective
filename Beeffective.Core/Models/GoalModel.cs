@@ -7,6 +7,7 @@ namespace Beeffective.Core.Models
     {
         private string title;
         private string description;
+        private int importance;
 
         public int Id { get; set; }
 
@@ -20,6 +21,12 @@ namespace Beeffective.Core.Models
         {
             get => description;
             set => SetProperty(ref description, value).IfTrue(NotifyChange);
+        }
+
+        public int Importance
+        {
+            get => importance;
+            set => SetProperty(ref importance, value).IfTrue(NotifyChange);
         }
 
         public bool Equals(GoalModel other)

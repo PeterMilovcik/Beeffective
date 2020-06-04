@@ -12,7 +12,8 @@ namespace Beeffective.Core.Models
             {
                 Id = entity.Id,
                 Title = entity.Title,
-                Description = entity.Description
+                Description = entity.Description,
+                Importance = entity.Importance
             };
         }
 
@@ -23,7 +24,8 @@ namespace Beeffective.Core.Models
             {
                 Id = model.Id,
                 Title = model.Title,
-                Description = model.Description
+                Description = model.Description,
+                Importance = model.Importance
             };
         }
     }
