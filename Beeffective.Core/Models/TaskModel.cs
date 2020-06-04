@@ -125,7 +125,11 @@ namespace Beeffective.Core.Models
                     OnRecordRemoved(recordModel);
                 }
             }
+            NotifyPropertyChange(nameof(TimeSpent));
         }
+
+        public TimeSpan TimeSpent => 
+            Records.Aggregate(TimeSpan.Zero, (current, record) => current + record.Duration);
 
         public EventHandler<RecordEventArgs> RecordAdded;
 

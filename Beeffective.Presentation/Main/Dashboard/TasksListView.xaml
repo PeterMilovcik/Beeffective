@@ -79,7 +79,16 @@
                     ColumnSizer="Auto"
                     HeaderText="Done"
                     MappingName="IsFinished" />
+
                 <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+
+                <sf:GridTimeSpanColumn
+                    AllowSorting="True"
+                    ColumnSizer="Auto"
+                    Format="hh:mm:ss"
+                    HeaderText="Time"
+                    MappingName="TimeSpent" />
+
                 <sf:GridDateTimeColumn
                     AllowSorting="True"
                     ColumnSizer="Auto"
@@ -113,6 +122,13 @@
                     MappingName="IsFinished" />
 
                 <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+
+                <sf:GridTimeSpanColumn
+                    AllowSorting="True"
+                    ColumnSizer="Auto"
+                    Format="hh:mm:ss"
+                    HeaderText="Time"
+                    MappingName="TimeSpent" />
 
                 <sf:GridDateTimeColumn
                     AllowSorting="True"
