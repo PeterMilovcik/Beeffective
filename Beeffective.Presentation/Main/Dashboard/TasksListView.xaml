@@ -125,13 +125,6 @@
             </sf:SfDataGrid.Columns>
         </sf:SfDataGrid>
 
-        <Border
-            Grid.Row="2"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Top"
-            BorderBrush="{StaticResource PrimaryHueMidBrush}"
-            BorderThickness="1" />
-
     </Grid>
 
 </UserControl>

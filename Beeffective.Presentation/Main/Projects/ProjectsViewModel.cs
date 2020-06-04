@@ -56,6 +56,8 @@ namespace Beeffective.Presentation.Main.Projects
         public DelegateCommand SelectAllCommand { get; }
 
         public AsyncCommand AddNewCommand { get; }
+        
+        public Action RefreshView { get; set; }
 
         private async Task AddNew()
         {
