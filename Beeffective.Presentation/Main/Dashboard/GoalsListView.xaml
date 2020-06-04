@@ -19,7 +19,7 @@
 
             <CollectionViewSource x:Key="Goals" Source="{Binding Core.Goals.SelectedCollection}">
                 <CollectionViewSource.SortDescriptions>
-                    <!--<componentModel:SortDescription Direction="Ascending" PropertyName="DueTo" />-->
+                    <componentModel:SortDescription Direction="Descending" PropertyName="Importance" />
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
 
@@ -63,12 +63,16 @@
             ItemsSource="{Binding Source={StaticResource Goals}}"
             Loaded="DataGrid_OnLoaded"
             SelectedItem="{Binding Core.Goals.Selected}">
-            <!--<sf:SfDataGrid.SortColumnDescriptions>
-                <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Ascending" />
-            </sf:SfDataGrid.SortColumnDescriptions>-->
+            <sf:SfDataGrid.SortColumnDescriptions>
+                <sf:SortColumnDescription ColumnName="Importance" SortDirection="Descending" />
+            </sf:SfDataGrid.SortColumnDescriptions>
             <sf:SfDataGrid.Columns>
 
                 <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+                <sf:GridNumericColumn
+                    ColumnSizer="Auto"
+                    MappingName="Importance"
+                    NumberDecimalDigits="0" />
 
             </sf:SfDataGrid.Columns>
         </sf:SfDataGrid>

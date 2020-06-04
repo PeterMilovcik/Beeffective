@@ -13,7 +13,7 @@ namespace Beeffective.Presentation.Main.Dashboard
         {
             if (DataContext is DashboardViewModel viewModel)
             {
-                viewModel.Core.Goals.Refresh = DataGrid.View.Refresh;
+                viewModel.Core.Goals.RefreshView = DataGrid.View.Refresh;
             }
         }
     }

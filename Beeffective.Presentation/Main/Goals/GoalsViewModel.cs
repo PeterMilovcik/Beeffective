@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
-using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Services.Repository;
 
 namespace Beeffective.Presentation.Main.Goals
@@ -58,23 +58,42 @@ namespace Beeffective.Presentation.Main.Goals
 
         public AsyncCommand AddNewCommand { get; }
         
-        public Action Refresh { get; set; }
+        public Action RefreshView { get; set; }
 
         private async Task AddNew()
         {
-            var added = await repository.Goals.AddAsync(new GoalModel());
-            Collection.Add(added);
+            var model = await repository.Goals.AddAsync(new GoalModel());
+            Add(model);
             SelectedCollection = Collection;
-            Selected = added;
+            Selected = model;
         }
 
         public async Task LoadAsync()
         {
+            Collection.ToList().ForEach(Unsubscribe);
             Collection.Clear();
             var goals = (await repository.Goals.LoadAsync())
                 .OrderBy(gm => gm.Title).ToList();
-            goals.ForEach(goalModel => Collection.Add(goalModel));
+            goals.ForEach(Add);
             SelectedCollection = Collection;
+        }
+
+        private void Add(GoalModel goalModel)
+        {
+            Subscribe(goalModel);
+            Collection.Add(goalModel);
+        }
+
+        private void Subscribe(GoalModel model) => model.PropertyChanged += OnGoalModelPropertyChanged;
+        
+        private void Unsubscribe(GoalModel model) => model.PropertyChanged -= OnGoalModelPropertyChanged;
+
+        private void OnGoalModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(GoalModel.Importance))
+            {
+                RefreshView();
+            }
         }
 
         public async Task SaveAsync() => 

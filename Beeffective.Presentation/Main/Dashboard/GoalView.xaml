@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -45,6 +46,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -64,10 +67,38 @@
                 Grid.Row="2"
                 Margin="16,8,16,0"
                 Style="{StaticResource BeeffectiveWatermarkTextBlock}"
+                Text="Importance" />
+
+            <syncfusion:UpDown
+                Grid.Row="3"
+                Height="30"
+                Margin="16,0"
+                ApplyZeroColor="True"
+                Background="{StaticResource MaterialDesignCardBackground}"
+                BorderBrush="{StaticResource MaterialDesignCardBackground}"
+                FocusedBorderBrush="Transparent"
+                FontSize="{StaticResource FontSize}"
+                Foreground="{StaticResource MaterialDesignBody}"
+                MinValue="0"
+                NumberDecimalDigits="0"
+                ZeroColor="{StaticResource MaterialDesignBody}"
+                Value="{Binding Core.Goals.Selected.Importance}" />
+
+            <Border
+                Grid.Row="3"
+                Margin="16,0"
+                VerticalAlignment="Bottom"
+                BorderBrush="{StaticResource MaterialDesignBodyLight}"
+                BorderThickness="0,1,0,0" />
+
+            <TextBlock
+                Grid.Row="4"
+                Margin="16,8,16,0"
+                Style="{StaticResource BeeffectiveWatermarkTextBlock}"
                 Text="Description" />
 
             <TextBox
-                Grid.Row="3"
+                Grid.Row="5"
                 Margin="16,0,16,16"
                 Style="{StaticResource BeeffectiveTextBox}"
                 Text="{Binding Core.Goals.Selected.Description}" />
