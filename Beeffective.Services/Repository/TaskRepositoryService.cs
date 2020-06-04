@@ -101,6 +101,8 @@ namespace Beeffective.Services.Repository
             taskModel.Changed += OnChanged;
             taskModel.LabelAdded += OnLabelAdded;
             taskModel.LabelRemoved += OnLabelRemoved;
+            taskModel.RecordAdded += OnRecordAdded;
+            taskModel.RecordRemoved += OnRecordRemoved;
         }
 
         private void Unsubscribe(TaskModel taskModel)
@@ -108,6 +110,8 @@ namespace Beeffective.Services.Repository
             taskModel.Changed -= OnChanged;
             taskModel.LabelAdded -= OnLabelAdded;
             taskModel.LabelRemoved -= OnLabelRemoved;
+            taskModel.RecordAdded -= OnRecordAdded;
+            taskModel.RecordRemoved -= OnRecordRemoved;
         }
 
         private async void OnChanged(object sender, EventArgs e)
@@ -138,5 +142,11 @@ namespace Beeffective.Services.Repository
                 await repository.TaskLabels.RemoveAsync(taskLabelEntity);
             }
         }
+
+        private async void OnRecordAdded(object sender, RecordEventArgs e) => 
+            await repository.Records.AddAsync(e.RecordModel.ToEntity());
+
+        private async void OnRecordRemoved(object sender, RecordEventArgs e) => 
+            await repository.Records.RemoveAsync(e.RecordModel.ToEntity());
     }
 }

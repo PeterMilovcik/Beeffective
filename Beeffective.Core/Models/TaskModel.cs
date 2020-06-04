@@ -17,8 +17,9 @@ namespace Beeffective.Core.Models
         public TaskModel()
         {
             Records = new ObservableCollection<RecordModel>();
+            Records.CollectionChanged += OnRecordsCollectionChanged;
             Labels = new ObservableCollection<LabelModel>();
-            Labels.CollectionChanged += LabelsCollectionChanged;
+            Labels.CollectionChanged += OnLabelsCollectionChanged;
         }
 
         public int Id { get; set; }
@@ -78,7 +79,7 @@ namespace Beeffective.Core.Models
 
         public static bool operator !=(TaskModel left, TaskModel right) => !Equals(left, right);
 
-        private void LabelsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnLabelsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -106,6 +107,35 @@ namespace Beeffective.Core.Models
 
         private void OnLabelRemoved(LabelModel labelModel) =>
             LabelRemoved?.Invoke(this, new LabelEventArgs(labelModel));
+
+        private void OnRecordsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (var recordModel in e.NewItems.OfType<RecordModel>())
+                {
+                    OnRecordAdded(recordModel);
+                }
+            }
+
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (var recordModel in e.OldItems.OfType<RecordModel>())
+                {
+                    OnRecordRemoved(recordModel);
+                }
+            }
+        }
+
+        public EventHandler<RecordEventArgs> RecordAdded;
+
+        private void OnRecordAdded(RecordModel recordModel) =>
+            RecordAdded?.Invoke(this, new RecordEventArgs(recordModel));
+
+        public EventHandler<RecordEventArgs> RecordRemoved;
+
+        private void OnRecordRemoved(RecordModel recordModel) =>
+            RecordRemoved?.Invoke(this, new RecordEventArgs(recordModel));
     }
 
     public class LabelEventArgs : EventArgs
@@ -116,5 +146,15 @@ namespace Beeffective.Core.Models
         }
 
         public LabelModel LabelModel { get; }
+    }
+
+    public class RecordEventArgs : EventArgs
+    {
+        public RecordEventArgs(RecordModel recordModel)
+        {
+            RecordModel = recordModel ?? throw new ArgumentNullException(nameof(recordModel));
+        }
+
+        public RecordModel RecordModel { get; }
     }
 }

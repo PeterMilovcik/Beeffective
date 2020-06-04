@@ -5,6 +5,7 @@
     xmlns:c="clr-namespace:Beeffective.Presentation.Controls"
     xmlns:calendar="clr-namespace:Beeffective.Presentation.Main.Calendar"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
     xmlns:dashboard="clr-namespace:Beeffective.Presentation.Main.Dashboard"
     xmlns:goals="clr-namespace:Beeffective.Presentation.Main.Goals"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -15,8 +16,7 @@
     Width="800"
     Height="450"
     UseLayoutRounding="True"
-    WindowState="Maximized"
-    mc:Ignorable="d">
+    WindowState="Maximized">
 
     <Window.InputBindings>
         <KeyBinding
