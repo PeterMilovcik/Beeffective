@@ -7,7 +7,6 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sf="http://schemas.syncfusion.com/wpf"
-    xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -66,6 +65,7 @@
             Grid.Row="1"
             AutoGenerateColumns="False"
             Foreground="{StaticResource MaterialDesignBody}"
+            HeaderStyle="{StaticResource HeaderStyle}"
             IsReadOnly="True"
             ItemsSource="{Binding Source={StaticResource UnfinishedTasks}}"
             Loaded="UnfinishedDataGrid_OnLoaded"
@@ -96,6 +96,7 @@
             Grid.Row="2"
             AutoGenerateColumns="False"
             Foreground="{StaticResource MaterialDesignBody}"
+            HeaderStyle="{StaticResource HeaderStyle}"
             IsReadOnly="True"
             ItemsSource="{Binding Source={StaticResource FinishedTasks}}"
             Loaded="FinishedDataGrid_OnLoaded"

@@ -17,6 +17,11 @@
     <system:Double x:Key="HeaderFontSize">36</system:Double>
     <system:Double x:Key="FontSize">16</system:Double>
 
+    <Style x:Key="HeaderStyle" TargetType="syncfusion:GridHeaderCellControl">
+        <Setter Property="Foreground" Value="{StaticResource PrimaryHueMidForegroundBrush}" />
+        <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />
+    </Style>
+
     <Style
         x:Key="WidgetHeaderTextBlock"
         BasedOn="{StaticResource MaterialDesignTextBlock}"

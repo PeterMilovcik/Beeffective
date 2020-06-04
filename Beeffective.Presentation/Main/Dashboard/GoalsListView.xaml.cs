@@ -1,26 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Beeffective.Presentation.Main.Dashboard
 {
-    /// <summary>
-    /// Interaction logic for GoalsListView.xaml
-    /// </summary>
-    public partial class GoalsListView : UserControl
+    public partial class GoalsListView
     {
         public GoalsListView()
         {
             InitializeComponent();
+        }
+
+        private void DataGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is DashboardViewModel viewModel)
+            {
+                viewModel.Core.Goals.Refresh = DataGrid.View.Refresh;
+            }
         }
     }
 }

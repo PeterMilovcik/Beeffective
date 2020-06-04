@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,6 +57,8 @@ namespace Beeffective.Presentation.Main.Goals
         public DelegateCommand SelectAllCommand { get; }
 
         public AsyncCommand AddNewCommand { get; }
+        
+        public Action Refresh { get; set; }
 
         private async Task AddNew()
         {

@@ -127,7 +127,6 @@
                     Margin="8,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Stretch"
-                    Background="{StaticResource MaterialDesignPaper}"
                     Text="{Binding RemainingTime, Converter={StaticResource TimeSpanConverter}}" />
 
             </Grid>
