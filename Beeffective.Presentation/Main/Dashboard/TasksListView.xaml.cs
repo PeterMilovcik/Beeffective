@@ -13,7 +13,7 @@ namespace Beeffective.Presentation.Main.Dashboard
         {
             if (DataContext is DashboardViewModel viewModel)
             {
-                viewModel.Core.Tasks.UnfinishedTasksRefresh = UnfinishedDataGrid.View.Refresh;
+                viewModel.Core.Tasks.UnfinishedTasksRefreshView = UnfinishedDataGrid.View.Refresh;
             }
         }
 
@@ -21,7 +21,7 @@ namespace Beeffective.Presentation.Main.Dashboard
         {
             if (DataContext is DashboardViewModel viewModel)
             {
-                viewModel.Core.Tasks.FinishedTasksRefresh = FinishedDataGrid.View.Refresh;
+                viewModel.Core.Tasks.FinishedTasksRefreshView = FinishedDataGrid.View.Refresh;
             }
         }
     }

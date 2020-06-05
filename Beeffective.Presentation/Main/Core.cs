@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using System.Threading.Tasks;
+using System.Windows;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Main.Dialogs;
 using Beeffective.Presentation.Main.Goals;
@@ -39,6 +41,10 @@ namespace Beeffective.Presentation.Main
                 await Projects.LoadAsync();
                 await Labels.LoadAsync();
                 await Tasks.LoadAsync();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
             }
             finally
             {

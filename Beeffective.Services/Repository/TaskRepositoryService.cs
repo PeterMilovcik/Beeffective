@@ -39,7 +39,7 @@ namespace Beeffective.Services.Repository
                     ? goalEntities.Find(e => e.Id == projectEntity.GoalId)
                     : null;
                 var goalModel = goalEntity.ToModel();
-                var projectModel = projectEntity.ToModel(goalModel);
+                var projectModel = projectEntity?.ToModel(goalModel);
                 var taskModel = taskEntity.ToModel(projectModel);
 
                 taskLabelEntities

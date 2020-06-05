@@ -25,7 +25,7 @@
 
             <CollectionViewSource x:Key="FinishedTasks" Source="{Binding Core.Tasks.FinishedCollection}">
                 <CollectionViewSource.SortDescriptions>
-                    <cm:SortDescription Direction="Ascending" PropertyName="DueTo" />
+                    <cm:SortDescription Direction="Descending" PropertyName="DueTo" />
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
 
@@ -112,7 +112,7 @@
             Loaded="FinishedDataGrid_OnLoaded"
             SelectedItem="{Binding Core.Tasks.Selected}">
             <sf:SfDataGrid.SortColumnDescriptions>
-                <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Ascending" />
+                <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Descending" />
             </sf:SfDataGrid.SortColumnDescriptions>
             <sf:SfDataGrid.Columns>
 

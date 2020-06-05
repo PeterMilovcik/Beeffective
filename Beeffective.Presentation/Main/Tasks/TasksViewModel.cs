@@ -146,9 +146,9 @@ namespace Beeffective.Presentation.Main.Tasks
 
         public AsyncCommand FinishCommand { get; }
 
-        public Action UnfinishedTasksRefresh { get; set; }
+        public Action UnfinishedTasksRefreshView { get; set; }
 
-        public Action FinishedTasksRefresh { get; set; }
+        public Action FinishedTasksRefreshView { get; set; }
 
         private async Task FinishTaskAsync()
         {
@@ -172,7 +172,7 @@ namespace Beeffective.Presentation.Main.Tasks
         {
             if (e.PropertyName == nameof(TaskModel.DueTo))
             {
-                UnfinishedTasksRefresh();
+                UnfinishedTasksRefreshView();
             }
 
             if (e.PropertyName == nameof(TaskModel.IsFinished))

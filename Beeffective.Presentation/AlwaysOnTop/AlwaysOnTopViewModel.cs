@@ -169,6 +169,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
                 {
                     Show();
                 }
+                RemainingTime = DefaultTimerInterval;
             }
         }
     }
