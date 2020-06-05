@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -8,27 +7,26 @@ using Beeffective.Data.Repositories;
 
 namespace Beeffective.Services.Repository
 {
-    [Export(typeof(IRepositoryService<LabelModel>))]
     public class LabelRepositoryService : IRepositoryService<LabelModel>
     {
         private readonly IRepository repository;
-        private readonly List<LabelModel> list;
 
-        [ImportingConstructor]
         public LabelRepositoryService(IRepository repository)
         {
             this.repository = repository;
-            list = new List<LabelModel>();
+            List = new List<LabelModel>();
         }
+
+        public List<LabelModel> List { get; }
 
         public async Task<List<LabelModel>> LoadAsync()
         {
             var entities = await repository.Labels.LoadAsync();
             var labelModels = entities.Select(e => e.ToModel()).ToList();
-            list.ForEach(Unsubscribe);
-            list.Clear();
+            List.ForEach(Unsubscribe);
+            List.Clear();
             labelModels.ForEach(Subscribe);
-            list.AddRange(labelModels);
+            List.AddRange(labelModels);
             return labelModels;
         }
 
@@ -36,7 +34,7 @@ namespace Beeffective.Services.Repository
         {
             var labelModel = (await repository.Labels.AddAsync(newLabelModel.ToEntity())).ToModel();
             Subscribe(labelModel);
-            list.Add(labelModel);
+            List.Add(labelModel);
             return labelModel;
         }
 
@@ -46,7 +44,7 @@ namespace Beeffective.Services.Repository
         public async Task RemoveAsync(LabelModel labelModel)
         {
             Unsubscribe(labelModel);
-            list.Remove(labelModel);
+            List.Remove(labelModel);
             await repository.Labels.RemoveAsync(labelModel.ToEntity());
         }
 

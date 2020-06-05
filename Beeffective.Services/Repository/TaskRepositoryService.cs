@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -10,52 +8,50 @@ using Beeffective.Data.Repositories;
 
 namespace Beeffective.Services.Repository
 {
-    [Export(typeof(IRepositoryService<TaskModel>))]
     public class TaskRepositoryService : IRepositoryService<TaskModel>
     {
         private readonly IRepository repository;
-        private readonly List<TaskModel> list;
+        private readonly IRepositoryService service;
 
-        [ImportingConstructor]
-        public TaskRepositoryService(IRepository repository)
+        public TaskRepositoryService(IRepository repository, IRepositoryService service)
         {
             this.repository = repository;
-            list = new List<TaskModel>();
+            this.service = service;
+            List = new List<TaskModel>();
         }
+
+        public List<TaskModel> List { get; }
 
         public async Task<List<TaskModel>> LoadAsync()
         {
             var taskModels = new List<TaskModel>();
             var taskEntities = await repository.Tasks.LoadAsync();
-            var labelEntities = await repository.Labels.LoadAsync();
-            var labelModels = labelEntities.Select(e => e.ToModel());
             var taskLabelEntities = await repository.TaskLabels.LoadAsync();
-            var goalEntities = await repository.Goals.LoadAsync();
-            var projectEntities = await repository.Projects.LoadAsync();
+            var recordEntities = await repository.Records.LoadAsync();
             foreach (var taskEntity in taskEntities)
             {
-                var projectEntity = projectEntities.Find(e => e.Id == taskEntity.ProjectId);
-                var goalEntity = projectEntity != null 
-                    ? goalEntities.Find(e => e.Id == projectEntity.GoalId)
-                    : null;
-                var goalModel = goalEntity.ToModel();
-                var projectModel = projectEntity?.ToModel(goalModel);
+                var projectModel = service.Projects.List.Find(p => p.Id == taskEntity.ProjectId);
                 var taskModel = taskEntity.ToModel(projectModel);
 
                 taskLabelEntities
                     .Where(e => e.TaskId == taskEntity.Id)
                     .Select(e => e.LabelId)
-                    .Select(labelId => labelModels.Single(lm => lm.Id == labelId))
+                    .Select(labelId => service.Labels.List.Single(lm => lm.Id == labelId))
                     .ToList()
                     .ForEach(label => taskModel.Labels.Add(label));
+
+                recordEntities.Where(e => e.TaskId == taskEntity.Id)
+                    .Select(e => e.ToModel())
+                    .ToList()
+                    .ForEach(record => taskModel.Records.Add(record));
 
                 taskModels.Add(taskModel);
             }
 
-            list.ForEach(Unsubscribe);
-            list.Clear();
+            List.ForEach(Unsubscribe);
+            List.Clear();
             taskModels.ForEach(Subscribe);
-            list.AddRange(taskModels);
+            List.AddRange(taskModels);
 
             return taskModels;
         }
@@ -78,7 +74,7 @@ namespace Beeffective.Services.Repository
             newTaskModel.Records.ToList().ForEach(record => savedTaskModel.Records.Add(record));
 
             Subscribe(savedTaskModel);
-            list.Add(savedTaskModel);
+            List.Add(savedTaskModel);
 
             return savedTaskModel;
         }
@@ -89,7 +85,7 @@ namespace Beeffective.Services.Repository
         public async Task RemoveAsync(TaskModel taskModel)
         {
             Unsubscribe(taskModel);
-            list.Remove(taskModel);
+            List.Remove(taskModel);
             await repository.Tasks.RemoveAsync(taskModel.ToEntity());
         }
 

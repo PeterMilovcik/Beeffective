@@ -2,10 +2,10 @@
     x:Class="Beeffective.Presentation.Main.Dashboard.LabelsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Syncfusion="http://schemas.syncfusion.com/wpf"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -52,7 +52,7 @@
 
         </StackPanel>
 
-        <Syncfusion:SfDataGrid
+        <sf:SfDataGrid
             x:Name="DataGrid"
             Grid.Row="1"
             AutoGenerateColumns="False"
@@ -65,12 +65,20 @@
             <!--<sf:SfDataGrid.SortColumnDescriptions>
                 <sf:SortColumnDescription ColumnName="DueTo" SortDirection="Ascending" />
             </sf:SfDataGrid.SortColumnDescriptions>-->
-            <Syncfusion:SfDataGrid.Columns>
+            <sf:SfDataGrid.Columns>
 
-                <Syncfusion:GridTextColumn ColumnSizer="Star" MappingName="Title" />
+                <sf:GridTextColumn ColumnSizer="Star" MappingName="Title" />
 
-            </Syncfusion:SfDataGrid.Columns>
-        </Syncfusion:SfDataGrid>
+                <sf:GridTimeSpanColumn
+                    AllowSorting="True"
+                    ColumnSizer="Auto"
+                    Format="hh:mm:ss"
+                    HeaderText="Time"
+                    MappingName="TimeSpent"
+                    TextAlignment="Right" />
+
+            </sf:SfDataGrid.Columns>
+        </sf:SfDataGrid>
 
     </Grid>
 

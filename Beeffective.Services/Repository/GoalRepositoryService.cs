@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -8,27 +7,26 @@ using Beeffective.Data.Repositories;
 
 namespace Beeffective.Services.Repository
 {
-    [Export(typeof(IRepositoryService<GoalModel>))]
     public class GoalRepositoryService : IRepositoryService<GoalModel>
     {
         private readonly IRepository repository;
-        private readonly List<GoalModel> list;
 
-        [ImportingConstructor]
         public GoalRepositoryService(IRepository repository)
         {
             this.repository = repository;
-            list = new List<GoalModel>();
+            List = new List<GoalModel>();
         }
+
+        public List<GoalModel> List { get; }
 
         public async Task<List<GoalModel>> LoadAsync()
         {
             var entities = await repository.Goals.LoadAsync();
             var goalModels = entities.Select(e => e.ToModel()).ToList();
-            list.ForEach(Unsubscribe);
-            list.Clear();
+            List.ForEach(Unsubscribe);
+            List.Clear();
             goalModels.ForEach(Subscribe);
-            list.AddRange(goalModels);
+            List.AddRange(goalModels);
             return goalModels;
         }
 
@@ -36,7 +34,7 @@ namespace Beeffective.Services.Repository
         {
             var goalModel = (await repository.Goals.AddAsync(newGoalModel.ToEntity())).ToModel();
             Subscribe(goalModel);
-            list.Add(goalModel);
+            List.Add(goalModel);
             return goalModel;
         }
 
@@ -46,7 +44,7 @@ namespace Beeffective.Services.Repository
         public async Task RemoveAsync(GoalModel goalModel)
         {
             Unsubscribe(goalModel);
-            list.Remove(goalModel);
+            List.Remove(goalModel);
             await repository.Goals.RemoveAsync(goalModel.ToEntity());
         }
 

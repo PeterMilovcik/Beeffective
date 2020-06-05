@@ -58,27 +58,6 @@ namespace Beeffective.Core.Models
             set => SetProperty(ref isFinished, value).IfTrue(NotifyChange);
         }
 
-        public bool Equals(TaskModel other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Id == other.Id;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((TaskModel) obj);
-        }
-
-        public override int GetHashCode() => Id;
-
-        public static bool operator ==(TaskModel left, TaskModel right) => Equals(left, right);
-
-        public static bool operator !=(TaskModel left, TaskModel right) => !Equals(left, right);
-
         private void OnLabelsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -114,6 +93,8 @@ namespace Beeffective.Core.Models
             {
                 foreach (var recordModel in e.NewItems.OfType<RecordModel>())
                 {
+                    Project?.Records.Add(recordModel);
+                    Labels.ToList().ForEach(label => label.Records.Add(recordModel));
                     OnRecordAdded(recordModel);
                 }
             }
@@ -122,6 +103,8 @@ namespace Beeffective.Core.Models
             {
                 foreach (var recordModel in e.OldItems.OfType<RecordModel>())
                 {
+                    Project?.Records.Remove(recordModel);
+                    Labels.ToList().ForEach(label => label.Records.Remove(recordModel));
                     OnRecordRemoved(recordModel);
                 }
             }
@@ -140,6 +123,27 @@ namespace Beeffective.Core.Models
 
         private void OnRecordRemoved(RecordModel recordModel) =>
             RecordRemoved?.Invoke(this, new RecordEventArgs(recordModel));
+
+        public bool Equals(TaskModel other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TaskModel)obj);
+        }
+
+        public override int GetHashCode() => Id;
+
+        public static bool operator ==(TaskModel left, TaskModel right) => Equals(left, right);
+
+        public static bool operator !=(TaskModel left, TaskModel right) => !Equals(left, right);
     }
 
     public class LabelEventArgs : EventArgs

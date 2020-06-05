@@ -6,6 +6,7 @@ namespace Beeffective.Services.Repository
 {
     public interface IRepositoryService<T>
     {
+        List<T> List { get; }
         Task<List<T>> LoadAsync();
         Task<T> AddAsync(T newItem);
         Task UpdateAsync(T item);

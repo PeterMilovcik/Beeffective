@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using Beeffective.Core.Extensions;
 
 namespace Beeffective.Core.Models
@@ -7,6 +10,12 @@ namespace Beeffective.Core.Models
     {
         private string title;
         private string description;
+
+        public LabelModel()
+        {
+            Records = new ObservableCollection<RecordModel>();
+            Records.CollectionChanged += OnRecordsCollectionChanged;
+        }
 
         public int Id { get; set; }
 
@@ -21,6 +30,14 @@ namespace Beeffective.Core.Models
             get => description;
             set => SetProperty(ref description, value).IfTrue(NotifyChange);
         }
+
+        public TimeSpan TimeSpent =>
+            Records.Aggregate(TimeSpan.Zero, (current, record) => current + record.Duration);
+
+        public ObservableCollection<RecordModel> Records { get; }
+
+        private void OnRecordsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) =>
+            NotifyPropertyChange(nameof(TimeSpent));
 
         public bool Equals(LabelModel other)
         {

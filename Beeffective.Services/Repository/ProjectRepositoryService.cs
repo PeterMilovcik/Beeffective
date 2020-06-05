@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Models;
@@ -8,18 +7,19 @@ using Beeffective.Data.Repositories;
 
 namespace Beeffective.Services.Repository
 {
-    [Export(typeof(IRepositoryService<ProjectModel>))]
     public class ProjectRepositoryService : IRepositoryService<ProjectModel>
     {
         private readonly IRepository repository;
-        private readonly List<ProjectModel> list;
+        private readonly IRepositoryService service;
 
-        [ImportingConstructor]
-        public ProjectRepositoryService(IRepository repository)
+        public ProjectRepositoryService(IRepository repository, IRepositoryService service)
         {
             this.repository = repository;
-            list = new List<ProjectModel>();
+            this.service = service;
+            List = new List<ProjectModel>();
         }
+
+        public List<ProjectModel> List { get; }
 
         public async Task<List<ProjectModel>> LoadAsync()
         {
@@ -27,15 +27,14 @@ namespace Beeffective.Services.Repository
             var entities = await repository.Projects.LoadAsync();
             foreach (var projectEntity in entities)
             {
-                var goalEntity = await repository.Goals.GetById(projectEntity.GoalId);
-                var goalModel = goalEntity.ToModel();
+                var goalModel = service.Goals.List.Find(g => g.Id == projectEntity.GoalId);
                 var projectModel = projectEntity.ToModel(goalModel);
                 projectModels.Add(projectModel);
             }
-            list.ForEach(Unsubscribe);
-            list.Clear();
+            List.ForEach(Unsubscribe);
+            List.Clear();
             projectModels.ForEach(Subscribe);
-            list.AddRange(projectModels);
+            List.AddRange(projectModels);
             return projectModels;
         }
 
@@ -43,7 +42,7 @@ namespace Beeffective.Services.Repository
         {
             var projectModel = (await repository.Projects.AddAsync(newProjectModel.ToEntity())).ToModel(newProjectModel.Goal);
             Subscribe(projectModel);
-            list.Add(projectModel);
+            List.Add(projectModel);
             return projectModel;
         }
 
@@ -53,7 +52,7 @@ namespace Beeffective.Services.Repository
         public async Task RemoveAsync(ProjectModel projectModel)
         {
             Unsubscribe(projectModel);
-            list.Remove(projectModel);
+            List.Remove(projectModel);
             await repository.Projects.RemoveAsync(projectModel.ToEntity());
         }
 

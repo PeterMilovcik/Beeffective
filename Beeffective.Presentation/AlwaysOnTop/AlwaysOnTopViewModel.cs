@@ -7,8 +7,6 @@ using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Extensions;
 using Beeffective.Presentation.Main.Tasks;
-using Beeffective.Services.Repository;
-using Syncfusion.Windows.Shared;
 using DelegateCommand = Beeffective.Presentation.Common.DelegateCommand;
 
 namespace Beeffective.Presentation.AlwaysOnTop
@@ -17,7 +15,6 @@ namespace Beeffective.Presentation.AlwaysOnTop
     public class AlwaysOnTopViewModel : CoreViewModel
     {
         private readonly IAlwaysOnTopWindow view;
-        private readonly IRepositoryService repository;
         private TimeSpan remainingTime;
         private readonly Timer timer;
         private bool isTimerElapsed;
@@ -29,9 +26,8 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
 
         [ImportingConstructor]
-        public AlwaysOnTopViewModel(Main.Core core, IAlwaysOnTopWindow view, IRepositoryService repository) : base(core)
+        public AlwaysOnTopViewModel(Main.Core core, IAlwaysOnTopWindow view) : base(core)
         {
-            this.repository = repository;
             this.view = view;
             this.view.DataContext = this;
             TimerCommand = new DelegateCommand(obj => TimeTrack());
@@ -93,6 +89,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void StartTimer()
         {
+            if (timer.Enabled) return;
             if (Core.Tasks.Selected == null) return;
             timer.Start();
             record = new RecordModel();
@@ -102,6 +99,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
 
         private void StopTimer()
         {
+            if (!timer.Enabled) return;
             timer.Stop();
             if (Core.Tasks.Selected == null) return;
             if (record == null) return;
@@ -152,7 +150,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
             if (Core.Tasks.Selected == null) return;
             if (Core.Tasks.Selected.DueTo == null) return;
             var startsInTimeSpan = Core.Tasks.Selected.DueTo - DateTime.Now;
-            StartsIn = startsInTimeSpan > TimeSpan.Zero 
+            StartsIn = startsInTimeSpan > TimeSpan.Zero && !timer.Enabled
                 ? $"starts in {startsInTimeSpan.Value.ToFormattedString()}" 
                 : string.Empty;
         }
