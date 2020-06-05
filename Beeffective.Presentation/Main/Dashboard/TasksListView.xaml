@@ -87,7 +87,8 @@
                     ColumnSizer="Auto"
                     Format="hh:mm:ss"
                     HeaderText="Time"
-                    MappingName="TimeSpent" />
+                    MappingName="TimeSpent"
+                    TextAlignment="Right" />
 
                 <sf:GridDateTimeColumn
                     AllowSorting="True"
@@ -128,7 +129,8 @@
                     ColumnSizer="Auto"
                     Format="hh:mm:ss"
                     HeaderText="Time"
-                    MappingName="TimeSpent" />
+                    MappingName="TimeSpent"
+                    TextAlignment="Right" />
 
                 <sf:GridDateTimeColumn
                     AllowSorting="True"

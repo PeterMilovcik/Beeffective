@@ -23,8 +23,6 @@ namespace Beeffective.Presentation.Main
         public MainViewModel(Core core, IMainView view) : base(core)
         {
             this.view = view;
-            this.view.Activated += OnViewActivated;
-            this.view.Deactivated += OnViewDeactivated;
             view.DataContext = this;
             DashboardCommand = new DelegateCommand(async o => await ChangeContentAsync(Dashboard));
             CalendarCommand = new DelegateCommand(async o => await ChangeContentAsync(Calendar));
@@ -84,10 +82,6 @@ namespace Beeffective.Presentation.Main
         }
 
         private async Task LoadAsync() => await Core.LoadAsync();
-
-        private void OnViewActivated(object sender, EventArgs e) => AlwaysOnTop.Hide();
-
-        private void OnViewDeactivated(object sender, EventArgs e) => AlwaysOnTop.Show();
 
         public void Close() => AlwaysOnTop.Close();
     }

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Timers;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
 using Beeffective.Presentation.Extensions;
+using Beeffective.Presentation.Main.Tasks;
 using Beeffective.Services.Repository;
+using Syncfusion.Windows.Shared;
+using DelegateCommand = Beeffective.Presentation.Common.DelegateCommand;
 
 namespace Beeffective.Presentation.AlwaysOnTop
 {
@@ -39,6 +43,7 @@ namespace Beeffective.Presentation.AlwaysOnTop
             untilDueToTimer.Interval = 1000;
             untilDueToTimer.Elapsed += OnUntilDueToTimerElapsed;
             RemainingTime = TimeSpan.FromMinutes(30);
+            Core.Tasks.PropertyChanged += OnTasksPropertyChanged;
         }
 
         public DelegateCommand TimerCommand { get; }
@@ -150,6 +155,21 @@ namespace Beeffective.Presentation.AlwaysOnTop
             StartsIn = startsInTimeSpan > TimeSpan.Zero 
                 ? $"starts in {startsInTimeSpan.Value.ToFormattedString()}" 
                 : string.Empty;
+        }
+
+        private void OnTasksPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(TasksViewModel.Selected))
+            {
+                if (Core.Tasks.Selected == null)
+                {
+                    Hide();
+                }
+                else
+                {
+                    Show();
+                }
+            }
         }
     }
 }
