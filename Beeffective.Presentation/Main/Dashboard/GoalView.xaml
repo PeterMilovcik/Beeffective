@@ -35,9 +35,9 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
 
-            <Button Style="{StaticResource WidgetHeaderButton}">
+            <!--<Button Command="{Binding Core.Goals.RemoveCommand}" Style="{StaticResource WidgetHeaderButton}">
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
-            </Button>
+            </Button>-->
 
         </StackPanel>
 

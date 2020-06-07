@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Dashboard;
 using Beeffective.Services.Repository;
+using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.Projects
 {
@@ -22,7 +25,9 @@ namespace Beeffective.Presentation.Main.Projects
             Collection = new ObservableCollection<ProjectModel>();
             Collection.CollectionChanged += OnCollectionChanged;
             SelectAllCommand = new DelegateCommand((obj) => Selected = null);
-            AddNewCommand = new AsyncCommand(AddNew);
+            AddNewCommand = new AsyncCommand(AddNewAsync);
+            EditCommand = new AsyncCommand(EditAsync);
+            RemoveCommand = new AsyncCommand(RemoveAsync);
         }
 
         public ObservableCollection<ProjectModel> Collection { get; }
@@ -56,16 +61,67 @@ namespace Beeffective.Presentation.Main.Projects
         public DelegateCommand SelectAllCommand { get; }
 
         public AsyncCommand AddNewCommand { get; }
-        
-        public Action RefreshView { get; set; }
 
-        private async Task AddNew()
+        private async Task AddNewAsync()
         {
-            var added = await repository.Projects.AddAsync(new ProjectModel());
-            Collection.Add(added);
+            var model = await repository.Projects.AddAsync(new ProjectModel());
+            Add(model);
             SelectedCollection = Collection;
-            Selected = added;
+            Selected = model;
+            await DialogHost.Show(
+                new ProjectView
+                {
+                    Width = 400,
+                    Height = 300,
+                    DataContext = this
+                });
         }
+
+        public AsyncCommand EditCommand { get; }
+
+        private async Task EditAsync()
+        {
+            if (Selected == null) return;
+            await DialogHost.Show(
+                new ProjectView
+                {
+                    Width = 400,
+                    Height = 300,
+                    DataContext = this
+                });
+        }
+
+        public AsyncCommand RemoveCommand { get; }
+
+        private async Task RemoveAsync()
+        {
+            if (Selected == null) return;
+            Unsubscribe(Selected);
+            await repository.Projects.RemoveAsync(Selected);
+            Collection.Remove(Selected);
+            SelectedCollection = Collection;
+            Selected = null;
+        }
+
+        private void Add(ProjectModel projectModel)
+        {
+            Subscribe(projectModel);
+            Collection.Add(projectModel);
+        }
+
+        private void Subscribe(ProjectModel model) => model.PropertyChanged += OnModelPropertyChanged;
+
+        private void Unsubscribe(ProjectModel model) => model.PropertyChanged -= OnModelPropertyChanged;
+
+        private void OnModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ProjectModel.TimeSpent))
+            {
+                RefreshView();
+            }
+        }
+
+        public Action RefreshView { get; set; }
 
         public async Task LoadAsync()
         {

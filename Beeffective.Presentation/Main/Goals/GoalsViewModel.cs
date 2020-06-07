@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Dashboard;
 using Beeffective.Services.Repository;
+using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.Goals
 {
@@ -23,7 +25,9 @@ namespace Beeffective.Presentation.Main.Goals
             Collection = new ObservableCollection<GoalModel>();
             Collection.CollectionChanged += OnGoalsCollectionChanged;
             SelectAllCommand = new DelegateCommand((obj) => Selected = null);
-            AddNewCommand = new AsyncCommand(AddNew);
+            AddNewCommand = new AsyncCommand(AddNewAsync);
+            EditCommand = new AsyncCommand(EditAsync);
+            RemoveCommand = new AsyncCommand(RemoveAsync);
         }
 
         public ObservableCollection<GoalModel> Collection { get; }
@@ -57,16 +61,49 @@ namespace Beeffective.Presentation.Main.Goals
         public DelegateCommand SelectAllCommand { get; }
 
         public AsyncCommand AddNewCommand { get; }
-        
-        public Action RefreshView { get; set; }
 
-        private async Task AddNew()
+        private async Task AddNewAsync()
         {
             var model = await repository.Goals.AddAsync(new GoalModel());
             Add(model);
             SelectedCollection = Collection;
             Selected = model;
+            await DialogHost.Show(
+                new GoalView
+                {
+                    Width = 400,
+                    Height = 300,
+                    DataContext = this
+                });
         }
+
+        public AsyncCommand EditCommand { get; }
+
+        private async Task EditAsync()
+        {
+            if (Selected == null) return;
+            await DialogHost.Show(
+                new GoalView
+                {
+                    Width = 400,
+                    Height = 300,
+                    DataContext = this
+                });
+        }
+
+        public AsyncCommand RemoveCommand { get; }
+
+        private async Task RemoveAsync()
+        {
+            if (Selected == null) return;
+            Unsubscribe(Selected);
+            await repository.Goals.RemoveAsync(Selected);
+            Collection.Remove(Selected);
+            SelectedCollection = Collection;
+            Selected = null;
+        }
+
+        public Action RefreshView { get; set; }
 
         public async Task LoadAsync()
         {

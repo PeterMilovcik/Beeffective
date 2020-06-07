@@ -50,6 +50,14 @@
                 <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="AddThick" />
             </Button>
 
+            <Button Command="{Binding Core.Labels.EditCommand}" Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="Edit" />
+            </Button>
+
+            <Button Command="{Binding Core.Labels.RemoveCommand}" Style="{StaticResource WidgetHeaderButton}">
+                <materialDesign:PackIcon Foreground="{StaticResource PrimaryHueMidForegroundBrush}" Kind="TrashCan" />
+            </Button>
+
         </StackPanel>
 
         <sf:SfDataGrid
