@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Beeffective.Core.Extensions;
 using Beeffective.Core.Models;
 using Beeffective.Presentation.Common;
+using Beeffective.Presentation.Main.Dashboard;
 using Beeffective.Services.Repository;
+using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.Presentation.Main.Tasks
 {
@@ -27,6 +29,8 @@ namespace Beeffective.Presentation.Main.Tasks
             Collection.CollectionChanged += OnCollectionChanged;
             SelectAllCommand = new DelegateCommand(obj => Selected = null);
             AddNewCommand = new AsyncCommand(AddNewAsync);
+            EditCommand = new AsyncCommand(EditAsync);
+            RemoveCommand = new AsyncCommand(RemoveAsync);
             FinishCommand = new AsyncCommand(FinishTaskAsync);
             AddDueToCommand = new DelegateCommand(AddDueTo);
         }
@@ -129,6 +133,39 @@ namespace Beeffective.Presentation.Main.Tasks
             Add(model);
             SelectedCollection = new ObservableCollection<TaskModel>(Collection);
             Selected = model;
+            await DialogHost.Show(
+                new TaskView
+                {
+                    Width = 500,
+                    Height = 500,
+                    DataContext = this
+                });
+        }
+
+        public AsyncCommand EditCommand { get; }
+
+        private async Task EditAsync()
+        {
+            if (Selected == null) return;
+            await DialogHost.Show(
+                new TaskView
+                {
+                    Width = 500,
+                    Height = 500,
+                    DataContext = this
+                });
+        }
+
+        public AsyncCommand RemoveCommand { get; }
+
+        private async Task RemoveAsync()
+        {
+            if (Selected == null) return;
+            Unsubscribe(Selected);
+            await repository.Tasks.RemoveAsync(Selected);
+            Collection.Remove(Selected);
+            SelectedCollection = Collection;
+            Selected = null;
         }
 
         public async Task LoadAsync()
