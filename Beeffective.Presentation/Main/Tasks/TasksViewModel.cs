@@ -190,7 +190,7 @@ namespace Beeffective.Presentation.Main.Tasks
         private async Task FinishTaskAsync()
         {
             if (Selected == null) return;
-            Selected.IsFinished = true;
+            Selected.IsFinished = !Selected.IsFinished;
             await repository.Tasks.UpdateAsync(Selected);
             Selected = null;
         }
