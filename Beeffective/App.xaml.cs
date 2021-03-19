@@ -1,7 +1,5 @@
 using System.ComponentModel.Composition.Hosting;
 using System.Windows;
-using Beeffective.Presentation.Main;
-using Syncfusion.Licensing;
 
 namespace Beeffective
 {
@@ -11,7 +9,6 @@ namespace Beeffective
 
         public App()
         {
-            SyncfusionLicenseProvider.RegisterLicense("##SyncfusionLicense##");
             var catalog = new ApplicationCatalog();
             Container = new CompositionContainer(catalog);
         }
@@ -19,9 +16,9 @@ namespace Beeffective
         protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var mainViewModel = Container.GetExportedValue<MainViewModel>();
-            await mainViewModel.ShowAsync();
-            await mainViewModel.ChangeContentAsync(mainViewModel.Dashboard);
+            //var mainViewModel = Container.GetExportedValue<MainViewModel>();
+            //await mainViewModel.ShowAsync();
+            //await mainViewModel.ChangeContentAsync(mainViewModel.Dashboard);
         }
     }
 }

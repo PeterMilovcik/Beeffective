@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Beeffective.Presentation\Beeffective.Presentation.csproj" />
+    <ProjectReference Include="..\Beeffective.Data\Beeffective.Data.csproj" />
   </ItemGroup>
 
 </Project>

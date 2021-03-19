@@ -7,11 +7,6 @@ namespace Beeffective.Data
     [Export]
     public class DataContext : DbContext
     {
-        public DataContext()
-        {
-            Database.Migrate();
-        }
-
         public DbSet<GoalEntity> Goals { get; set; }
         public DbSet<ProjectEntity> Projects { get; set; }
         public DbSet<LabelEntity> Labels { get; set; }

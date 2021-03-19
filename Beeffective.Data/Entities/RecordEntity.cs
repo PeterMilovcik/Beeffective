@@ -5,7 +5,8 @@ namespace Beeffective.Data.Entities
     public class RecordEntity : Entity
     {
         public int TaskId { get; set; }
-        public DateTime StartAt { get; set; }
-        public DateTime StopAt { get; set; }
+        public TaskEntity Task { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
     }
 }

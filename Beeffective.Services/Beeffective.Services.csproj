@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Beeffective.Core\Beeffective.Core.csproj" />
     <ProjectReference Include="..\Beeffective.Data\Beeffective.Data.csproj" />
   </ItemGroup>
 

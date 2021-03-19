@@ -25,9 +25,6 @@ namespace Beeffective.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Importance")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
@@ -62,13 +59,15 @@ namespace Beeffective.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("GoalId")
+                    b.Property<int?>("GoalId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GoalId");
 
                     b.ToTable("Projects");
                 });
@@ -79,16 +78,18 @@ namespace Beeffective.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("StartAt")
+                    b.Property<DateTime>("End")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StopAt")
+                    b.Property<DateTime>("Start")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TaskId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
 
                     b.ToTable("Records");
                 });
@@ -102,9 +103,6 @@ namespace Beeffective.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DueTo")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsFinished")
                         .HasColumnType("INTEGER");
 
@@ -115,6 +113,8 @@ namespace Beeffective.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("Tasks");
                 });
@@ -134,6 +134,31 @@ namespace Beeffective.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TaskLabels");
+                });
+
+            modelBuilder.Entity("Beeffective.Data.Entities.ProjectEntity", b =>
+                {
+                    b.HasOne("Beeffective.Data.Entities.GoalEntity", "Goal")
+                        .WithMany()
+                        .HasForeignKey("GoalId");
+                });
+
+            modelBuilder.Entity("Beeffective.Data.Entities.RecordEntity", b =>
+                {
+                    b.HasOne("Beeffective.Data.Entities.TaskEntity", "Task")
+                        .WithMany("Records")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Beeffective.Data.Entities.TaskEntity", b =>
+                {
+                    b.HasOne("Beeffective.Data.Entities.ProjectEntity", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
