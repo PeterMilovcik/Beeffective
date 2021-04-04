@@ -13,6 +13,7 @@ namespace Beeffective.Tests.Data.DataContextTests.GoalTests
         public override void SetUp()
         {
             base.SetUp();
+            CreateGoal();
             added = SUT.Goals.Add(NewGoal).Entity;
             SUT.SaveChanges();
             added.Title = UpdatedGoalTitle;

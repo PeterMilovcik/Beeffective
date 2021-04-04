@@ -9,6 +9,8 @@ namespace Beeffective.Tests.Data.DataContextTests.ProjectTests
         public override void SetUp()
         {
             base.SetUp();
+            CreateGoal();
+            CreateProject(NewGoal);
             SUT.Projects.Add(NewProject);
             SUT.SaveChanges();
             SUT.Projects.Remove(NewProject);

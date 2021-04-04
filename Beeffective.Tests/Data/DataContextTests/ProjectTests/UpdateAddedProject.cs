@@ -13,6 +13,8 @@ namespace Beeffective.Tests.Data.DataContextTests.ProjectTests
         public override void SetUp()
         {
             base.SetUp();
+            CreateGoal();
+            CreateProject(NewGoal);
             added = SUT.Projects.Add(NewProject).Entity;
             SUT.SaveChanges();
             added.Title = UpdatedProjectTitle;

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Beeffective.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210319132937_Initial")]
+    [Migration("20210319135543_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,7 +108,7 @@ namespace Beeffective.Data.Migrations
                     b.Property<bool>("IsFinished")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -158,9 +158,7 @@ namespace Beeffective.Data.Migrations
                 {
                     b.HasOne("Beeffective.Data.Entities.ProjectEntity", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
                 });
 #pragma warning restore 612, 618
         }

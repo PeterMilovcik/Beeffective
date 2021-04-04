@@ -76,7 +76,7 @@ namespace Beeffective.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProjectId = table.Column<int>(nullable: false),
+                    ProjectId = table.Column<int>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     IsFinished = table.Column<bool>(nullable: false)
@@ -89,7 +89,7 @@ namespace Beeffective.Data.Migrations
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

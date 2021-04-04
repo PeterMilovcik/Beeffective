@@ -106,7 +106,7 @@ namespace Beeffective.Data.Migrations
                     b.Property<bool>("IsFinished")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -156,9 +156,7 @@ namespace Beeffective.Data.Migrations
                 {
                     b.HasOne("Beeffective.Data.Entities.ProjectEntity", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
                 });
 #pragma warning restore 612, 618
         }

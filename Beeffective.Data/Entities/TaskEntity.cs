@@ -4,7 +4,6 @@ namespace Beeffective.Data.Entities
 {
     public class TaskEntity : Entity
     {
-        public int ProjectId { get; set; }
         public ProjectEntity Project { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

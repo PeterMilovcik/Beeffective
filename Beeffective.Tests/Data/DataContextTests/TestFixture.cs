@@ -6,14 +6,14 @@ namespace Beeffective.Tests.Data.DataContextTests
 {
     class TestFixture : TestFixture<DataContext>
     {
+        protected GoalEntity AddedGoal { get; set; }
         protected GoalEntity NewGoal { get; set; }
         protected ProjectEntity NewProject { get; set; }
+        protected TaskEntity NewTask { get; set; }
 
         [SetUp]
         public virtual void SetUp()
         {
-            CreateGoal();
-            CreateProject();
         }
 
         protected void CreateGoal()
@@ -25,14 +25,30 @@ namespace Beeffective.Tests.Data.DataContextTests
             };
         }
 
-        protected void CreateProject()
+        protected void CreateProject(GoalEntity goal)
         {
-            var addedGoal = SUT.Goals.Add(NewGoal).Entity;
             NewProject = new ProjectEntity
             {
                 Title = "Test Project Title",
                 Description = "Test Project Description",
-                Goal = addedGoal,
+                Goal = goal,
+            };
+        }
+
+        private GoalEntity Save(GoalEntity entity)
+        {
+            var added = SUT.Goals.Add(entity).Entity;
+            SUT.SaveChanges();
+            return added;
+        }
+
+        protected void CreateTask(ProjectEntity project)
+        {
+            NewTask = new TaskEntity
+            {
+                Title = "Test Task Title",
+                Description = "Test Task Description",
+                Project = project,
             };
         }
 
